@@ -206,3 +206,35 @@ class Like(TimeStamp, BaseModel):
     def __str__(self):
         return f'{self.user.username}: {self.product.name}'
 
+
+class Comment(TimeStamp, BaseModel):
+    COMMENT_STATUS_WAITING = 'w'
+    COMMENT_STATUS_APPROVED = 'a'
+    COMMENT_STATUS_NOT_APPROVED = 'na'
+    COMMENT_STATUS = (
+        (COMMENT_STATUS_WAITING, 'Waiting'),
+        (COMMENT_STATUS_APPROVED, 'Approved'),
+        (COMMENT_STATUS_NOT_APPROVED, 'Not Approved'),
+    )
+    body = models.TextField(verbose_name=_('comment text'))
+    status = models.CharField(max_length=2, choices=COMMENT_STATUS,
+                              default=COMMENT_STATUS_WAITING,
+                              verbose_name=_('comment status'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='product_comments',
+                                verbose_name=_('comment product'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             related_name='user_comments',
+                             verbose_name=_('comment user'))
+    reply_comment = models.ForeignKey('self', on_delete=models.CASCADE,
+                                      null=True, blank=True,
+                                      related_name='replize_comment',
+                                      verbose_name=_('replize comment'))
+
+    class Meta:
+        verbose_name = _('comment')
+        verbose_name_plural = _('comments')
+
+    def __str__(self):
+        return f'{self.body} : {self.user}'
