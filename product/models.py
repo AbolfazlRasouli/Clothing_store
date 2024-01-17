@@ -177,3 +177,32 @@ class Product(TimeStamp, BaseModel):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class Image(models.Model):
+    image = models.ImageField(verbose_name=_('Image'), upload_to='item_image/')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+
+    class Meta:
+        verbose_name = _('Image')
+        verbose_name_plural = _('Image gallery')
+
+    def __str__(self):
+        return f'{self.product.name}'
+
+
+class Like(TimeStamp, BaseModel):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='product_like',
+                                verbose_name=_('product'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                             related_name='user_like',
+                             verbose_name=_('user'))
+
+    class Meta:
+        verbose_name = _('like')
+        verbose_name_plural = _('likes')
+
+    def __str__(self):
+        return f'{self.user.username}: {self.product.name}'
+
