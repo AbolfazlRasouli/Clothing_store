@@ -135,3 +135,45 @@ class Discount(TimeStamp):
 
     def __str__(self):
         return f'{self.code} for {self.name}'
+
+
+class Product(TimeStamp, BaseModel):
+    name = models.CharField(verbose_name=_('name product'), max_length=255)
+    brand = models.CharField(verbose_name=_('brand'), max_length=100)
+    code = models.CharField(verbose_name=_('code'), max_length=15, unique=True)
+    price = models.PositiveIntegerField(verbose_name=_('price product'))
+    slug = models.SlugField(verbose_name=_('name unique product'), max_length=100, unique=True, blank=True)
+    description = models.TextField(verbose_name=_(' description product'), null=True, blank=True)
+    image = models.ImageField(verbose_name=_('image product'), upload_to='item_image/')
+    attribute = models.ManyToManyField(Attribute, related_name='product_attribute',
+                                       verbose_name=_('attribute product'))
+    discount = models.ForeignKey(Discount, on_delete=models.CASCADE,
+                                 related_name='product_discount',
+                                 null=True, blank=True,
+                                 verbose_name=_('discount product'))
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product_category',
+                                 verbose_name=_('category'))
+
+    class Meta:
+        verbose_name = _('product')
+        verbose_name_plural = _('products')
+
+    # def calculate_discounted_price(self):
+    #     if self.discount:
+    #         if self.discount.percent:
+    #             discount_amount = (self.discount.percent / 100) * self.price
+    #         elif self.discount.amount:
+    #             discount_amount = self.discount.amount
+    #         else:
+    #             raise ValidationError(_('Invalid discount type.'))
+    #         return self.price - discount_amount
+    #     else:
+    #         return self.price
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.code)
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.name}'
