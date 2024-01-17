@@ -84,3 +84,54 @@ class Category(TimeStamp, BaseModel):
             self.slug = slugify(self.name)
             self.save()
         return super().save(*args, **kwargs)
+
+
+class Attribute(models.Model):
+    size = models.CharField(max_length=20, verbose_name=_('size'))
+    color = models.CharField(max_length=20, verbose_name=_('color'))
+    count = models.PositiveIntegerField(verbose_name=_('count'))
+
+    class Meta:
+        verbose_name = _('Attribute')
+        verbose_name_plural = _('Attributes')
+
+    def __str__(self):
+        return f'{self.size} --> {self.color}'
+
+
+class DiscountManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(start_date__lte=timezone.now(),
+                                             end_date__gte=timezone.now(),
+                                             count__gt=0)
+
+
+class Discount(TimeStamp):
+    name = models.CharField(verbose_name=_('name discount'), max_length=255)
+    description = models.TextField(verbose_name=_('description discount'), null=True, blank=True)
+    code = models.CharField(verbose_name=_('code discount'), unique=True, max_length=15)
+    start_date = models.DateTimeField(verbose_name=_('start_date discount'))
+    end_date = models.DateTimeField(verbose_name=_('end_date discount'))
+    percent = models.PositiveIntegerField(verbose_name=_('percent discount'),
+                                          validators=[MinValueValidator(1), MaxValueValidator(100)],
+                                          null=True, blank=True)
+    amount = models.PositiveIntegerField(verbose_name=_('amount discount'), null=True, blank=True)
+    count = models.PositiveIntegerField(verbose_name=_('count discount'), null=True,
+                                        blank=True)
+
+    def clean(self):
+        if self.percent is not None and self.amount is not None:
+            raise ValidationError(_('Only one of percent or amount should be provided.'))
+        if self.percent is None and self.amount is None:
+            raise ValidationError(_('One of percentage or amount must have a value.'))
+
+    class Meta:
+        verbose_name = _(' discount')
+        verbose_name_plural = _('discounts')
+
+    objects = models.Manager()
+    discount_manage = DiscountManager()
+
+    def __str__(self):
+        return f'{self.code} for {self.name}'
