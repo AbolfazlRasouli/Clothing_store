@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-18 04:11+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: models.py:19
+msgid "status order"
+msgstr "وضعیت سفارش"
+
+#: models.py:24
+msgid "user"
+msgstr "کاربرها"
+
+#: models.py:28
+msgid "Address"
+msgstr "آدرس"
+
+#: models.py:31 models.py:45
+msgid "order"
+msgstr "سفارش"
+
+#: models.py:32
+msgid "orders"
+msgstr "سفارش ها"
+
+#: models.py:39
+msgid "size"
+msgstr "سایز"
+
+#: models.py:40
+msgid "color"
+msgstr "رنگ"
+
+#: models.py:41
+msgid "count"
+msgstr "تعداد"
+
+#: models.py:42
+msgid "price"
+msgstr "قیمت"
+
+#: models.py:48
+msgid "product "
+msgstr "محصول"
+
+#: models.py:51
+msgid "order item"
+msgstr "جزييات سفارش"
+
+#: models.py:52
+msgid "order items"
+msgstr "جزییات سفارش"
