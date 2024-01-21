@@ -27,3 +27,8 @@ class ItemsDetailView(DetailView):
 
 def home(request):
     return render(request, 'product/home_product.html')
+
+
+def category(request):
+    return render(request, 'product/category_product.html')
+
