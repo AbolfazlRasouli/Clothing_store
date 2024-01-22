@@ -26,10 +26,29 @@ class UserAdmin(UserAdmin):
         url = reverse('admin:accounts_customuser_change', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
 
-    def delete(self,obj):
+    def delete(self, obj):
         url = reverse('admin:accounts_customuser_delete', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
 
     edit.short_description = 'ویرایش'
-    edit.short_description = 'حذف'
+    delete.short_description = 'حذف'
+
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ('user', 'city', 'street', 'pelak', 'edit', 'delete')
+    search_fields = ('user__email', 'city', 'street', 'pelak')
+    list_filter = ('user', 'city', 'province')
+    list_display_links = None
+
+    def edit(self, obj):
+        url = reverse('admin:accounts_address_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
+
+    def delete(self, obj):
+        url = reverse('admin:accounts_address_delete', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
+
+    edit.short_description = 'ویرایش'
+    delete.short_description = 'حذف'
 
