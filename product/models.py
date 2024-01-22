@@ -81,7 +81,7 @@ class Category(TimeStamp, BaseModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name, allow_unicode=True)
             self.save()
         return super().save(*args, **kwargs)
 
