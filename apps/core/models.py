@@ -58,6 +58,7 @@ class BaseModel(models.Model):
 
     def undelete(self):
         self.is_deleted = False
+        # self.delete_date = None
         self.save()
 
 
