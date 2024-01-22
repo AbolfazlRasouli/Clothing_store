@@ -88,7 +88,8 @@ class Category(TimeStamp, BaseModel):
 
 class Attribute(models.Model):
     size = models.CharField(max_length=20, verbose_name=_('size'))
-    color = models.CharField(max_length=20, verbose_name=_('color'))
+    name_color = models.CharField(max_length=20, verbose_name=_('name color'))
+    code_color = models.CharField(max_length=20, verbose_name=_('code color'))
     count = models.PositiveIntegerField(verbose_name=_('count'))
 
     class Meta:
@@ -96,7 +97,7 @@ class Attribute(models.Model):
         verbose_name_plural = _('Attributes')
 
     def __str__(self):
-        return f'{self.size} --> {self.color}'
+        return f'{self.size} --> {self.name_color}'
 
 
 class DiscountManager(models.Manager):
@@ -172,7 +173,7 @@ class Product(TimeStamp, BaseModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.code)
+            self.slug = slugify(self.name, allow_unicode=True)
         return super().save(*args, **kwargs)
 
     def __str__(self):
