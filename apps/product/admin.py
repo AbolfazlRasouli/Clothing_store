@@ -1,5 +1,34 @@
+from typing import Any
 from django.contrib import admin
-
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
+from django.utils.html import format_html
 from .models import Product, Attribute, Comment, Category, Image, Discount, Like
+from django.urls import reverse
 
-admin.site.register([Product, Attribute, Comment, Category, Image, Discount, Like])
+admin.site.register([Product, Attribute, Comment, Image, Discount, Like])
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    model = Category
+    list_display = ("name", "display_image", "edit", "delete")
+    readonly_fields = ("display_image",)
+    search_fields = ("name",)
+    list_display_links = None
+
+    def display_image(self, obj):
+        return format_html('<img src="{}" height="60" style="background-color: #121212;"/>'.format(obj.image.url))
+
+    display_image.short_description = "تصویر موجود"
+
+    def edit(self, obj):
+        url = reverse('admin:product_category_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
+
+    def delete(self, obj):
+        url = reverse('admin:product_category_delete', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
+
+    edit.short_description = 'ویرایش'
+    delete.short_description = 'حذف'
