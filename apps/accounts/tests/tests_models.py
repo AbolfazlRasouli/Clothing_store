@@ -1,5 +1,5 @@
 from django.test import TestCase
-from apps.core.models import CustomUser, Address
+from apps.accounts.models import CustomUser, Address
 
 
 class CustomUserTests(TestCase):

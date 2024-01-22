@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 
 from apps.product.models import Product, Attribute, Category, Discount
-from apps.core.models import Address
+from apps.accounts.models import Address
 from apps.order.models import Order, OrderItem
 
 
