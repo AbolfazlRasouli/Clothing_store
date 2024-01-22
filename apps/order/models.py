@@ -1,7 +1,8 @@
 from django.db import models
-from core.models import Address
+from apps.accounts.models import Address
 from django.conf import settings
-from product.models import Product, TimeStamp, BaseModel
+from apps.core.models import TimeStamp, BaseModel
+from apps.product.models import Product
 from django.utils.translation import gettext_lazy as _
 
 

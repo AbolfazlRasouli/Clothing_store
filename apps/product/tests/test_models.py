@@ -1,9 +1,8 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.utils import timezone
-import datetime
 from django.utils.text import slugify
-from product.models import Product, Attribute, Comment, Category, Image, Discount, Like
+from apps.product.models import Product, Attribute, Comment, Category, Image, Discount, Like
 from django.core.exceptions import ValidationError
 
 

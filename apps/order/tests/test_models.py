@@ -2,9 +2,9 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from product.models import Product, Attribute, Category, Discount
-from core.models import Address
-from order.models import Order, OrderItem
+from apps.product.models import Product, Attribute, Category, Discount
+from apps.core.models import Address
+from apps.order.models import Order, OrderItem
 
 
 class OrderModelTest(TestCase):
