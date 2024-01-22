@@ -6,7 +6,7 @@ from django.utils.html import format_html
 from .models import Product, Attribute, Comment, Category, Image, Discount, Like
 from django.urls import reverse
 
-admin.site.register([Product, Comment, Image, Discount, Like])
+admin.site.register([Comment, Image, Like])
 
 
 @admin.register(Category)
@@ -59,26 +59,55 @@ class AttributeAdmin(admin.ModelAdmin):
     delete.short_description = 'حذف'
 
 
-# @admin.register(Product)
-# class ProductAdmin(admin.ModelAdmin):
-#     model = Product
-#     list_display = ('name', 'code', 'price', 'image', 'edit', 'delete')
-#     search_fields = ('size', 'name_color', 'code_color')
-#     list_filter = ('size', 'name_color', 'count')
-#     list_display_links = None
-#
-#     def edit(self, obj):
-#         url = reverse('admin:product_product_change', args=[obj.id])
-#         return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
-#
-#     def delete(self, obj):
-#         url = reverse('admin:product_product_delete', args=[obj.id])
-#         return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
-#
-#     def display_image(self, obj):
-#         return format_html('<img src="{}" height="60" style="background-color: #121212;"/>'.format(obj.image.url))
-#
-#     display_image.short_description = "تصویر موجود"
-#
-#     edit.short_description = 'ویرایش'
-#     delete.short_description = 'حذف'
+@admin.register(Discount)
+class DiscountAdmin(admin.ModelAdmin):
+    model = Discount
+    list_display = ('name', 'code', 'start_date', 'end_date', 'count', 'edit', 'delete')
+    search_fields = ('name', 'code')
+    list_filter = ('name', 'code', 'count')
+    list_display_links = None
+
+    def edit(self, obj):
+        url = reverse('admin:product_discount_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
+
+    def delete(self, obj):
+        url = reverse('admin:product_discount_delete', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
+
+    edit.short_description = 'ویرایش'
+    delete.short_description = 'حذف'
+
+
+# class AttributeInline(admin.TabularInlin):
+#     model = Attribute
+
+
+class CategoryInline(admin.StackedInline):
+    model = Category
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    model = Product
+    list_display = ('name', 'code', 'price', 'display_image', 'edit', 'delete')
+    search_fields = ('name', 'category__name')
+    list_filter = ('name','category__name')
+    # inlines = (CategoryInline, AttributeInline)
+    list_display_links = None
+
+    def edit(self, obj):
+        url = reverse('admin:product_product_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
+
+    def delete(self, obj):
+        url = reverse('admin:product_product_delete', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
+
+    def display_image(self, obj):
+        return format_html('<img src="{}" height="60" style="background-color: #121212;"/>'.format(obj.image.url))
+
+    display_image.short_description = "تصویر موجود"
+
+    edit.short_description = 'ویرایش'
+    delete.short_description = 'حذف'
