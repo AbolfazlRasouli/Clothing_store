@@ -5,148 +5,140 @@
 {% block content %}
 
 
-<!-- Breadcumbs start -->
-<div class="e-breadcumb-wrap text-center">
-    <h2 class="e-breadcumb-title">تک محصول</h2>
-    <ul class="e-breadcumb-kist">
-        <li><a href="index.html">صفحه اصلی </a></li>
-        <li><a href="javascript:void(0);">لباس مردانه </a></li>
-        <li><a href="javascript:void(0);">کت </a></li>
-        <li><a href="javascript:void(0);">مشکی خاکستری کلاه دار </a></li>
-    </ul>
-</div>
+    <!-- Breadcumbs start -->
+    <div class="e-breadcumb-wrap text-center">
+        <h2 class="e-breadcumb-title">تک محصول</h2>
+        <ul class="e-breadcumb-kist">
+            <li><a href="index.html">صفحه اصلی </a></li>
+            <li><a href="javascript:void(0);">لباس مردانه </a></li>
+            <li><a href="javascript:void(0);">کت </a></li>
+            <li><a href="javascript:void(0);">مشکی خاکستری کلاه دار </a></li>
+        </ul>
+    </div>
 
 
 
-<!-- Product Details start -->
-<section class="e-prodetails-wrap">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-12">
-                <div class="pd-gallery-wrap">
-                    <div class="pd-thumb-box">
-                        <ul class="pd-thumb-list">
-                            <li class="active">
-                                <img src="assets/images/index1/pro-singlethumb01.jpg" alt="product-img" data-source="assets/images/index1/pro-single01.jpg" class="pro_thumb">
-                            </li>
-                            <li>
-                                <img src="assets/images/index1/pro-singlethumb02.jpg" alt="product-img" data-source="assets/images/index1/pro-single02.jpg" class="pro_thumb">
-                            </li>
-                            <li>
-                                <img src="assets/images/index1/pro-singlethumb03.jpg" alt="product-img" data-source="assets/images/index1/pro-single03.jpg" class="pro_thumb">
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="pd-img-wrap">
-                        <div class="pd-img text-center">
-                            <img src="assets/images/index1/pro-single01.jpg" alt="product-img">
+    <!-- Product Details start -->
+    <section class="e-prodetails-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="pd-gallery-wrap">
+                        <div class="pd-thumb-box">
+                            <ul class="pd-thumb-list">
+                                {% for image in images %}
+                                    <li class="active">
+                                        <img src="{{ image.image.url }}" alt="product-img"
+                                             data-source="assets/images/index1/pro-single01.jpg" class="pro_thumb">
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="pd-img-wrap">
+                            <div class="pd-img text-center">
+                                <img src="{{ details.image.url }}" alt="product-img">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-                <div class="prodetails-info">
-                    <div class="pd-infotop">
-                        <h2 class="pd-title">کت کلاه دار خاکستری مشکی</h2>
-                        <div class="pd-special-price">
-                            <span class="pd-price-end" id="headline">قیمت ویژه در کمتر از</span>
-                            <div id="countdown">
-                                <ul class="pd-counter-list">
-                                  <li><span id="days"></span> روز : </li>
-                                  <li><span id="hours"></span> ساعت : </li>
-                                  <li><span id="minutes"></span> دقیقه : </li>
-                                  <li><span id="seconds"></span> ثانیه پایان می می رسد</li>
-                                </ul>
-                            </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="prodetails-info">
+                        <div class="pd-infotop">
+                            <h2 class="pd-title">{{ details.name }}</h2>
+                            {#                        <div class="pd-special-price">#}
+                            {#                            <span class="pd-price-end" id="headline">قیمت ویژه در کمتر از</span>#}
+                            {#                            <div id="countdown">#}
+                            {#                                <ul class="pd-counter-list">#}
+                            {#                                  <li><span id="days"></span> روز : </li>#}
+                            {#                                  <li><span id="hours"></span> ساعت : </li>#}
+                            {#                                  <li><span id="minutes"></span> دقیقه : </li>#}
+                            {#                                  <li><span id="seconds"></span> ثانیه پایان می می رسد</li>#}
+                            {#                                </ul>#}
+                            {#                            </div>#}
+                            {#                        </div>#}
+                            <ul class="pd-price-wrap">
+                                {#                            <li><span class="pd-price-ttile">{{ details.price }} تومان <span>90000 تومان</span></span></li>#}
+                                <li><span class="pd-price-ttile">{{ details.price }} تومان </span></li>
+
+                                {#                            <li><span class="pd-price-off">10% تخفیف </span></li>#}
+                            </ul>
                         </div>
-                        <ul class="pd-price-wrap">
-                            <li><span class="pd-price-ttile">120000 تومان <span>90000 تومان</span></span></li>
-                            <li><span class="pd-price-off">10% تخفیف </span></li>
-                        </ul>
-                    </div>
-                    <div class="pd-info-bottom">
-                        <ul class="info-bottom-list">
-                            <li>
-                                <div class="ib-list-left">
-                                    <span>رنگ های موجود</span>
-                                </div>
-                                <div class="ib-list-right">
-                                    <ul class="na-color-skin">
-                                        <li></li>
-{#                                        <li></li>#}
-{#                                        <li></li>#}
-{#                                        <li></li>#}
-{#                                        <li></li>#}
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="ib-list-left">
-                                    <span>سایز های موجود</span>
-                                </div>
-                                <div class="ib-list-right">
-                                    <ul class="pd-info-size d-flex">
-                                        <li>S</li>
-                                        <li>M</li>
-                                        <li>L</li>
-                                        <li>XL</li>
-                                    </ul>
-                                </div>
-                            </li>
-{#                            <li>#}
-{#                                <div class="ib-list-left">#}
-{#                                    <span>ارائه به </span>#}
-{#                                </div>#}
-{#                                <div class="ib-list-right">#}
-{#                                    <div class="pd-info-pincode">#}
-{#                                        <div class="e-nl-box boreder  pd-info-pinbox">#}
-{#                                            <input type="text" placeholder="کد رمز خود را وارد کنید...">#}
-{#                                            <a href="javascript:void(0);" class="e-btn newsletter-btn">بررسی </a>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </li>#}
-                            <li>
-                                <div class="ib-list-left">
-                                    <span>تعداد </span>
-                                </div>
-                                <div class="ib-list-right">
-                                    <ul class="pd-qua-wrap">
-                                        <li>
-                                            <div class="quantity-box">
-                                                <input type="text" class="quantity" value="2">
-                                                <span class="quantity-minus pa-sub quantity-icon"> - </span>
-                                                <span class="quantity-plus  pa-add quantity-icon"> + </span>
-                                                <div class="clearfix"></div>
-
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="cart.html" class="e-btn pd-addcart">افزودن به سبد </a>
-                                        </li>
-                                        <li>
-                                            <a href="wishlist.html" class="e-btn light pd-heart">
-                                                <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                width="17px" height="16px">
-                                                <path fill-rule="evenodd"  fill="rgb(90, 106, 137)"
-                                                d="M15.616,1.939 C14.768,0.972 13.603,0.440 12.337,0.440 C11.387,0.440 10.516,0.755 9.751,1.377 C9.456,1.616 9.182,1.898 8.933,2.217 C8.683,1.898 8.409,1.616 8.115,1.377 C7.350,0.755 6.480,0.440 5.529,0.440 C4.262,0.440 3.098,0.972 2.249,1.939 C1.419,2.886 0.962,4.175 0.962,5.570 C0.962,7.002 1.465,8.308 2.547,9.681 C3.494,10.880 4.842,12.088 6.411,13.493 C6.940,13.967 7.540,14.504 8.163,15.077 C8.375,15.272 8.649,15.380 8.933,15.380 C9.218,15.380 9.491,15.272 9.703,15.077 C10.269,14.555 10.818,14.063 11.311,13.622 L11.458,13.490 C13.019,12.092 14.367,10.886 15.318,9.681 C16.400,8.309 16.904,7.003 16.904,5.570 C16.904,4.175 16.446,2.886 15.616,1.939 ZM5.529,1.905 C6.154,1.905 6.729,2.115 7.237,2.528 C7.702,2.906 8.028,3.387 8.219,3.724 C8.522,4.253 9.346,4.252 9.646,3.723 C9.838,3.387 10.163,2.906 10.628,2.528 C11.137,2.115 11.712,1.905 12.337,1.905 C13.198,1.905 13.989,2.266 14.566,2.923 C15.160,3.599 15.486,4.540 15.486,5.570 C15.486,6.662 15.095,7.644 14.220,8.754 C13.352,9.855 12.049,11.023 10.530,12.383 C10.045,12.817 9.501,13.304 8.932,13.823 C8.365,13.305 7.823,12.818 7.332,12.379 C5.821,11.025 4.515,9.857 3.647,8.754 C2.770,7.644 2.379,6.662 2.379,5.570 C2.379,4.540 2.706,3.599 3.300,2.923 C3.877,2.266 4.668,1.905 5.529,1.905 Z"/>
-                                                </svg>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-
-
+                        <div class="pd-info-bottom">
+                            <ul class="info-bottom-list">
+                                {#                                <li>#}
+                                {#                                    <div class="ib-list-left">#}
+                                {#                                        <span>رنگ های موجود</span>#}
+                                {#                                    </div>#}
+                                {#                                    <div class="ib-list-right">#}
+                                {#                                        <ul class="na-color-skin">#}
+                                {#                                            <li></li>#}
+                                {#                                        <li></li>#}
+                                {#                                        <li></li>#}
+                                {#                                        <li></li>#}
+                                {#                                        <li></li>#}
+                                {#                                        </ul>#}
+                                {#                                    </div>#}
+                                {#                                </li>#}
+                                {#                                <li>#}
+                                {#                                    <div class="ib-list-left">#}
+                                {#                                        <span>سایز های موجود</span>#}
+                                {#                                    </div>#}
+                                {#                                    <div class="ib-list-right">#}
+                                {#                                            <ul class="pd-info-size d-flex">#}
+                                {#                                                <li>{{ attr.size }}</li>#}
+                                {#                                            </ul>#}
+                                {#                                    </div>#}
+                                {##}
+                                {#                                </li>#}
+                                <li>
+                                    <div class="dropdown mx-3">
+                                        <button class="btn btn-outline-secondary dropdown-toggle " type="button"
+                                                data-toggle="dropdown" aria-expanded="false">
+                                            رنگ بندی و سایز
+                                        </button>
+                                        <ul class="dropdown-menu ">
+                                            {% for foo in attributes %}
+                                                <li><a class="dropdown-item text-end" href="#">
+                                                    <span style="width: 15px; height: 15px; background-color: {{ foo.code_color }}; display: inline-block; border-radius: 100%;"></span>
+                                                    سایز: {{ foo.size }}
+                                                </a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div class="ib-list-right">
+                                        <ul class="pd-qua-wrap">
+                                            <li>
+                                                <div class="quantity-box">
+                                                    <input type="text" class="quantity" value="2">
+                                                    <span class="quantity-minus pa-sub quantity-icon"> - </span>
+                                                    <span class="quantity-plus  pa-add quantity-icon"> + </span>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="cart.html" class="e-btn pd-addcart">افزودن به سبد </a>
+                                            </li>
+                                            <li>
+                                                <a href="wishlist.html" class="e-btn light pd-heart">
+                                                    <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                            width="17px" height="16px">
+                                                        <path fill-rule="evenodd" fill="rgb(90, 106, 137)"
+                                                              d="M15.616,1.939 C14.768,0.972 13.603,0.440 12.337,0.440 C11.387,0.440 10.516,0.755 9.751,1.377 C9.456,1.616 9.182,1.898 8.933,2.217 C8.683,1.898 8.409,1.616 8.115,1.377 C7.350,0.755 6.480,0.440 5.529,0.440 C4.262,0.440 3.098,0.972 2.249,1.939 C1.419,2.886 0.962,4.175 0.962,5.570 C0.962,7.002 1.465,8.308 2.547,9.681 C3.494,10.880 4.842,12.088 6.411,13.493 C6.940,13.967 7.540,14.504 8.163,15.077 C8.375,15.272 8.649,15.380 8.933,15.380 C9.218,15.380 9.491,15.272 9.703,15.077 C10.269,14.555 10.818,14.063 11.311,13.622 L11.458,13.490 C13.019,12.092 14.367,10.886 15.318,9.681 C16.400,8.309 16.904,7.003 16.904,5.570 C16.904,4.175 16.446,2.886 15.616,1.939 ZM5.529,1.905 C6.154,1.905 6.729,2.115 7.237,2.528 C7.702,2.906 8.028,3.387 8.219,3.724 C8.522,4.253 9.346,4.252 9.646,3.723 C9.838,3.387 10.163,2.906 10.628,2.528 C11.137,2.115 11.712,1.905 12.337,1.905 C13.198,1.905 13.989,2.266 14.566,2.923 C15.160,3.599 15.486,4.540 15.486,5.570 C15.486,6.662 15.095,7.644 14.220,8.754 C13.352,9.855 12.049,11.023 10.530,12.383 C10.045,12.817 9.501,13.304 8.932,13.823 C8.365,13.305 7.823,12.818 7.332,12.379 C5.821,11.025 4.515,9.857 3.647,8.754 C2.770,7.644 2.379,6.662 2.379,5.570 C2.379,4.540 2.706,3.599 3.300,2.923 C3.877,2.266 4.668,1.905 5.529,1.905 Z"/>
+                                                    </svg>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
