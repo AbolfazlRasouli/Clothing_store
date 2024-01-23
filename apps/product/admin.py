@@ -93,7 +93,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'price', 'display_image', 'edit', 'delete')
     search_fields = ('name', 'category__name')
     list_filter = ('name','category__name')
-    # inlines = (CategoryInline, AttributeInline)
+    # inlines = (CategoryInline,)
     list_display_links = None
 
     def edit(self, obj):
