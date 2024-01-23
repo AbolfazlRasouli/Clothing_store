@@ -32,3 +32,5 @@ def home(request):
 def category(request):
     return render(request, 'product/category_product.html')
 
+def detail(request,slug):
+    return render(request, 'product/detail_product.html')
