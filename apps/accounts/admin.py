@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import Address, CustomUser
 from django.utils.html import format_html
 from django.urls import reverse
+from django.contrib.auth.models import Group
 
 
 @admin.register(CustomUser)
@@ -24,8 +25,8 @@ class UserAdmin(UserAdmin):
 
     # def save_model(self, request, obj, form, change):
     #     super().save_model(request, obj, form, change)
-    #     if obj.is_staff and obj.user_type == 'CUSTOMERUSER_EMPLOYEE':
-    #         group = Group.objects.get(name="supervisor")
+    #     if obj.user_type == 'e' and obj.is_active:
+    #         group, created = Group.objects.get_or_create(name="supervisor")
     #         obj.groups.add(group)
     #         obj.save()
     #         print(obj.groups.all())
