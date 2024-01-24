@@ -8,12 +8,13 @@
             <div class=" text-center">
                 <h2 class="autho-model-ttl"> کد ارسال شده را وارد کنید  </h2>
             </div>
-            <form>
+            <form method="post">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="e-form-field mb-20">
-{#                            {{ form.0tp_code }}#}
-                            <input type="text">
+{#
+                            {% csrf_token %}
+                            <input type="password" name="otp" id="otp" class="form-control" placeholder="Enter the temporary code..." required="">
                         </div>
                     </div>
 
