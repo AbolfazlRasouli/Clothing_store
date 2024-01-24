@@ -8,12 +8,12 @@ class LoginForm(AuthenticationForm):
     def __init__(self, request, *args, **kwargs):
         super().__init__(request, *args, **kwargs)
         self.fields["username"].widget.attrs.update({
-            "class": "form-control bg-transparent text-white font-17 fw-bold",
+            "class": "form-control  font-17 fw-bold me-1 border border-dark",
             "placeholder":" نام کاربری ",
             "type": "email"
         })
         self.fields["password"].widget.attrs.update({
-            "class": "form-control bg-transparent text-white font-17 fw-bold",
+            "class": "form-control  font-17 fw-bold me-1 border border-dark",
             "placeholder": "رمز عبور"
         })
 
