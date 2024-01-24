@@ -1,6 +1,8 @@
 from django.contrib.auth.backends import BaseBackend, ModelBackend
-from django.contrib.auth import get_user_model; User = get_user_model()
+from django.contrib.auth import get_user_model
 from multiprocessing import AuthenticationError
+
+User = get_user_model()
 
 
 class CustomModelBackend(ModelBackend):
@@ -31,15 +33,3 @@ class CustomModelBackend(ModelBackend):
             return user
         else:
             return None
-# """
-# Custom authentication backend for login user with OTP code... :3
-# """
-# def email_authenticate(email):
-#     User = get_user_model()
-#     try:
-#         user = User.objects.get(email=email) or None
-#         return user
-
-#     except (User.DoesNotExist, AuthenticationError):
-#         # User does not exist, authentication fails
-#         return None
