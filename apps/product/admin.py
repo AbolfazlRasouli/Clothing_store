@@ -9,24 +9,23 @@ from django.urls import reverse
 admin.site.register([Comment, Image, Like])
 
 
-# class ProductInline(admin.StackedInline):
-#     model = Product
-#     extra = 0
-#     classes = ('collapse',)
-#     fieldsets = (
-#         (None, {'fields': ('name', 'code', 'price')}),
-#     )
+class ProductInline(admin.StackedInline):
+    model = Product
+    extra = 0
+    classes = ('collapse',)
+    fieldsets = (
+        (None, {'fields': ('name', 'code', 'price')}),
+    )
 
 
-# @admin.register(Category)
-# class CategoryAdmin(admin.ModelAdmin):
-#     model = Category
-#     list_display = ("name", "display_image", "edit", "delete")
-#     readonly_fields = ("display_image",)
-#     search_fields = ("name",)
-#     list_display_links = None
-#     inlines = (ProductInline,)
-
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    model = Category
+    list_display = ("name", "display_image", "edit", "delete")
+    readonly_fields = ("display_image",)
+    search_fields = ("name",)
+    list_display_links = None
+    inlines = (ProductInline,)
 
     def display_image(self, obj):
         return format_html('<img src="{}" height="60" style="background-color: #121212;"/>'.format(obj.image.url))
@@ -88,14 +87,6 @@ class DiscountAdmin(admin.ModelAdmin):
 
     edit.short_description = 'ویرایش'
     delete.short_description = 'حذف'
-
-
-# class AttributeInline(admin.TabularInlin):
-#     model = Attribute
-
-
-
-
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
