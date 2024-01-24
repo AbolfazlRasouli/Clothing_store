@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 
 class LoginForm(AuthenticationForm):
-
     def __init__(self, request, *args, **kwargs):
         super().__init__(request, *args, **kwargs)
         self.fields["username"].widget.attrs.update({
@@ -16,6 +16,18 @@ class LoginForm(AuthenticationForm):
             "class": "form-control  font-17 fw-bold me-1 border border-dark",
             "placeholder": "رمز عبور"
         })
+
+
+class EmailCheckForm(forms.Form):
+    email = forms.EmailField(widget=forms.TextInput(attrs={"autofocus": True}))
+
+    error_messages = {
+        "invalid_email": _(
+            "Please enter a correct email!"
+            "email may be case-sensitive."
+        ),
+        "inactive": _("This account is inactive."),
+    }
 
 
 class SignUpForm(UserCreationForm):
@@ -54,3 +66,6 @@ class SignUpForm(UserCreationForm):
             "placeholder": "تکرار رمز عبور",
             "required": "",
         })
+
+
+
