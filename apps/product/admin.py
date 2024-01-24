@@ -9,13 +9,24 @@ from django.urls import reverse
 admin.site.register([Comment, Image, Like])
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    model = Category
-    list_display = ("name", "display_image", "edit", "delete")
-    readonly_fields = ("display_image",)
-    search_fields = ("name",)
-    list_display_links = None
+# class ProductInline(admin.StackedInline):
+#     model = Product
+#     extra = 0
+#     classes = ('collapse',)
+#     fieldsets = (
+#         (None, {'fields': ('name', 'code', 'price')}),
+#     )
+
+
+# @admin.register(Category)
+# class CategoryAdmin(admin.ModelAdmin):
+#     model = Category
+#     list_display = ("name", "display_image", "edit", "delete")
+#     readonly_fields = ("display_image",)
+#     search_fields = ("name",)
+#     list_display_links = None
+#     inlines = (ProductInline,)
+
 
     def display_image(self, obj):
         return format_html('<img src="{}" height="60" style="background-color: #121212;"/>'.format(obj.image.url))
@@ -83,8 +94,7 @@ class DiscountAdmin(admin.ModelAdmin):
 #     model = Attribute
 
 
-class CategoryInline(admin.StackedInline):
-    model = Category
+
 
 
 @admin.register(Product)
@@ -93,8 +103,14 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'price', 'display_image', 'edit', 'delete')
     search_fields = ('name', 'category__name')
     list_filter = ('name','category__name')
-    # inlines = (CategoryInline,)
     list_display_links = None
+
+    def get_list_display(self, request):
+        if request.user.is_superuser:
+            return super().get_list_display(request)
+        else:
+            if request.user.groups.filter(name='supervisor').exists():
+                return ('name', 'code', 'price', 'display_image', 'show')
 
     def edit(self, obj):
         url = reverse('admin:product_product_change', args=[obj.id])
@@ -107,7 +123,13 @@ class ProductAdmin(admin.ModelAdmin):
     def display_image(self, obj):
         return format_html('<img src="{}" height="60" style="background-color: #121212;"/>'.format(obj.image.url))
 
+
+    def show(self, obj):
+        url = reverse('admin:product_product_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
+
     display_image.short_description = "تصویر موجود"
 
     edit.short_description = 'ویرایش'
     delete.short_description = 'حذف'
+    show.short_description = 'مشاهده'
