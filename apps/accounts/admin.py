@@ -16,11 +16,19 @@ class UserAdmin(UserAdmin):
     readonly_fields = ("last_login", "date_joined")
 
     fieldsets = UserAdmin.fieldsets + (
-        ('اطلاعات یکتا ', {'fields': ('phone_number', 'birthday', 'profile_image', 'is_deleted')}),
+        ('اطلاعات یکتا ', {'fields': ('phone_number', 'birthday', 'profile_image', 'user_type', 'is_deleted')}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ('اطلاعات یکتا ', {'fields': ('phone_number', 'birthday', 'profile_image', 'is_deleted')}),
+        ('اطلاعات یکتا ', {'fields': ('phone_number', 'birthday', 'profile_image', 'user_type', 'is_deleted')}),
     )
+
+    # def save_model(self, request, obj, form, change):
+    #     super().save_model(request, obj, form, change)
+    #     if obj.is_staff and obj.user_type == 'CUSTOMERUSER_EMPLOYEE':
+    #         group = Group.objects.get(name="supervisor")
+    #         obj.groups.add(group)
+    #         obj.save()
+    #         print(obj.groups.all())
 
     def edit(self, obj):
         url = reverse('admin:accounts_customuser_change', args=[obj.id])

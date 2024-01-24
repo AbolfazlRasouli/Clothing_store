@@ -19,6 +19,14 @@ class UserLogicalManager(UserManager, LogicalManager):
 
 class CustomUser(AbstractUser):
 
+    CUSTOMERUSER_EMPLOYEE = 'e'
+    CUSTOMERUSER_CUSTOMER = 'c'
+    CUSTOMERUSER_MANAGER = 'm'
+    CUSTOMERUSER_STATUS = (
+        (CUSTOMERUSER_EMPLOYEE, "employee"),
+        (CUSTOMERUSER_CUSTOMER, "customer"),
+        (CUSTOMERUSER_MANAGER, "manager"))
+
     email = models.EmailField(verbose_name=_('Email Address'), unique=True)
     mobile_regex = RegexValidator(regex='^09[0-9]{9}$',
                                   message="Phone number must be entered in the format: '09199999933'.")
@@ -34,6 +42,7 @@ class CustomUser(AbstractUser):
                                       validators=[validate_image])
     is_deleted = models.BooleanField(verbose_name=_('is_deleted'), default=False)
     is_active = models.BooleanField(verbose_name=_('is_active'), default=False)
+    user_type = models.CharField(max_length=1, choices=CUSTOMERUSER_STATUS, default=CUSTOMERUSER_CUSTOMER)
 
     REQUIRED_FIELDS = ['email', 'phone_number']
 
