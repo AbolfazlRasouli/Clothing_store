@@ -93,3 +93,37 @@ class UsernameLoginView(LoginView):
         # if next_url:
         #     return next_url
         # return reverse_lazy('core:home')
+
+
+class EmailLoginView(FormView):
+    template_name = 'accounts/email.html'
+    form_class = EmailCheckForm
+
+    def post(self, request):
+        if user_email := request.POST.get('email', None):
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                user = CMB().authenticate(request=request, email=user_email)
+                if user:
+                    otp_code = store_otp(user_email)
+                    status = send_otp_by_email(user_email, otp_code)  # delay
+                    if status:
+                        request.session['email'] = user_email
+                        messages.success(
+                            self.request,
+                            _(
+                                f"Code sent Successfuly. " \
+                                f"Check {user_email}."
+                            )
+                        )
+                        return redirect("users:otp")
+                    else:
+                        messages.error(request, _("Opss! some truble happend! please try again!"))
+                else:
+                    messages.error(request, _("you didn't define email or you need to signup!"))
+            else:
+                messages.error(request, _(form.errors))
+        else:
+            messages.error(request, _("email field cant Empty!"))
+
+        return self.render_to_response(self.get_context_data())
