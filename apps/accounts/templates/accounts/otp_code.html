@@ -1,0 +1,33 @@
+{% extends '_base.html' %}
+
+
+{% block content %}
+
+    <div class="container text-center d-flex justify-content-center align-items-center align-items-center mt-5">
+        <div class="col-8 py-4 text-light rounded-5 border border-dark rounded px-4 pt-4 pb-3 shadow">
+            <div class=" text-center">
+                <h2 class="autho-model-ttl"> کد ارسال شده را وارد کنید  </h2>
+            </div>
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="e-form-field mb-20">
+{#                            {{ form.0tp_code }}#}
+                            <input type="text">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="">
+                            <button type="submit" class="btn btn-dark mt-3 w-100">تایید  </button>
+                            <a class="btn btn-dark mt-2 w-100 " href="">بازگشت</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock content %}
