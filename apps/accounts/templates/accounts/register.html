@@ -8,7 +8,11 @@
             <div class=" text-center">
                 <h2 class="autho-model-ttl">ثبت نام </h2>
             </div>
-            <form>
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-dark">
+                {{ form.errors }}
+                    </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="e-form-field mb-20">
