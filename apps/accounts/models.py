@@ -56,14 +56,23 @@ class CustomUser(AbstractUser):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.user_type == CustomUser.CUSTOMERUSER_EMPLOYEE and self.is_active:
-            group, created = Group.objects.get_or_create(name="supervisor")
+            group, created = Group.objects.get_or_create(name="operator")
             if created:
                 perm = Permission.objects.filter(codename__in=[
-                    'view_customuser',
-                    'view_address',
-                    'view_product',
-                    'view_category',
-                    'view_order'
+                    'add_customuser', 'change_customuser', 'delete_customuser', 'view_customuser',
+                    'add_order', 'change_order', 'delete_order', 'view_order',
+                    'add_address' 'change_address', 'delete_address', 'view_address'
+                ])
+                group.permissions.add(*perm)
+            self.groups.add(group)
+
+        if self.user_type == CustomUser.CUSTOMERUSER_MANAGER and self.is_active:
+            group, created = Group.objects.get_or_create(name="manager")
+            if created:
+                perm = Permission.objects.filter(codename__in=[
+                    'add_product', 'change_product', 'delete_product', 'view_product',
+                    'add_category', 'change_category', ' delete_category', 'view_category',
+                    'add_discount', 'change_discount', 'delete_discount', 'view_discount'
                 ])
                 group.permissions.add(*perm)
             self.groups.add(group)
