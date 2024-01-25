@@ -77,8 +77,11 @@
                         <li><a href="profile.html">حساب کاربری </a></li>
                         <li><a href="wishlist.html">لیست علاقه مندیها </a></li>
                         <li>
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#register">ثبت نام </a> یا
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#login">ورود </a>
+{#                            <a href="javascript:void(0);" data-toggle="modal" data-target="#register">ثبت نام </a> یا#}
+{#                            <a href="javascript:void(0);" data-toggle="modal" data-target="#login">ورود </a>#}
+                            <a href="{% url 'accounts:signup' %}" data-target="#register">ثبت نام </a> یا
+                            <a href="{% url 'accounts:login' %}" data-target="#login">ورود </a>
+
                         </li>
 
                     </ul>

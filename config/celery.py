@@ -1,9 +1,9 @@
 # from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
-from apps.accounts.views import SignUpView
-obj = SignUpView()
-user_id = obj.object.id
+# from apps.accounts.views import SignUpView
+# obj = SignUpView()
+# user_id = obj.object.id
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
