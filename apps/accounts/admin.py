@@ -20,7 +20,7 @@ class UserAdmin(UserAdmin):
         ('اطلاعات یکتا ', {'fields': ('phone_number', 'birthday', 'profile_image', 'user_type', 'is_deleted')}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ('اطلاعات یکتا ', {'fields': ('phone_number', 'birthday', 'profile_image', 'user_type', 'is_deleted')}),
+        ('اطلاعات یکتا ', {'fields': ('phone_number', 'email', 'birthday', 'profile_image', 'user_type', 'is_active', 'is_deleted')}),
     )
 
     # def save_model(self, request, obj, form, change):
@@ -61,3 +61,6 @@ class AddressAdmin(admin.ModelAdmin):
     edit.short_description = 'ویرایش'
     delete.short_description = 'حذف'
 
+
+
+# celery -A src beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
