@@ -54,7 +54,7 @@ class CategoryAdmin(admin.ModelAdmin):
         if 'operator' in user_groups:
             return super().get_list_display(request)
         elif 'manager' in user_groups:
-            return super().get_list_display(Category.objects.filter(name='پوشاک زنانه'))
+            return super().get_list_display(request)
         else:
             return ('name', 'display_image', 'show')
 

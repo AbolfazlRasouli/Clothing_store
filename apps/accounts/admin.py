@@ -31,6 +31,15 @@ class UserAdmin(UserAdmin):
     #         obj.save()
     #         print(obj.groups.all())
 
+    def get_list_display(self, request):
+        user_groups = request.user.groups.values_list('name', flat=True)
+        if 'operator' in user_groups:
+            return super().get_list_display(request)
+        elif 'manager' in user_groups:
+            return super().get_list_display(request)
+        else:
+            return ("email", "phone_number", "first_name", "last_name", "is_staff", 'show')
+
     def edit(self, obj):
         url = reverse('admin:accounts_customuser_change', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
@@ -39,6 +48,11 @@ class UserAdmin(UserAdmin):
         url = reverse('admin:accounts_customuser_delete', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
 
+    def show(self, obj):
+        url = reverse('admin:product_category_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
+
+    show.short_description = 'مشاهده'
     edit.short_description = 'ویرایش'
     delete.short_description = 'حذف'
 
@@ -50,6 +64,16 @@ class AddressAdmin(admin.ModelAdmin):
     list_filter = ('user', 'city', 'province')
     list_display_links = None
 
+    def get_list_display(self, request):
+        user_groups = request.user.groups.values_list('name', flat=True)
+        if 'operator' in user_groups:
+            return super().get_list_display(request)
+        elif 'manager' in user_groups:
+            return super().get_list_display(request)
+        else:
+            return ('user', 'city', 'street', 'pelak', 'show')
+
+
     def edit(self, obj):
         url = reverse('admin:accounts_address_change', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
@@ -58,6 +82,11 @@ class AddressAdmin(admin.ModelAdmin):
         url = reverse('admin:accounts_address_delete', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
 
+    def show(self, obj):
+        url = reverse('admin:product_category_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
+
+    show.short_description = 'مشاهده'
     edit.short_description = 'ویرایش'
     delete.short_description = 'حذف'
 
