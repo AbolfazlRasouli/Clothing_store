@@ -15,6 +15,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from config.celery import app
+from django.contrib.auth.decorators import login_required
 
 
 User = get_user_model()
@@ -69,7 +70,7 @@ class UsernameLoginView(LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        return self.request.GET.get("next", reverse_lazy("home"))
+        return self.request.GET.get("next", reverse_lazy("product:home_page"))
 
 
 class EmailLoginView(FormView):
@@ -130,7 +131,7 @@ class OTPView(TemplateView):
                             )
                         )
 
-                        return redirect('home')
+                        return redirect('product:home_page')
 
                     else:
                         messages.error(request, _("The entered code does not match!!!"))
@@ -144,8 +145,13 @@ class OTPView(TemplateView):
         return self.render_to_response(self.get_context_data())
 
 
-class LogoutView(View):
-    def get(self, request, *args, **kwargs):
-        logout(request)
-        return redirect("home")
+# class LogoutView(View):
+#     def get(self, request, *args, **kwargs):
+#         logout(request)
+#         return redirect("product:home_page")
 
+class CustomLogoutView(LogoutView):
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('product:home_page')
