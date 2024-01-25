@@ -37,8 +37,6 @@ class CategoryDetailView(DetailView):
         return context
 
 
-
-
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product/detail_product.html'
@@ -46,29 +44,17 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # description_lines = self.object.description.splitlines()
-        # context['description_lines'] = description_lines
+        product = self.get_object()
+        comments = Comment.objects.filter(product=product, status=Comment.COMMENT_STATUS_APPROVED)
+        # context['comments'] = comments
+        # context['images'] = self.object.images.all()
+        # context['attributes'] = self.object.attribute.all()
+        context['comments'] = comments
+        context['images'] = product.images.all()
+        context['attributes'] = product.attribute.all()
 
-
-        # context['images'] = Product.objects.select_related('image')
-        # context['attributs'] = Product.objects.prefetch_related('attribute')
-
-
-        context['images'] = self.object.images.all()
-        context['attributes'] = self.object.attribute.all()
-        print(self.object)
-        print((self.object.price))
-        print(context['images'])
-        print(context['attributes'])
+        # print(self.object)
+        # print(self.object.price)
+        # print(context['images'])
+        # print(context['attributes'])
         return context
-
-
-# def home(request):
-#     return render(request, 'product/home_product.html')
-
-
-# def category(request):
-#     return render(request, 'product/category_product.html')
-
-# def detail(request,slug):
-#     return render(request, 'product/detail_product.html')
