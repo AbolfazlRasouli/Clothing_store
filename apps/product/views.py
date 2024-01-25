@@ -5,8 +5,18 @@ from django.views.generic import ListView, DetailView, DeleteView, UpdateView, T
 from django.db.models import Q, F
 from .models import Product, Attribute, Discount, Category, Image, Comment, Like
 
+
 class HomePage(ListView):
-    pass
+    model = Product
+    template_name = 'product/home_product.html'
+    context_object_name = 'products'
+    queryset = Product.objects.prefetch_related('images')
+    # print('*' * 100)
+    # print(queryset.query)
+    # print(queryset.values('name', 'price', 'images__image'))
+
+    # def get_queryset(self):
+    #     return Product.objects.prefetch_related('images')
 
 
 class CategoryView(ListView):
@@ -49,8 +59,8 @@ class ProductDetailView(DetailView):
         return context
 
 
-def home(request):
-    return render(request, 'product/home_product.html')
+# def home(request):
+#     return render(request, 'product/home_product.html')
 
 
 def category(request):
