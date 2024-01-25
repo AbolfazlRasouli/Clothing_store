@@ -11,28 +11,32 @@ class HomePage(ListView):
     template_name = 'product/home_product.html'
     context_object_name = 'products'
     queryset = Product.objects.prefetch_related('images')
-    # print('*' * 100)
-    # print(queryset.query)
-    # print(queryset.values('name', 'price', 'images__image'))
-
-    # def get_queryset(self):
-    #     return Product.objects.prefetch_related('images')
+    print(queryset)
 
 
-class CategoryView(ListView):
-    pass
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'product/category_product.html'
+    context_object_name = 'categories'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = self.get_object()
+        print(category, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        subcategory = Category.objects.filter(replay_cat=category)
+        print(subcategory,'bbbbbbbbbbbbbbbbbbbbbbbbbbbb')
+        if subcategory.exists():
+            products = Product.objects.filter(category__in=subcategory)
+            # context['subcategory'] = subcategory
+            print(products, 'cccccccccccccccccccccccccccccccccccccccccc')
+        else:
+            products = Product.objects.filter(category=category)
+            print(products, 'dddddddddddddddddddddddddddddddddddddddddddd')
+        context['products'] = products
+        print(context, 'e' * 100)
+        return context
 
 
-class CategoryDetailView(ListView):
-    pass
-
-
-class ItemsView(ListView):
-    pass
-
-
-class ItemsDetailView(DetailView):
-    pass
 
 
 class ProductDetailView(DetailView):
@@ -63,8 +67,8 @@ class ProductDetailView(DetailView):
 #     return render(request, 'product/home_product.html')
 
 
-def category(request):
-    return render(request, 'product/category_product.html')
+# def category(request):
+#     return render(request, 'product/category_product.html')
 
 # def detail(request,slug):
 #     return render(request, 'product/detail_product.html')

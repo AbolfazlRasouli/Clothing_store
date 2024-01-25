@@ -136,6 +136,11 @@
         </div>
     </section>
 
+
+
+
+
+
     <!-- مجموعه جدید  start -->
     <section class="e-newarivles-wrap e-newarivles-cloth">
         <div class="container">
@@ -150,13 +155,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="e-gallery new-arrivals-galry text-center">
-{#                        <div class="gallery-nav">#}
-{#                            <ul>#}
-{#                                <li><a data-filter="*" class="gallery-active">همه </a></li>#}
-{#                                <li><a data-filter=".mens">مردانه </a></li>#}
-{#                                <li><a data-filter=".womens">زنانه </a></li>#}
-{#                            </ul>#}
-{#                        </div>#}
+                        {#                        <div class="gallery-nav">#}
+                        {#                            <ul>#}
+                        {#                                <li><a data-filter="*" class="gallery-active">همه </a></li>#}
+                        {#                                <li><a data-filter=".mens">مردانه </a></li>#}
+                        {#                                <li><a data-filter=".womens">زنانه </a></li>#}
+                        {#                            </ul>#}
+                        {#                        </div>#}
                         <div class="gallery-container">
                             <div class="gallery-grid">
 
@@ -173,24 +178,25 @@
                                                     </div>
                                                     <div class="na-overlay-img">
                                                         {% for pro in product.images.all %}
-                                                            <img src="{{ pro.image.url }}" alt="product-img"
-                                                                 class="img-fluid">
-
+                                                            {% if forloop.first %}
+                                                                <img src="{{ pro.image.url }}" alt="product-img"
+                                                                     class="img-fluid">
+                                                            {% endif %}
                                                         {% endfor %}
 
                                                     </div>
                                                 </div>
 
-{#                                                <div class="na-color-details">#}
-{#                                                    <h2 class="na-color-title">رنگ های موجود </h2>#}
-{#                                                    <ul class="na-color-skin">#}
-{#                                                        <li></li>#}
-{#                                                        <li></li>#}
-{#                                                        <li></li>#}
-{#                                                        <li></li>#}
-{#                                                        <li></li>#}
-{#                                                    </ul>#}
-{#                                                </div>#}
+                                                {#                                                <div class="na-color-details">#}
+                                                {#                                                    <h2 class="na-color-title">رنگ های موجود </h2>#}
+                                                {#                                                    <ul class="na-color-skin">#}
+                                                {#                                                        <li></li>#}
+                                                {#                                                        <li></li>#}
+                                                {#                                                        <li></li>#}
+                                                {#                                                        <li></li>#}
+                                                {#                                                        <li></li>#}
+                                                {#                                                    </ul>#}
+                                                {#                                                </div>#}
                                                 <ul class="na-hover-content na-vartical-hover">
                                                     <li><a href="wishlist.html"><span><svg
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="16px"
@@ -212,12 +218,12 @@
                                                     </li>
 
                                                 </ul>
-{#                                                <span class="new-tag">جدید </span>#}
+                                                {#                                                <span class="new-tag">جدید </span>#}
                                             </div>
 
 
                                             <div class="na-top-heading text-center">
-                                                <a href="product_details.html" class="na-name">{{ product.name }}</a>
+                                                <a href="{% url 'product:detail_product' product.id %}" class="na-name">{{ product.name }}</a>
                                                 <h2 class="na-price">{{ product.price }} تومان</h2>
                                             </div>
                                         </div>
@@ -236,6 +242,9 @@
             </div>
         </div>
     </section>
+
+
+
 
 
     <!-- Best Seller start -->
@@ -514,6 +523,9 @@
             </div>
         </div>
     </section>
+
+
+
 
 
     <!-- Newsletter start -->
