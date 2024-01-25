@@ -72,6 +72,9 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
+    def hard_delete(self):
+        return super().delete()
+
 
 class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('user'))
