@@ -40,12 +40,21 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = None
     inlines = (ProductInline,)
 
+    # def get_list_display(self, request):
+    #     user_groups = request.user.groups.values_list('name', flat=True)
+    #     if 'operator' in user_groups:
+    #         return super().get_list_display(request)
+    #     elif 'manager' in user_groups:
+    #         return super().get_list_display(request)
+    #     else:
+    #         return ('name', 'display_image', 'show')
+
     def get_list_display(self, request):
         user_groups = request.user.groups.values_list('name', flat=True)
         if 'operator' in user_groups:
             return super().get_list_display(request)
         elif 'manager' in user_groups:
-            return super().get_list_display(request)
+            return super().get_list_display(Category.objects.filter(name='پوشاک زنانه'))
         else:
             return ('name', 'display_image', 'show')
 

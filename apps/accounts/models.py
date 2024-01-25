@@ -8,6 +8,7 @@ from apps.core.models import LogicalManager
 from django.contrib.auth.models import UserManager
 from django.contrib.auth import get_user_model
 from apps.core.models import UserRelatedModelBaseManager
+from django.contrib.auth.models import Group, Permission
 
 
 class UserLogicalManager(UserManager, LogicalManager):
@@ -51,6 +52,23 @@ class CustomUser(AbstractUser):
     class Meta:
         verbose_name = _('User')
         verbose_name_plural = _('Users')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.user_type == CustomUser.CUSTOMERUSER_EMPLOYEE and self.is_active:
+            group, created = Group.objects.get_or_create(name="supervisor")
+            if created:
+                perm = Permission.objects.filter(codename__in=[
+                    'view_customuser',
+                    'view_address',
+                    'view_product',
+                    'view_category',
+                    'view_order'
+                ])
+                group.permissions.add(*perm)
+            self.groups.add(group)
+            # self.save()
+            # print(self.groups.all())
 
     # def clean(self):
     #    if self.profile_image:
