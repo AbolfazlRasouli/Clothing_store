@@ -83,7 +83,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
 
 
-# def item_search(request):
-#     search_query = request.GET.get('search')
-#     search = Product.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query) | Q(category__name__icontains=search_query))
-#     return render(request, 'cafemenu/search.html', {'searchs': search})
+def item_search(request):
+    search_query = request.GET.get('search')
+    search = Product.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query) | Q(category__name__icontains=search_query))
+    return render(request, 'product/category_product.html', {'products': search})
