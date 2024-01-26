@@ -1,15 +1,19 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.views.generic import ListView, DetailView, DeleteView, UpdateView, TemplateView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView, TemplateView, CreateView
 from django.db.models import Q, F
 from .models import Product, Attribute, Discount, Category, Image, Comment, Like
+from .forms import CommentForm
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class HomePage(ListView):
     model = Product
     template_name = 'product/home_product.html'
     context_object_name = 'products'
+    # paginate_by = 1
     queryset = Product.objects.prefetch_related('images')
     print(queryset)
 
@@ -52,9 +56,34 @@ class ProductDetailView(DetailView):
         context['comments'] = comments
         context['images'] = product.images.all()
         context['attributes'] = product.attribute.all()
+        context['comment_form'] = CommentForm()
 
         # print(self.object)
         # print(self.object.price)
         # print(context['images'])
         # print(context['attributes'])
         return context
+
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+
+    def get_success_url(self):
+        return reverse_lazy('product:home_page')
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.user = self.request.user
+
+        product_id = int(self.kwargs['details_id'])
+        product = get_object_or_404(Product, id=product_id)
+        obj.product = product
+        return super().form_valid(form)
+
+
+
+# def item_search(request):
+#     search_query = request.GET.get('search')
+#     search = Product.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query) | Q(category__name__icontains=search_query))
+#     return render(request, 'cafemenu/search.html', {'searchs': search})

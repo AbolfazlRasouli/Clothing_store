@@ -199,28 +199,30 @@
                         </div>
                         <div class="tab-pane fade" id="review" role="tabpanel" >
                             <div class="tab-content-inner">
-                                <h2 class="pdtab-rev-title">هنوز هیچ نظری وجود ندارد.</h2>
-                                <h2 class="pdtab-rev-stitle">اولین نفری باشید که این محصول را مورد بازنگری قرار میدهد"</h2>
-                                <form>
+
+                                <h2 class="pdtab-rev-stitle">نظر خود را وارد کنید .</h2>
+                                <form action="{% url 'product:comment_create' details.id %}" method="post">
+                                    {% csrf_token %}
                                     <div class="row">
-                                      <div class="col-md-6">
-                                        <div class="e-form-field mb-30">
-                                          <input class="e-field-inner" type="text" placeholder="نام شما">
-                                        </div>
-                                      </div>
-                                      <div class="col-md-6">
-                                        <div class="e-form-field mb-30">
-                                          <input class="e-field-inner" type="email" placeholder="ایمیل">
-                                        </div>
-                                      </div>
+{#                                      <div class="col-md-6">#}
+{#                                        <div class="e-form-field mb-30">#}
+{#                                          <input class="e-field-inner" type="text" placeholder="نام شما">#}
+{#                                        </div>#}
+{#                                      </div>#}
+{#                                      <div class="col-md-6">#}
+{#                                        <div class="e-form-field mb-30">#}
+{#                                          <input class="e-field-inner" type="email" placeholder="ایمیل">#}
+{#                                        </div>#}
+{#                                      </div>#}
                                       <div class="col-12">
                                         <div class="e-form-field mb-30">
-                                          <textarea class="e-field-inner" ></textarea>
+{#                                          <textarea class="e-field-inner" name=""></textarea>#}
+                                            {{ comment_form.body }}
                                         </div>
                                       </div>
                                       <div class="col-12">
                                         <div class="e-form-field">
-                                        <button type="button" class="e-btn">ارسال</button>
+                                        <button type="submit" class="e-btn">ارسال</button>
                                         </div>
                                       </div>
                                     </div>
