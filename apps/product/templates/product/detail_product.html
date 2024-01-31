@@ -57,54 +57,88 @@
                             {#                            </div>#}
                             {#                        </div>#}
                             <ul class="pd-price-wrap">
-                                {#                            <li><span class="pd-price-ttile">{{ details.price }} تومان <span>90000 تومان</span></span></li>#}
-                                <li><span class="pd-price-ttile">{{ details.price }} تومان </span></li>
 
-                                {#                            <li><span class="pd-price-off">10% تخفیف </span></li>#}
+
+                                {% if details.discount %}
+                                    <li><span class="pd-price-ttile"
+                                              style="text-decoration: line-through; color: red;">{{ details.price }} تومان </span>
+                                    </li>
+                                    <li><span class="pd-price-off">{{ details.discount.percent }}% </span></li>
+
+
+
+                                    <li class="na-price">{{ details.calculate_discounted_price|floatformat:"2" }}
+                                        تومان
+                                    </li>
+                                {% else %}
+                                    <li><span class="pd-price-ttile"
+                                    >{{ details.price }} تومان </span>
+                                    </li>
+                                {% endif %}
+
+
                             </ul>
                         </div>
                         <div class="pd-info-bottom">
                             <ul class="info-bottom-list">
-                                {#                                <li>#}
-                                {#                                    <div class="ib-list-left">#}
-                                {#                                        <span>رنگ های موجود</span>#}
-                                {#                                    </div>#}
-                                {#                                    <div class="ib-list-right">#}
-                                {#                                        <ul class="na-color-skin">#}
-                                {#                                            <li></li>#}
-                                {#                                        <li></li>#}
-                                {#                                        <li></li>#}
-                                {#                                        <li></li>#}
-                                {#                                        <li></li>#}
-                                {#                                        </ul>#}
-                                {#                                    </div>#}
-                                {#                                </li>#}
-                                {#                                <li>#}
-                                {#                                    <div class="ib-list-left">#}
-                                {#                                        <span>سایز های موجود</span>#}
-                                {#                                    </div>#}
-                                {#                                    <div class="ib-list-right">#}
-                                {#                                            <ul class="pd-info-size d-flex">#}
-                                {#                                                <li>{{ attr.size }}</li>#}
-                                {#                                            </ul>#}
-                                {#                                    </div>#}
-                                {##}
-                                {#                                </li>#}
                                 <li>
-                                    <div class="dropdown mx-3">
-                                        <button class="btn btn-outline-secondary dropdown-toggle " type="button"
-                                                data-toggle="dropdown" aria-expanded="false">
-                                            رنگ بندی و سایز
-                                        </button>
-                                        <ul class="dropdown-menu ">
-                                            {% for foo in attributes %}
-                                                <li><a class="dropdown-item text-end" href="#">
-                                                    <span style="width: 15px; height: 15px; background-color: {{ foo.code_color }}; display: inline-block; border-radius: 100%;"></span>
-                                                    سایز: {{ foo.size }}
-                                                </a></li>
+                                    <div class="ib-list-left">
+                                        <span>رنگ های موجود</span>
+                                    </div>
+                                    <div class="ib-list-right">
+                                        <ul class="na-color-skin">
+                                            {#                                    <ul class="d-flex">#}
+                                            {% for color in colors %}
+                                                <li style=" border-radius: 10px; background-color: {{ color }} "></li>
                                             {% endfor %}
                                         </ul>
                                     </div>
+                                </li>
+                                <li>
+                                    <div class="ib-list-left">
+                                        <span>سایز های موجود</span>
+                                    </div>
+                                    <div class="ib-list-right">
+                                        <ul class="pd-info-size d-flex">
+                                            {% for size in sizes %}
+                                                <li>{{ size }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                </li>
+
+
+                                {#                                <h3>Sizes:</h3>#}
+                                {#                                <ul>#}
+                                {#                                    {% for size in sizes %}#}
+                                {#                                        <li>{{ size }}</li>#}
+                                {#                                    {% endfor %}#}
+                                {#                                </ul>#}
+
+                                {#                                <h3>Colors:</h3>#}
+                                {#                                <ul>#}
+                                {#                                    {% for color in colors %}#}
+                                {#                                        <li>{{ color }}</li>#}
+                                {#                                    {% endfor %}#}
+                                {#                                </ul>#}
+
+
+                                <li>
+                                    {#                                    <div class="dropdown mx-3">#}
+                                    {#                                        <button class="btn btn-outline-secondary dropdown-toggle " type="button"#}
+                                    {#                                                data-toggle="dropdown" aria-expanded="false">#}
+                                    {#                                            رنگ بندی و سایز#}
+                                    {#                                        </button>#}
+                                    {#                                        <ul class="dropdown-menu ">#}
+                                    {#                                            {% for foo in attributes %}#}
+                                    {#                                                <li><a class="dropdown-item text-end" href="#">#}
+                                    {#                                                    <span style="width: 15px; height: 15px; background-color: {{ foo.code_color }}; display: inline-block; border-radius: 100%;"></span>#}
+                                    {#                                                    سایز: {{ foo.size }}#}
+                                    {#                                                </a></li>#}
+                                    {#                                            {% endfor %}#}
+                                    {#                                        </ul>#}
+                                    {#                                    </div>#}
                                     <div class="ib-list-right">
                                         <ul class="pd-qua-wrap">
                                             <li>
@@ -149,92 +183,95 @@
 
 
 
-<!-- Product Description tab start -->
-<section class="e-pdtab-wrap">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="e-pdtab-inner">
-                    <ul class="nav nav-pills e-pdtab-tabs" role="tablist">
-                        <li>
-                        <a class="active" data-toggle="pill" href="#descrtiption" role="tab" aria-controls="descrtiption" aria-selected="true">توضیحات </a>
-                        </li>
-                        <li>
-                        <a data-toggle="pill" href="#addi_info" role="tab" aria-controls="addi_info" aria-selected="false">نظرات</a>
-                        </li>
-                        <li>
-                        <a data-toggle="pill" href="#review" role="tab" aria-controls="review" aria-selected="false"> گذاشتن نظر</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="descrtiption" role="tabpanel" >
-                            <div class="tab-content-inner">
-                                <p class="mb-20">{{ details.description }} </p>
+    <!-- Product Description tab start -->
+    <section class="e-pdtab-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="e-pdtab-inner">
+                        <ul class="nav nav-pills e-pdtab-tabs" role="tablist">
+                            <li>
+                                <a class="active" data-toggle="pill" href="#descrtiption" role="tab"
+                                   aria-controls="descrtiption" aria-selected="true">توضیحات </a>
+                            </li>
+                            <li>
+                                <a data-toggle="pill" href="#addi_info" role="tab" aria-controls="addi_info"
+                                   aria-selected="false">نظرات</a>
+                            </li>
+                            <li>
+                                <a data-toggle="pill" href="#review" role="tab" aria-controls="review"
+                                   aria-selected="false"> گذاشتن نظر</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="descrtiption" role="tabpanel">
+                                <div class="tab-content-inner">
+                                    <p class="mb-20">{{ details.description }} </p>
 
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="addi_info" role="tabpanel" >
-                            <div class="tab-content-inner">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <ul class="pdtab-addinfo">
-                                            {% for foo in comments %}
-                                            	<li><p> {{ foo.body }}</p></li>
-                                            {% endfor %}
-
-
-{#                                            <li><p> <span> رنگ </span>  - صورتی ، مشکی</p></li>#}
-{#                                            <li><p> <span> شماره مدل </span>  - کد 1323</p></li>#}
-{#                                            <li><p> <span> نام محصول </span> - کت تابستانی</p></li>#}
-                                        </ul>
-                                    </div>
-{#                                    <div class="col-md-4">#}
-{#                                        <ul class="pdtab-addinfo ">#}
-{#                                            <li><p> <span> امتیاز سیستمی  </span> - عالی </p></li>#}
-{#                                            <li><p> <span> طراحی </span> - متریال</p></li>#}
-{#                                        </ul>#}
-{#                                    </div>#}
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane fade" id="review" role="tabpanel" >
-                            <div class="tab-content-inner">
-
-                                <h2 class="pdtab-rev-stitle">نظر خود را وارد کنید .</h2>
-                                <form action="{% url 'product:comment_create' details.id %}" method="post">
-                                    {% csrf_token %}
+                            <div class="tab-pane fade" id="addi_info" role="tabpanel">
+                                <div class="tab-content-inner">
                                     <div class="row">
-{#                                      <div class="col-md-6">#}
-{#                                        <div class="e-form-field mb-30">#}
-{#                                          <input class="e-field-inner" type="text" placeholder="نام شما">#}
-{#                                        </div>#}
-{#                                      </div>#}
-{#                                      <div class="col-md-6">#}
-{#                                        <div class="e-form-field mb-30">#}
-{#                                          <input class="e-field-inner" type="email" placeholder="ایمیل">#}
-{#                                        </div>#}
-{#                                      </div>#}
-                                      <div class="col-12">
-                                        <div class="e-form-field mb-30">
-{#                                          <textarea class="e-field-inner" name=""></textarea>#}
-                                            {{ comment_form.body }}
+                                        <div class="col-md-12">
+                                            <ul class="pdtab-addinfo">
+                                                {% for foo in comments %}
+                                                    <li><p> {{ foo.body }}</p></li>
+                                                {% endfor %}
+
+
+                                                {#                                            <li><p> <span> رنگ </span>  - صورتی ، مشکی</p></li>#}
+                                                {#                                            <li><p> <span> شماره مدل </span>  - کد 1323</p></li>#}
+                                                {#                                            <li><p> <span> نام محصول </span> - کت تابستانی</p></li>#}
+                                            </ul>
                                         </div>
-                                      </div>
-                                      <div class="col-12">
-                                        <div class="e-form-field">
-                                        <button type="submit" class="e-btn">ارسال</button>
-                                        </div>
-                                      </div>
+                                        {#                                    <div class="col-md-4">#}
+                                        {#                                        <ul class="pdtab-addinfo ">#}
+                                        {#                                            <li><p> <span> امتیاز سیستمی  </span> - عالی </p></li>#}
+                                        {#                                            <li><p> <span> طراحی </span> - متریال</p></li>#}
+                                        {#                                        </ul>#}
+                                        {#                                    </div>#}
                                     </div>
-                                  </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="review" role="tabpanel">
+                                <div class="tab-content-inner">
+
+                                    <h2 class="pdtab-rev-stitle">نظر خود را وارد کنید .</h2>
+                                    <form action="{% url 'product:comment_create' details.id %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            {#                                      <div class="col-md-6">#}
+                                            {#                                        <div class="e-form-field mb-30">#}
+                                            {#                                          <input class="e-field-inner" type="text" placeholder="نام شما">#}
+                                            {#                                        </div>#}
+                                            {#                                      </div>#}
+                                            {#                                      <div class="col-md-6">#}
+                                            {#                                        <div class="e-form-field mb-30">#}
+                                            {#                                          <input class="e-field-inner" type="email" placeholder="ایمیل">#}
+                                            {#                                        </div>#}
+                                            {#                                      </div>#}
+                                            <div class="col-12">
+                                                <div class="e-form-field mb-30">
+                                                    {#                                          <textarea class="e-field-inner" name=""></textarea>#}
+                                                    {{ comment_form.body }}
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="e-form-field">
+                                                    <button type="submit" class="e-btn">ارسال</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 

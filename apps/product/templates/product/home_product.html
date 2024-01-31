@@ -198,7 +198,8 @@
                                                 {#                                                    </ul>#}
                                                 {#                                                </div>#}
                                                 <ul class="na-hover-content na-vartical-hover">
-                                                    <li><a href="wishlist.html"><span><svg
+                                                    <li><a href="{% url 'product:like_product' product.id %}"
+                                                           onclick="like_product(this); return false;"><span><svg
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="16px"
                                                             height="15px"><path fill-rule="evenodd"
                                                                                 fill="rgb(242, 243, 245)"
@@ -218,14 +219,27 @@
                                                     </li>
 
                                                 </ul>
-                                                {#                                                <span class="new-tag">جدید </span>#}
+                                                {% if product.discount %}
+                                                    <span class="new-tag"> {{ product.discount.percent }}% </span>
+
+                                                {% endif %}
+
                                             </div>
 
 
                                             <div class="na-top-heading text-center">
                                                 <a href="{% url 'product:detail_product' product.id %}"
                                                    class="na-name">{{ product.name }}</a>
-                                                <h2 class="na-price">{{ product.price }} تومان</h2>
+                                                {% if product.discount %}
+                                                    <h2 class="na-price"
+                                                        style="text-decoration: line-through; color: red;">{{ product.price }}
+                                                        تومان</h2>
+                                                    <h2 class="na-price">{{ product.calculate_discounted_price|floatformat:"2" }}
+                                                        تومان</h2>
+                                                {% else %}
+                                                    <h2 class="na-price">{{ product.price }} تومان</h2>
+                                                {% endif %}
+
                                             </div>
                                         </div>
                                     </div>
@@ -236,36 +250,26 @@
 
                 </div>
                 <div class="col-12 text-center">
-                    {#                                        <div class="load-more-wrap e-line">#}
-                    {#                                            <a class="e-btn light" href="product_category.html">نمایش بیشتر </a>#}
-                    {#                                        </div>#}
-{#                    <div class="e-pagination-wrap mt-10">#}
-{#                        <ul class="e-pagination justify-content-center e-line">#}
-{#                            {% if page_obj.has_previous %}#}
-{#                                <li class="e-page-item disabled"><a class="e-btn light"#}
-{#                                                                    href="?page={{ page_obj.previous }}">قبلی </a>#}
-{#                                </li>#}
-{#                            {% endif %}#}
-{#                            <li class="e-page-item"><a class="active e-btn light" href="#">{{ page_obj.number }}</a>#}
-{#                            </li>#}
-{#                            {% if page_obj.next %}#}
-{#                                <li class="e-page-item"><a class="e-btn light" href="{{ page_obj.next }}">بعدی </a></li>#}
-{#                            {% endif %}#}
-{#                        </ul>#}
-{#                    </div>#}
 
-                    {#                    <nav aria-label="Page navigation example">#}
-                    {#                        <ul class="pagination">#}
-                    {#                            {% if page_obj.has_previous %}#}
-                    {#                                <li class="page-item"><a class="page-link"#}
-                    {#                                                         href="?page={{ page_obj.previous }}">قبلی </a></li>#}
-                    {#                            {% endif %}#}
-                    {#                            <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }}</a></li>#}
-                    {#                            {% if page_obj.next %}#}
-                    {#                                <li class="page-item"><a class="page-link" href="{{ page_obj.next }}"></a></li>#}
-                    {#                            {% endif %}#}
-                    {#                        </ul>#}
-                    {#                    </nav>#}
+
+                    <div class="e-pagination-wrap mt-20">
+                        <ul class="e-pagination justify-content-center e-line">
+                            {% if page_obj.has_next %}
+                                <li class="e-page-item"><a class="e-btn light"
+                                                           href="?page={{ page_obj.next_page_number }}">بعدی </a>
+                                </li>
+                            {% endif %}
+
+                            <li class="e-page-item"><a class="active e-btn light" href="#">{{ page_obj.number }}</a>
+                            </li>
+                            {% if page_obj.has_previous %}
+                                <li class="e-page-item disabled"><a class="e-btn light"
+                                                                    href="?page={{ page_obj.previous_page_number }}">قبلی </a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
 
 
                 </div>
@@ -631,4 +635,37 @@
     </section>
 
 
+    <script src="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.min.js"></script>
+
+    <script>
+
+
+        function like_product(element) {
+            var url = element.getAttribute("href");
+            fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then(function (response) {
+                        console.log('aaaaaaaaaaaaa')
+                        if (!response.ok) {
+                            {#throw Error(response.statusText);#}
+                            return response.json().then(function (data) {
+                                alert(data.error)
+                            });
+                        }
+                        return response.json();
+                    }
+                )
+                .then(function (data) {
+                    console.log('bbbbbbbbbbbbbbbbbbb')
+                    alert(data.message)
+                })
+                .catch(function (error) {
+                    window.location.replace('{% url 'accounts:login' %}')
+                });
+        }
+    </script>
 {% endblock content %}
