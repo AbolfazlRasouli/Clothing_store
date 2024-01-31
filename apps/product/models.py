@@ -160,17 +160,17 @@ class Product(TimeStamp, BaseModel):
         verbose_name = _('product')
         verbose_name_plural = _('products')
 
-    # def calculate_discounted_price(self):
-    #     if self.discount:
-    #         if self.discount.percent:
-    #             discount_amount = (self.discount.percent / 100) * self.price
-    #         elif self.discount.amount:
-    #             discount_amount = self.discount.amount
-    #         else:
-    #             raise ValidationError(_('Invalid discount type.'))
-    #         return self.price - discount_amount
-    #     else:
-    #         return self.price
+    def calculate_discounted_price(self):
+        if self.discount:
+            if self.discount.percent:
+                discount_amount = (self.discount.percent / 100) * self.price
+            elif self.discount.amount:
+                discount_amount = self.discount.amount
+            else:
+                raise ValidationError(_('Invalid discount type.'))
+            return self.price - discount_amount
+        else:
+            return self.price
 
     def save(self, *args, **kwargs):
         if not self.slug:
