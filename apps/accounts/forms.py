@@ -19,7 +19,12 @@ class LoginForm(AuthenticationForm):
 
 
 class EmailCheckForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput(attrs={"autofocus": True}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={"autofocus": True,
+                                                           "class": "form-control  font-17 border border-dark",
+                                                           "placeholder": "ایمیل خود را وارد کنید ",
+                                                           "required": "",
+                                                           "type": "email",
+                                                           }))
 
     error_messages = {
         "invalid_email": _(
@@ -71,13 +76,21 @@ class SignUpForm(UserCreationForm):
 class PasswordResetForm(forms.Form):
     password1 = forms.CharField(
         label=_("New password"),
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+                                          "class": "form-control font-17 fw-bold ms-1 border border-dark",
+                                          "placeholder": "رمز عبور",
+                                          "required": "",
+                                          }),
         strip=False,
     )
     password2 = forms.CharField(
         label=_("New password confirmation"),
         strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password",
+                                          "class": "form-control  font-17 fw-bold me-1 border border-dark",
+                                          "placeholder": "تکرار رمز عبور",
+                                          "required": "",
+                                          }),
     )
 
     def clean(self):
