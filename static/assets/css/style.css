@@ -2288,6 +2288,20 @@ body.open-cart .main-wrapper:not(.sb-cartbox) {
     display: inline-block;
     padding: 0 11px;
 }
+.new-tag-left {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    border-radius: 3px;
+    background-color: rgb(255, 91, 114);
+    color: var(--white-color);
+    font-size: 12px;
+    font-weight: 500;
+    height: 22px;
+    line-height: 22px;
+    display: inline-block;
+    padding: 0 11px;
+}
 .na-sale-tag {
     color: var(--white-color);
     position: absolute;
