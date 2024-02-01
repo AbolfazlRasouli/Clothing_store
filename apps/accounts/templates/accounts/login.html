@@ -3,58 +3,58 @@
 
 {% block content %}
 
-{#<div class="container text-center d-flex justify-content-center align-items-center align-items-center mt-5">#}
-{#    <div class="col-4 py-4 text-light rounded-5" style="background-color: rgb(255, 126, 190);">#}
-{#<form method="post">#}
-{#    {% csrf_token %}#}
-{#    {{ form | crispy }}#}
-{#   #}
-{#    <button class="bg-white border-0 py-2 px-4 rounded-5" type="submit">ثبت نام</button>#}
-{#</form>#}
+    {#<div class="container text-center d-flex justify-content-center align-items-center align-items-center mt-5">#}
+    {#    <div class="col-4 py-4 text-light rounded-5" style="background-color: rgb(255, 126, 190);">#}
+    {#<form method="post">#}
+    {#    {% csrf_token %}#}
+    {#    {{ form | crispy }}#}
+    {#   #}
+    {#    <button class="bg-white border-0 py-2 px-4 rounded-5" type="submit">ثبت نام</button>#}
+    {#</form>#}
 
-{#         <form>#}
-{#                                    <div class="row">#}
-{#                                        <div class="col-md-12">#}
-{#                                            <div class="e-form-field mb-20">#}
-{#                                                <label>ایمیل </label>#}
-{#                                                <input class="e-field-inner" type="email">#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                        <div class="col-md-12">#}
-{#                                            <div class="e-form-field mb-20">#}
-{#                                                <label>رمز عبور </label>#}
-{#                                                <input class="e-field-inner" type="Password">#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                        <div class="col-md-12">#}
-{#                                            <div class="e-form-field mb-20">#}
-{#                                                <ul class="e-rememberforgot-list">#}
-{#                                                    <li>#}
-{#                                                        <div class="e-checkbox-wrap">#}
-{#                                                            <input class="e-checkbox-input" type="checkbox" id="remember_me">#}
-{#                                                            <label for="remember_me" class="e-checkbox">مرا به خاطر بسپار </label>#}
-{#                                                        </div>#}
-{#                                                    </li>#}
-{#                                                    <li><a href="forgot_password.html" class="e-comn-link">فراموشی رمز عبور؟ </a></li>#}
-{#                                                </ul>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                        <div class="col-md-12">#}
-{#                                            <div class="">#}
-{#                                                <a href="index.html" class="e-btn">ورود </a>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
+    {#         <form>#}
+    {#                                    <div class="row">#}
+    {#                                        <div class="col-md-12">#}
+    {#                                            <div class="e-form-field mb-20">#}
+    {#                                                <label>ایمیل </label>#}
+    {#                                                <input class="e-field-inner" type="email">#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {#                                        <div class="col-md-12">#}
+    {#                                            <div class="e-form-field mb-20">#}
+    {#                                                <label>رمز عبور </label>#}
+    {#                                                <input class="e-field-inner" type="Password">#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {#                                        <div class="col-md-12">#}
+    {#                                            <div class="e-form-field mb-20">#}
+    {#                                                <ul class="e-rememberforgot-list">#}
+    {#                                                    <li>#}
+    {#                                                        <div class="e-checkbox-wrap">#}
+    {#                                                            <input class="e-checkbox-input" type="checkbox" id="remember_me">#}
+    {#                                                            <label for="remember_me" class="e-checkbox">مرا به خاطر بسپار </label>#}
+    {#                                                        </div>#}
+    {#                                                    </li>#}
+    {#                                                    <li><a href="forgot_password.html" class="e-comn-link">فراموشی رمز عبور؟ </a></li>#}
+    {#                                                </ul>#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {#                                        <div class="col-md-12">#}
+    {#                                            <div class="">#}
+    {#                                                <a href="index.html" class="e-btn">ورود </a>#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {#                                    </div>#}
 
-{#             {{ form.as_p }}#}
-{#                                </form>#}
-{#</div>#}
-{#</div>#}
+    {#             {{ form.as_p }}#}
+    {#                                </form>#}
+    {#</div>#}
+    {#</div>#}
 
-    <div class="container text-center d-flex justify-content-center align-items-center align-items-center mt-5">
+    <div class="container text-center d-flex justify-content-center align-items-center align-items-center" style="margin: 100px auto">
         <div class="col-6 py-4 text-light rounded-5 border border-dark rounded px-4 pt-4 pb-3 shadow">
             <div class=" text-center">
-                <h2 class="autho-model-ttl"> ورود  </h2>
+                <h2 class="autho-model-ttl"> ورود </h2>
             </div>
             <form method="post">
                 <div class="row">
@@ -71,12 +71,28 @@
                         </div>
                     </div>
 
-                            <a class=" mt-2 w-100 " href="{% url 'accounts:email' %}">ورود با ایمیل </a>
-                            <a class=" mt-2 w-100 " href="{% url 'accounts:password_change' %}"> فراموش کردن رمز عبور</a>
+                    {#                    <div class="d-flex ">#}
+                    {#                         <a class=" mt-2 w-100 " href="{% url 'accounts:email' %}">ورود با ایمیل </a>#}
+                    {#                            <a class=" mt-2 w-100 " href="{% url 'accounts:password_change' %}"> فراموش کردن رمز عبور</a>#}
+                    {#                    </div>#}
+
+                    <div class="col-md-12 d-flex">
+                        <div>
+                            <a class="mt-2 w-100 text-dark" href="{% url 'accounts:email' %}">ورود با ایمیل</a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex">
+                        <div>
+
+                            <a class="mt-2 w-100 text-dark" href="{% url 'accounts:password_change' %}">فراموش کردن رمز عبور</a>
+                        </div>
+                    </div>
+
 
                     <div class="col-md-12">
                         <div class="">
-                            <button type="submit" class="btn btn-dark mt-3 w-100"> ورود </button>
+                            <button type="submit" class="btn btn-dark mt-3 w-100"> ورود</button>
 
                             <a class="btn btn-dark mt-2 w-100 " href="{% url 'product:home_page' %}">بازگشت</a>
                         </div>
