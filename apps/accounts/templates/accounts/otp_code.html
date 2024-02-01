@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <div class="container text-center d-flex justify-content-center align-items-center align-items-center mt-5">
+    <div class="container text-center d-flex justify-content-center align-items-center align-items-center" style="margin: 150px auto">
         <div class="col-8 py-4 text-light rounded-5 border border-dark rounded px-4 pt-4 pb-3 shadow">
             <div class=" text-center">
                 <h2 class="autho-model-ttl"> کد ارسال شده را وارد کنید  </h2>
@@ -14,14 +14,14 @@
                         <div class="e-form-field mb-20">
 {#
                             {% csrf_token %}
-                            <input type="password" name="otp" id="otp" class="form-control" placeholder="Enter the temporary code..." required="">
+                            <input type="password" name="otp" id="otp" class="form-control font-17 fw-bold me-1 border border-dark " placeholder="Enter the temporary code..." required="">
                         </div>
                     </div>
 
                     <div class="col-md-12">
                         <div class="">
                             <button type="submit" class="btn btn-dark mt-3 w-100">تایید  </button>
-                            <a class="btn btn-dark mt-2 w-100 " href="">بازگشت</a>
+                            <a class="btn btn-dark mt-2 w-100 " href="{% url 'product:home_page' %}">بازگشت</a>
                         </div>
                     </div>
                 </div>
