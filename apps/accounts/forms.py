@@ -68,4 +68,26 @@ class SignUpForm(UserCreationForm):
         })
 
 
+class PasswordResetForm(forms.Form):
+    password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        strip=False,
+    )
+    password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+    )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                _("The two password fields didn't match."),
+            )
+
+        return cleaned_data
