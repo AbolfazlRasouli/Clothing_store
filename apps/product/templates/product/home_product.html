@@ -234,7 +234,9 @@
                                                     <h2 class="na-price"
                                                         style="text-decoration: line-through; color: red;">{{ product.price }}
                                                         تومان</h2>
-                                                    <h2 class="na-price">{{ product.calculate_discounted_price|floatformat:"2" }}
+{#                                                    <h2 class="na-price">{{ product.calculate_discounted_price|floatformat:"2" }}#}
+                                                    <h2 class="na-price">{{ product.calculate_discounted_price|floatformat:"2"|floatformat:"0"}}
+
                                                         تومان</h2>
                                                 {% else %}
                                                     <h2 class="na-price">{{ product.price }} تومان</h2>

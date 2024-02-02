@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
+{#{% load crispy_forms_tags %}#}
 
 
 {% block content %}
@@ -184,7 +185,7 @@
 
 
     <!-- Product Description tab start -->
-    <section class="e-pdtab-wrap">
+    <section class="e-pdtab-wrap mb-20">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -206,7 +207,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="descrtiption" role="tabpanel">
                                 <div class="tab-content-inner">
-                                    <p class="mb-20">{{ details.description }} </p>
+                                    <p class="mb-20">{{ details.description | safe }} </p>
 
                                 </div>
                             </div>
@@ -216,7 +217,7 @@
                                         <div class="col-md-12">
                                             <ul class="pdtab-addinfo">
                                                 {% for foo in comments %}
-                                                    <li><p> {{ foo.body }}</p></li>
+                                                    <li><p> {{ foo.body | safe}}</p></li>
                                                 {% endfor %}
 
 
@@ -251,9 +252,10 @@
                                             {#                                          <input class="e-field-inner" type="email" placeholder="ایمیل">#}
                                             {#                                        </div>#}
                                             {#                                      </div>#}
-                                            <div class="col-12">
+                                            <div class="col-12 ">
                                                 <div class="e-form-field mb-30">
-                                                    {#                                          <textarea class="e-field-inner" name=""></textarea>#}
+
+                                                    {{ comment_form.media }}
                                                     {{ comment_form.body }}
                                                 </div>
                                             </div>
