@@ -362,13 +362,13 @@
                                                 {% endif %}
                                             </div>
                                             <div class="na-top-heading text-center">
-                                                <a href="product_details.html"
+                                                <a href="{% url 'product:detail_product' new_product.id %}"
                                                    class="na-name">{{ new_product.name }}</a>
                                                 {% if new_product.discount %}
                                                     <h2 class="na-price"
                                                         style="text-decoration: line-through; color: red;">{{ new_product.price }}
                                                         تومان</h2>
-                                                    <h2 class="na-price">{{ new_product.calculate_discounted_price|floatformat:"2" }}
+                                                    <h2 class="na-price">{{ new_product.calculate_discounted_price|floatformat:"2"|floatformat:"0"}}
                                                         تومان</h2>
                                                 {% else %}
                                                     <h2 class="na-price">{{ new_product.price }} تومان</h2>

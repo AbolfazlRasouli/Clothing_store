@@ -68,7 +68,7 @@
 
 
 
-                                    <li class="na-price">{{ details.calculate_discounted_price|floatformat:"2" }}
+                                    <li class="na-price">{{ details.calculate_discounted_price|floatformat:"2"|floatformat:"0"}}
                                         تومان
                                     </li>
                                 {% else %}
