@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_celery_beat',
+    'ckeditor',
+    # 'crispy_forms',
+    # 'crispy_bootstrap4',
 
 
     # my app
@@ -194,6 +197,9 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
+
+# CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+# CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 ALLOW_UNICODE_SLUGS = True
 
