@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 from apps.core.models import TimeStamp, BaseModel
+from ckeditor.fields import RichTextField
 
 
 # class TimeStamp(models.Model):
@@ -66,7 +67,7 @@ from apps.core.models import TimeStamp, BaseModel
 
 class Category(TimeStamp, BaseModel):
     name = models.CharField(verbose_name=_('name category'), max_length=100, unique=True)
-    description = models.TextField(verbose_name=_('description category'), null=True, blank=True)
+    description = RichTextField(verbose_name=_('description category'), null=True, blank=True)
     slug = models.SlugField(verbose_name=_('name unique category'), max_length=100, unique=True, blank=True)
     image = models.ImageField(verbose_name=_('image category'), upload_to='category_image/')
     replay_cat = models.ForeignKey('self', null=True, blank=True,
@@ -111,7 +112,7 @@ class DiscountManager(models.Manager):
 
 class Discount(TimeStamp):
     name = models.CharField(verbose_name=_('name discount'), max_length=255)
-    description = models.TextField(verbose_name=_('description discount'), null=True, blank=True)
+    description = RichTextField(verbose_name=_('description discount'), null=True, blank=True)
     code = models.CharField(verbose_name=_('code discount'), unique=True, max_length=15)
     start_date = models.DateTimeField(verbose_name=_('start_date discount'))
     end_date = models.DateTimeField(verbose_name=_('end_date discount'))
@@ -145,7 +146,7 @@ class Product(TimeStamp, BaseModel):
     code = models.CharField(verbose_name=_('code'), max_length=15, unique=True)
     price = models.PositiveIntegerField(verbose_name=_('price product'))
     slug = models.SlugField(verbose_name=_('name unique product'), max_length=100, unique=True, blank=True)
-    description = models.TextField(verbose_name=_(' description product'), null=True, blank=True)
+    description = RichTextField(verbose_name=_(' description product'), null=True, blank=True)
     image = models.ImageField(verbose_name=_('image product'), upload_to='item_image/')
     attribute = models.ManyToManyField(Attribute, related_name='product_attribute',
                                        verbose_name=_('attribute product'))
@@ -218,7 +219,7 @@ class Comment(TimeStamp, BaseModel):
         (COMMENT_STATUS_APPROVED, 'Approved'),
         (COMMENT_STATUS_NOT_APPROVED, 'Not Approved'),
     )
-    body = models.TextField(verbose_name=_('comment text'))
+    body = RichTextField(verbose_name=_('comment text'))
     status = models.CharField(max_length=2, choices=COMMENT_STATUS,
                               default=COMMENT_STATUS_WAITING,
                               verbose_name=_('comment status'))
