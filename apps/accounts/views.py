@@ -20,6 +20,7 @@ import hashlib
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from passlib.hash import pbkdf2_sha256
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 User = get_user_model()
 
@@ -29,7 +30,12 @@ class SignUpView(CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy('accounts:signup')
 
-    # @app.task(name='form_valid', bind=True)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('product:home_page')
+        return super().dispatch(request, *args, **kwargs)
+
+
     def form_valid(self, form):
         response = super().form_valid(form)
         url = reverse_lazy('accounts:verify', kwargs={'user_id': self.object.id})

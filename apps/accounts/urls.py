@@ -12,7 +12,7 @@ urlpatterns = [
     ),
     path(
         'login/',
-        UsernameLoginView.as_view(),
+        UsernameLoginView.as_view(redirect_authenticated_user=True),
         name='login',
     ),
     path(
