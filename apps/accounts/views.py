@@ -233,3 +233,7 @@ class PasswordReset(View):
 
 class ResetPasswordDone(TemplateView):
     template_name = 'accounts/reset_password_done.html'
+
+
+def profile(request):
+    return render(request, 'accounts/profile.html')

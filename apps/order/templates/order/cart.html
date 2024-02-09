@@ -1,0 +1,261 @@
+{% extends '_base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+    <!-- Product Category start -->
+<section class="e-shopcart-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-12">
+                <div class="e-shopcart-sec">
+                    <div class="shopcart-table-wrap mb-30">
+                        <form class="table-responsive">
+                            <table class="shopcart-table">
+                                <thead>
+                                  <tr>
+                                    <th>محصول </th>
+                                    <th>تعداد </th>
+                                    <th>قیمت </th>
+                                    <th>قیمت جمع </th>
+                                    <th>&nbsp;</th>
+                                  </tr>
+                                </thead>
+
+
+
+
+
+
+
+
+
+
+                                <tbody id="tbody">
+{#                                  <tr>#}
+{#                                    <td >#}
+{#                                        <div class="sc-productwrap">#}
+{#                                            <a href="product_details.html" class="sc-product-thumb">#}
+{#                                                <img src="assets/images/index1/shopcart01.jpg" alt="محصول" class="img-fluid">#}
+{#                                            </a>#}
+{#                                            <div class="sc-product-details">#}
+{#                                                <a href="product_details.html" class="sc-product-ttl">کت کلاه دار خاکستری مشکی</a>#}
+{#                                                <p class="sc-product-sz">اندازه: متوسط </p>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </td>#}
+{#                                    <td>#}
+{#                                        <div class="quantity-box">#}
+{#                                            <input type="text" class="quantity" value="2">#}
+{#                                            <span class="quantity-minus pa-sub quantity-icon"> - </span>#}
+{#                                            <span class="quantity-plus  pa-add quantity-icon"> + </span>#}
+{#                                        </div>#}
+{#                                    </td>#}
+{#                                    <td><span class="sc-product-prc">120000 تومان</span></td>#}
+{#                                    <td><span class="sc-product-prc">2,240</span></td>#}
+{#                                    <td>#}
+{#                                        <a href="javascript:void(0);" class="sc-produc-remove e-remove-product">#}
+{#                                            <img src="assets/images/index1/svg/cut.svg" alt="icon">#}
+{#                                        </a>#}
+{#                                    </td>#}
+{#                                  </tr>#}
+
+                                </tbody>
+                              </table>
+                        </form>
+                    </div>
+                    <div class="shopcart-bottom mb-30">
+                        <ul class="shopcart-dis-list">
+                            <li>
+                                <div class="sc-dcinput">
+                                    <div class="sc-diswrap">
+{#                                        <img src="assets/images/index1/svg/discount_Per.svg" alt="icon">#}
+                                        <span>کد تخفیف</span>
+                                    </div>
+                                    <div class="sc-disinputwrap">
+                                        <form>
+                                            <div class="e-nl-box boreder">
+                                                <input type="text" placeholder="کد تخفیف را وارد کنید">
+                                                <a href="" class="e-btn newsletter-btn">اعمال کد تخفیف </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="" class="e-btn black update-cart">بروز رسانی سبد </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-12">
+                <div class="e-shopcart-sidebar">
+                    <div class="e-totalsumry mb-30">
+                        <div class="e-totalsumry-header">
+                            <h2 class="e-totalsumry-ttl">خلاصه مجموع سبد خرید</h2>
+                        </div>
+                        <div class="e-totalsumry-body">
+                            <ul class="e-totalsumry-list">
+                                <li>
+                                    <span class="ts-list-head">مجموع سبد:</span>
+                                    <span class="ts-list-shead">240000 تومان</span>
+                                </li>
+{#                                <li>#}
+{#                                    <span class="ts-list-head">حمل و نقل: </span>#}
+{#                                    <span class="ts-list-shead">22000 تومان</span>#}
+{#                                </li>#}
+                            </ul>
+                            <!-- <a href="javascript:void(0);" class="ts-chngadd">Change Address
+                                <img src="assets/images/index1/svg/edit.svg" alt="edit">
+                            </a> -->
+                        </div>
+                        <div class="e-totalsumry-fotr">
+{#                            <ul class="e-totalsumry-list total">#}
+{#                                <li>#}
+{#                                    <span class="ts-list-head">گراند توتال</span>#}
+{#                                    <span class="ts-list-shead">26000 تومان</span>#}
+{#                                </li>#}
+{#                            </ul>#}
+                        </div>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <button class="e-btn" id="addtocart">پرداخت صورتحساب </button>
+                        {% else %}
+                    <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="e-btn" >لاگین کنید </a>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+
+let cartItems = sessionStorage.getItem("cart");
+{#console.log(cartItems)#}
+if (cartItems) {
+    for (let [key, value] of Object.entries(JSON.parse(cartItems))) {
+        {#console.log(key)#}
+        {#console.log(value)#}
+
+
+        const tbody = document.getElementById("tbody")
+        const  tr1 = document.createElement("tr")
+        const  td1 = document.createElement("td")
+
+        const  div1 = document.createElement("div")
+        div1.className += "sc-productwrap"
+        const  a1 = document.createElement("a")
+        a1.className += "sc-product-thumb"
+        const  img1 = document.createElement("img")
+        img1.className += "img-fluid"
+        img1.setAttribute("src", value.imageSrc)
+        a1.appendChild(img1)
+        div1.appendChild(a1)
+
+        const  div2 = document.createElement("div")
+        div2.className += "sc-product-details"
+
+        const  a2 = document.createElement("a")
+        a2.className += "sc-product-ttl"
+        a2.innerHTML = value.name
+
+        const  p1 = document.createElement("p")
+        p1.className += "sc-product-ttl"
+        p1.innerHTML = value.size
+
+        div2.appendChild(a2)
+        div2.appendChild(p1)
+        td1.appendChild(div1)
+        td1.appendChild(div2)
+        tr1.appendChild(td1)
+
+            {#console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')#}
+
+
+        const  td2 = document.createElement("td")
+        {#const  div3 = document.createElement("div")#}
+        {#div3.className += "quantity-box"#}
+        const  span3 = document.createElement("span")
+        span3.className += "sc-product-prc"
+        span3.innerHTML = value.quantity
+        {#div3.appendChild(span3)#}
+        td2.appendChild(span3)
+        tr1.appendChild(td2)
+
+
+
+
+
+        const  td3 = document.createElement("td")
+
+        const  span1 = document.createElement("span")
+        span1.className += "sc-product-prc"
+        span1.innerHTML = value.originalPrice
+        td3.appendChild(span1)
+        tr1.appendChild(td3)
+
+
+        const  td4 = document.createElement("td")
+
+        const  span2 = document.createElement("span")
+        span2.className += "sc-product-prc"
+        span2.innerHTML = value.originalPrice * value.quantity
+        td4.appendChild(span2)
+        tr1.appendChild(td4)
+
+        tbody.appendChild(tr1)
+        {#console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')#}
+
+    }
+
+}
+
+function getCookie(name) {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+}
+
+const button = document.getElementById('addtocart')
+button.addEventListener("click", ()=>{
+                addToCart()})
+
+function addToCart() {
+
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
+    console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+    const csrftoken = getCookie('csrftoken');
+    fetch('http://127.0.0.1:8000/api/cart/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+
+        },
+        body: JSON.stringify(cart),
+    })
+    .then(response => {
+        if (response.ok){
+            window.location.href = "http://127.0.0.1:8000";
+            console.log(response)
+             sessionStorage.clear();
+        }
+        else if (response.status === 401) {
+            {#window.location.href = "http://127.0.0.1:8000/accounts/login/";#}
+        }
+        else {
+            console.log('Error:', response.statusText);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+</script>
+
+{% endblock content %}

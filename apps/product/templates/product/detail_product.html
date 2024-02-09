@@ -68,7 +68,7 @@
 
 
 
-                                    <li class="na-price">{{ details.calculate_discounted_price|floatformat:"2"|floatformat:"0"}}
+                                    <li class="na-price">{{ details.calculate_discounted_price|floatformat:"2"|floatformat:"0" }}
                                         تومان
                                     </li>
                                 {% else %}
@@ -87,12 +87,24 @@
                                         <span>رنگ های موجود</span>
                                     </div>
                                     <div class="ib-list-right">
+                                        {#                                                                                <ul class="na-color-skin">#}
+                                        {##}
+                                        {#                                                                                        {% for color in colors %}#}
+                                        {#                                                                                            <li style=" border-radius: 10px; background-color: {{ color }} "></li>#}
+                                        {#                                                                                        {% endfor %}#}
+                                        {#                                                                                    </ul>#}
+
+
                                         <ul class="na-color-skin">
-                                            {#                                    <ul class="d-flex">#}
                                             {% for color in colors %}
-                                                <li style=" border-radius: 10px; background-color: {{ color }} "></li>
+                                                <li style="width: 30px; height: 30px; border-radius: 5px; padding: 5px;
+                                                        box-sizing: border-box; background-color: {{ color }};"
+                                                    onclick="selectColor(this)"></li>
+
                                             {% endfor %}
                                         </ul>
+
+
                                     </div>
                                 </li>
                                 <li>
@@ -100,9 +112,16 @@
                                         <span>سایز های موجود</span>
                                     </div>
                                     <div class="ib-list-right">
-                                        <ul class="pd-info-size d-flex">
+                                        <ul class="d-flex">
+                                            {#                                            {% for size in sizes %}#}
+                                            {#                                                <li>{{ size }}</li>#}
+                                            {#                                            {% endfor %}#}
                                             {% for size in sizes %}
-                                                <li>{{ size }}</li>
+                                                <li>
+                                                    <input type="radio" id="size_{{ size }}" name="selected_size"
+                                                           value="{{ size }}">
+                                                    <label for="size_{{ size }}">{{ size }}</label>
+                                                </li>
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -110,19 +129,6 @@
                                 </li>
 
 
-                                {#                                <h3>Sizes:</h3>#}
-                                {#                                <ul>#}
-                                {#                                    {% for size in sizes %}#}
-                                {#                                        <li>{{ size }}</li>#}
-                                {#                                    {% endfor %}#}
-                                {#                                </ul>#}
-
-                                {#                                <h3>Colors:</h3>#}
-                                {#                                <ul>#}
-                                {#                                    {% for color in colors %}#}
-                                {#                                        <li>{{ color }}</li>#}
-                                {#                                    {% endfor %}#}
-                                {#                                </ul>#}
 
 
                                 <li>
@@ -144,14 +150,14 @@
                                         <ul class="pd-qua-wrap">
                                             <li>
                                                 <div class="quantity-box">
-                                                    <input type="text" class="quantity" value="2">
+                                                    <input type="text" class="quantity" value="0">
                                                     <span class="quantity-minus pa-sub quantity-icon"> - </span>
                                                     <span class="quantity-plus  pa-add quantity-icon"> + </span>
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </li>
                                             <li>
-                                                <a href="cart.html" class="e-btn pd-addcart">افزودن به سبد </a>
+                                                <a href="#" class="e-btn pd-addcart" onclick="addToCart(this)">افزودن به سبد </a>
                                             </li>
                                             <li>
                                                 <a href="wishlist.html" class="e-btn light pd-heart">
@@ -217,7 +223,7 @@
                                         <div class="col-md-12">
                                             <ul class="pdtab-addinfo">
                                                 {% for foo in comments %}
-                                                    <li><p> {{ foo.body | safe}}</p></li>
+                                                    <li><p> {{ foo.body | safe }}</p></li>
                                                 {% endfor %}
 
 
@@ -276,11 +282,98 @@
     </section>
 
 
+    <script>
+        var selectedColor = null;
+
+        function selectColor(element) {
+
+            if (selectedColor === null) {
+
+                element.style.border = '2px solid black';
+                selectedColor = element.style.backgroundColor;
+            } else {
+
+                var previousSelection = document.querySelector('.na-color-skin li[selectedColor="' + selectedColor + '"]');
+                previousSelection.style.border = 'none';
 
 
+                element.style.border = '2px solid black';
+                selectedColor = element.style.backgroundColor;
+            }
 
 
+            element.setAttribute('selectedColor', selectedColor);
+        }
 
+{#    function getCookie(cookieName) {#}
+{#        let name = cookieName + "=";#}
+{#        let decodedCookie = decodeURIComponent(document.cookie);#}
+{#        let cookieArray = decodedCookie.split(';');#}
+{#        for(let i = 0; i < cookieArray.length; i++) {#}
+{#            let cookie = cookieArray[i].trim();#}
+{#            if (cookie.indexOf(name) == 0) {#}
+{#                return cookie.substring(name.length, cookie.length);#}
+{#            }#}
+{#        }#}
+{#        return "";#}
+
+{##}
+{##}
+{#function setCookie(cookieName, cookieValue, expireDays) {#}
+{#    let d = new Date();#}
+{#    d.setTime(d.getTime() + (expireDays * 24 * 60 * 60 * 1000));#}
+{#    let expires = "expires="+d.toUTCString();#}
+{#    document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";#}
+
+{##}
+{#    function addToCart() {#}
+{#        let selectedSize = document.querySelector('input[name="selected_size"]:checked').value;#}
+{#        console.log(selectedSize)#}
+{#        let selectedColor = document.querySelector('.na-color-skin li[selectedColor]').getAttribute('selectedColor');#}
+{#        console.log(selectedColor)#}
+{##}
+{#        let itemId = "{{ details.id }}";#}
+{#        console.log(itemId)#}
+{##}
+{#        let quantity = document.querySelector('.quantity').value;#}
+{#        console.log(quantity)#}
+{##}
+{#        let cart = JSON.parse(getCookie("cart")) || {};#}
+{#         cart[itemId] = {#}
+{#        "size": selectedSize,#}
+{#        "color": selectedColor,#}
+{#        "quantity": quantity#}
+{#    };#}
+{##}
+{##}
+{#    setCookie("cart", JSON.stringify(cart), 1);#}
+{##}
+function addToCart() {
+    let selectedSize = document.querySelector('input[name="selected_size"]:checked').value;
+    let selectedColor = document.querySelector('.na-color-skin li[selectedColor]').getAttribute('selectedColor');
+    let itemId = "{{ details.id }}";
+    let quantity = document.querySelector('.quantity').value;
+    let imageSrc = "{{ details.image.url }}";
+    let name = "{{ details.name  }}"
+
+    let originalPrice = "{{ details.price }}";
+    let discountedPrice = "{{ details.calculate_discounted_price }}";
+
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
+    cart[itemId] = {
+        "name": name,
+        "size": selectedSize,
+        "color": selectedColor,
+        "quantity": quantity,
+        "imageSrc": imageSrc,
+        "originalPrice": originalPrice,
+        "discountedPrice": discountedPrice
+    };
+
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+}
+
+    </script>
 
 
 

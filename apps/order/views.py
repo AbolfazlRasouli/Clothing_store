@@ -5,5 +5,5 @@ from django.views.generic import ListView, View
 from .models import Order, OrderItem
 
 
-class CartView(ListView):
-    pass
+def cart_view(request):
+    return render(request, 'order/cart.html')

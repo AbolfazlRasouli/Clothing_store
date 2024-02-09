@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (UsernameLoginView, EmailLoginView, OTPView, LoginView, SignUpView, VerifyUser, CustomLogoutView,
-                    PasswordChange, PasswordReset, ResetPasswordDone)
+                    PasswordChange, PasswordReset, ResetPasswordDone, profile)
 
 
 app_name = "accounts"
@@ -34,6 +34,7 @@ urlpatterns = [
     path('password_change/', PasswordChange.as_view(), name='password_change'),
     # path('password_reset/<str:hashed_user_id>/', PasswordReset.as_view(), name='password_reset')
     path('password_reset/<str:hashed_user_id>/', PasswordReset.as_view(), name='password_reset'),
-    path('resetpassworddone/', ResetPasswordDone.as_view(), name='resetpassworddone')
+    path('resetpassworddone/', ResetPasswordDone.as_view(), name='resetpassworddone'),
+    path('profile/', profile, name='profile')
 
 ]

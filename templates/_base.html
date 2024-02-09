@@ -81,8 +81,19 @@
                         <li>
 
                             {% if user.is_authenticated %}
-                                <span class="ms-4 font-weight-bold">  خوش آمدی  {{ user.username }}  </span> |
-                                <a href="{% url 'accounts:logout' %}" data-target="#register">خروج </a>
+                                <div class="dropdown">
+                                  <button class=" dropdown-toggle" type="button" id="dropdownMenuButton"
+                                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                          style="background-color: white; border: none">
+                                      خوش آمدی  {{ user.username }}
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">حساب کاربری</a>
+                                    <a class="dropdown-item" href="#"> سفارش ها </a>
+                                    <a class="dropdown-item" href="{% url 'accounts:logout' %}">خروج</a>
+                                  </div>
+                                </div>
+{#                                <a href="{% url 'accounts:logout' %}" data-target="#register">خروج </a>#}
 
                             {% else %}
                                 <a href="{% url 'accounts:signup' %}" data-target="#register">ثبت نام </a> یا
@@ -234,7 +245,7 @@
                             </a>
                         </li>
                         <li class="hs-cart-box cmn-cart-tgl">
-                            <a href="javascript:void(0);">
+                            <a href="{% url 'order:cart_view' %}">
                                 <div class="hs-cartbox-inner">
                                     <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="22px" height="20px">
                                         <path fill-rule="evenodd" fill="rgb(125, 143, 179)"
