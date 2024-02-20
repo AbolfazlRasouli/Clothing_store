@@ -87,23 +87,13 @@
                                         <span>رنگ های موجود</span>
                                     </div>
                                     <div class="ib-list-right">
-                                        {#                                                                                <ul class="na-color-skin">#}
-                                        {##}
-                                        {#                                                                                        {% for color in colors %}#}
-                                        {#                                                                                            <li style=" border-radius: 10px; background-color: {{ color }} "></li>#}
-                                        {#                                                                                        {% endfor %}#}
-                                        {#                                                                                    </ul>#}
-
-
-                                        <ul class="na-color-skin">
+                                        <ul style="display: flex; align-items: center;">
                                             {% for color in colors %}
-                                                <li style="width: 30px; height: 30px; border-radius: 5px; padding: 5px;
-                                                        box-sizing: border-box; background-color: {{ color }};"
-                                                    onclick="selectColor(this)"></li>
+                                                <li style="width: 50px; height: 50px; padding: 5px;"
+                                                    onclick="selectColor(this, '{{ color }}')"><div style=" width:90%; height:90%; border-radius: 5px; box-sizing: border-box;  margin:auto; background-color: {{ color }}"></div></li>
 
                                             {% endfor %}
                                         </ul>
-
 
                                     </div>
                                 </li>
@@ -283,27 +273,18 @@
 
 
     <script>
-        var selectedColor = null;
+function selectColor(element, color) {
 
-        function selectColor(element) {
-
-            if (selectedColor === null) {
-
-                element.style.border = '2px solid black';
-                selectedColor = element.style.backgroundColor;
-            } else {
-
-                var previousSelection = document.querySelector('.na-color-skin li[selectedColor="' + selectedColor + '"]');
-                previousSelection.style.border = 'none';
+    var liElements = document.querySelectorAll('.ib-list-right ul li');
+    liElements.forEach(function(li) {
+        li.style.border = 'none';
+    });
+    element.style.border = '2px solid black';
+    selectedColor = color;
+}
 
 
-                element.style.border = '2px solid black';
-                selectedColor = element.style.backgroundColor;
-            }
 
-
-            element.setAttribute('selectedColor', selectedColor);
-        }
 
 {#    function getCookie(cookieName) {#}
 {#        let name = cookieName + "=";#}
@@ -350,7 +331,8 @@
 {##}
 function addToCart() {
     let selectedSize = document.querySelector('input[name="selected_size"]:checked').value;
-    let selectedColor = document.querySelector('.na-color-skin li[selectedColor]').getAttribute('selectedColor');
+    let selectedColor = document.querySelectorAll('.ib-list-right ul li');
+
     let itemId = "{{ details.id }}";
     let quantity = document.querySelector('.quantity').value;
     let imageSrc = "{{ details.image.url }}";
@@ -371,6 +353,7 @@ function addToCart() {
     };
 
     sessionStorage.setItem("cart", JSON.stringify(cart));
+    alert("محصول با موفقیت به سبد خرید اضافه شد.");
 }
 
     </script>
