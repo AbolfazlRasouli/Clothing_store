@@ -25,3 +25,24 @@ class ProductSerializer(serializers.ModelSerializer):
             attributes_list.append(attribute_data)
 
         return attributes_list
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['status', 'create_at']
+
+
+class ProductCartShowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'image']
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    order = OrderSerializer()
+    product = ProductCartShowSerializer()
+
+    class Meta:
+        model = OrderItem
+        fields = ['size', 'color', 'count', 'price', 'order', 'product']
