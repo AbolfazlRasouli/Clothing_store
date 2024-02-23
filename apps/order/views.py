@@ -7,3 +7,7 @@ from .models import Order, OrderItem
 
 def cart_view(request):
     return render(request, 'order/cart.html')
+
+
+def show_buy(request):
+    return render(request, 'order/showbuy.html')
