@@ -1,0 +1,247 @@
+{% extends '_base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+<!-- Product Category start -->
+<section class="e-checkout-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-12">
+
+
+
+                <div class="e-checkout-sec mb-80">
+                    <div class="cmn-ck-wrap mb-30">
+                        <div class="cmn-ck-header">
+                            <h2 class="cmn-ck-heading">بررسی و پرداخت </h2>
+                        </div>
+                        <div class="cmn-ck-body">
+                            <div class="cmn-ck-box mb-20">
+                                <h4 class="cmn-brdr-ttle mb-20">اطلاعات تماس</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="e-form-field mb-30">
+                                            <label>نام </label>
+                                            <input class="e-field-inner" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="e-form-field mb-30">
+                                            <label>ایمیل </label>
+                                            <input class="e-field-inner" type="email">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cmn-ck-box mb-20">
+                                <h4 class="cmn-brdr-ttle mb-20">آدرس حمل و نقل</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="e-form-field mb-30">
+                                            <label>نام اصلی </label>
+                                            <input class="e-field-inner" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="e-form-field mb-30">
+                                            <label>نام خانوادگی </label>
+                                            <input class="e-field-inner" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="e-form-field mb-30">
+                                            <label>آدرس 01</label>
+                                            <input class="e-field-inner" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="e-form-field mb-30">
+                                            <label>آدرس 02</label>
+                                            <input class="e-field-inner" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="e-form-field mb-30">
+                                            <label>کشور</label>
+                                            <select class="e-field-inner e-field-select">
+                                                <option data-display="انتخاب کشور">انتخاب کشور خود</option>
+                                                <option value="1">ایران</option>
+                                                <option value="2">کانادا</option>
+                                                <option value="3">آمریکا</option>
+                                                <option value="4">هندی</option>
+                                                <option value="5">استرالیا</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="e-form-field mb-30">
+                                            <label>شهر</label>
+                                            <select class="e-field-inner e-field-select">
+                                                <option data-display="انتخاب شهر">انتخاب شهر</option>
+                                                <option value="1">ارومیه</option>
+                                                <option value="2">تبریز</option>
+                                                <option value="3">تهران</option>
+                                                <option value="4">بیهار</option>
+                                                <option value="5">کرج</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="e-form-field mb-30">
+                                            <label>کد پستی</label>
+                                            <input class="e-field-inner" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <a href="javascript:void(0);" class="e-btn">پرداخت صورتحساب </a>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+
+
+
+{#function getUserData() {#}
+{#    fetch('http://127.0.0.1:8000/api/showcart/', {#}
+{#        method: 'GET',#}
+{#        headers: {#}
+{#            'Content-Type': 'application/json'#}
+{#        },#}
+{#    })#}
+{#    .then(response => {#}
+{#        console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')#}
+{#        if (response.ok) {#}
+{#            return response.json();#}
+{#        }#}
+{#        throw new Error('Network response was not ok.');#}
+{#    })#}
+{#    .then(data => {#}
+{#        console.log(data)#}
+{##}
+{#        if (data) {#}
+{#        const tbody = document.getElementById("tbody")#}
+{#     data.forEach(item => {#}
+{##}
+{##}
+{#        const  tr1 = document.createElement("tr")#}
+{#        const  td1 = document.createElement("td")#}
+{##}
+{#        const  div1 = document.createElement("div")#}
+{#        div1.className += "sc-productwrap"#}
+{#        const  a1 = document.createElement("a")#}
+{#        a1.className += "sc-product-thumb"#}
+{#        const  img1 = document.createElement("img")#}
+{#        img1.className += "img-fluid"#}
+{#        img1.setAttribute("src", item.product.image)#}
+{#        a1.appendChild(img1)#}
+{#        div1.appendChild(a1)#}
+{##}
+{#        const  div2 = document.createElement("div")#}
+{#        div2.className += "sc-product-details"#}
+{##}
+{#        const  a2 = document.createElement("a")#}
+{#        a2.className += "sc-product-ttl"#}
+{#        a2.innerHTML = item.product.name#}
+{##}
+{#        const  p1 = document.createElement("p")#}
+{#        p1.className += "sc-product-ttl"#}
+{#        p1.innerHTML = "سایز: " +  item.size#}
+{##}
+{##}
+{#         const div_color_wrapper = document.createElement("div");#}
+{#        div_color_wrapper.className += "sc-productwrap"#}
+{##}
+{#        const pColor = document.createElement("p");#}
+{#        pColor.className += "sc-product-ttl"#}
+{#        pColor.textContent = "رنگ : ";#}
+{##}
+{##}
+{#        const  div_color = document.createElement("div")#}
+{#         div_color.style.width = "15px"#}
+{#         div_color.style.height = "15px"#}
+{#         div_color.style.marginRight = "5px"#}
+{#         div_color.style.backgroundColor =  item.color#}
+{##}
+{#         div_color_wrapper.appendChild(div_color);#}
+{##}
+{#        div2.appendChild(a2)#}
+{#        div2.appendChild(p1)#}
+{#        div_color_wrapper.appendChild(pColor);#}
+{#        div_color_wrapper.appendChild(div_color)#}
+{#         div2.appendChild(div_color_wrapper);#}
+{#        div1.appendChild(div2)#}
+{#        td1.appendChild(div1)#}
+{#        tr1.appendChild(td1)#}
+{##}
+{#            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')#}
+{##}
+{##}
+{#        const  td2 = document.createElement("td")#}
+{#        const  div3 = document.createElement("div")#}
+{#        div3.className += "quantity-box"#}
+{#        const  span3 = document.createElement("span")#}
+{#        span3.className += "sc-product-prc"#}
+{#        span3.innerHTML = item.count#}
+{#        div3.appendChild(span3)#}
+{#        td2.appendChild(span3)#}
+{#        tr1.appendChild(td2)#}
+{##}
+{##}
+{#        const  td3 = document.createElement("td")#}
+{##}
+{#        const  span1 = document.createElement("span")#}
+{#        span1.className += "sc-product-prc"#}
+{#        span1.innerHTML = item.price#}
+{#        td3.appendChild(span1)#}
+{#        tr1.appendChild(td3)#}
+{##}
+{##}
+{#        const  td4 = document.createElement("td")#}
+{#        const  span2 = document.createElement("span")#}
+{#        span2.className += "sc-product-prc"#}
+{#         const date = new Date(item.order.create_at);#}
+{#        const year = date.getFullYear();#}
+{#        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // اضافه کردن صفر به ابتدای عدد ماه#}
+{#        const day = date.getDate().toString().padStart(2, '0'); // اضافه کردن صفر به ابتدای عدد روز#}
+{##}
+{#        const formattedDate = `${year}-${month}-${day}`;#}
+{#        span2.innerHTML = formattedDate#}
+{#        td4.appendChild(span2)#}
+{#        tr1.appendChild(td4)#}
+{##}
+{#        tbody.appendChild(tr1)#}
+{##}
+{##}
+{#    })#}
+{##}
+
+{##}
+{#    })#}
+{#    .catch(error => {#}
+{#        console.error('There was an error!', error);#}
+{#    });#}
+
+
+{#window.addEventListener('load', getUserData);#}
+{#const addressId = event.target.getAttribute('data-address-id');#}
+{#console.log(addressId)#}
+
+</script>
+
+{% endblock content %}

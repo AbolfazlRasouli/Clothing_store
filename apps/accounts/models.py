@@ -112,7 +112,7 @@ class Address(models.Model):
     pelak = models.CharField(verbose_name=_('pelak'), max_length=4)
     complete_address = models.TextField(verbose_name=_('complete_address'), max_length=500)
 
-    object = UserRelatedModelBaseManager()
+    objects = UserRelatedModelBaseManager()
 
     def __str__(self):
         return f'{self.user} - {self.city} - {self.street}'

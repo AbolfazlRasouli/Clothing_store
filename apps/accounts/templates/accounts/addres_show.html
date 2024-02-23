@@ -1,0 +1,281 @@
+{% extends '_base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+    <section class="e-shopcart-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+
+
+                    <div class="e-shopcart-sec" id="address">
+                        <div class="shopcart-table-wrap mb-30">
+                            <form class="table-responsive">
+                                <table class="shopcart-table">
+                                    <thead>
+                                    <tr>
+                                        <th>آدرس های شما</th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <tbody id="tbody">
+
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+
+                    </div>
+
+
+                    <div class="e-checkout-sec mb-80" id="detail-address" style="display: none">
+                        <div class="cmn-ck-wrap mb-30">
+                            <div class="cmn-ck-header">
+                                <h2 class="cmn-ck-heading">ویرایش آدرس </h2>
+                            </div>
+                            <div class="cmn-ck-body">
+                                <div class="cmn-ck-box mb-20">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="e-form-field mb-30">
+                                                <label>کشور </label>
+                                                <input class="e-field-inner" type="text" id="country">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="e-form-field mb-30">
+                                                <label>استان </label>
+                                                <input class="e-field-inner" type="email" id="privod">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="cmn-ck-box mb-20">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="e-form-field mb-30">
+                                                <label> شهر </label>
+                                                <input class="e-field-inner" type="text" id="city">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="e-form-field mb-30">
+                                                <label>خیابان </label>
+                                                <input class="e-field-inner" type="text" id="street">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="e-form-field mb-30">
+                                                <label> پلاک </label>
+                                                <input class="e-field-inner" type="text" id="pelak">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="e-form-field mb-30">
+                                                <label>آدرس کامل </label>
+                                                <input class="e-field-inner" type="text" id="full_address">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <a href="#" class="e-btn" id="send-data">تایید </a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+
+        let addressId = null
+
+        function getAddressData() {
+            fetch('http://127.0.0.1:8000/dashbord/Addressshoow/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                    console.log(data)
+
+                    if (data) {
+                        const tbody = document.getElementById("tbody")
+                        data.forEach(item => {
+
+
+                            const tr1 = document.createElement("tr")
+                            const td1 = document.createElement("td")
+
+                            const div1 = document.createElement("div")
+                            div1.className += "sc-product-details"
+
+
+                            const p1 = document.createElement("p")
+                            p1.style.marginBottom = "20px"
+                            p1.innerHTML = item.complete_address
+
+                            const editButton = document.createElement("button");
+                            editButton.style.backgroundColor = "#4CAF50";
+                            editButton.style.border = "none";
+                            editButton.style.color = "white";
+                            editButton.style.padding = "10px 20px";
+                            editButton.style.textAlign = "center";
+                            editButton.style.textDecoration = "none";
+                            editButton.style.display = "inline-block";
+                            editButton.style.fontSize = "16px";
+                            editButton.style.margin = "4px 2px";
+                            editButton.style.cursor = "pointer";
+                            editButton.style.borderRadius = "5px";
+                            editButton.innerText = "ویرایش";
+
+                            div1.appendChild(p1)
+                            div1.appendChild(editButton);
+                            td1.appendChild(div1)
+                            tr1.appendChild(td1)
+                            tbody.appendChild(tr1)
+
+
+                            editButton.addEventListener('click', function (event) {
+                                event.preventDefault();
+
+
+                                document.getElementById('address').style.display = 'none';
+                                document.getElementById('detail-address').style.display = 'block';
+
+                                addressId = item.id;
+                                console.log(addressId)
+
+                                fetch(`http://127.0.0.1:8000/dashbord/detailaddress/${addressId}/`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                })
+
+                                    .then(response => {
+                                        if (response.ok) {
+                                            return response.json();
+                                        }
+                                        throw new Error('Network response was not ok.');
+                                    })
+                                    .then(data => {
+                                        console.log(data);
+
+                                        document.getElementById('country').value = data.country;
+                                        document.getElementById('privod').value = data.province;
+                                        document.getElementById('city').value = data.city;
+                                        document.getElementById('street').value = data.street;
+                                        document.getElementById('pelak').value = data.pelak;
+                                        document.getElementById('full_address').value = data.complete_address;
+                                        console.log(data.complete_address)
+
+
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                            });
+
+                        })
+
+                    }
+
+
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+        }
+
+        {#window.addEventListener('load', getAddressData);#}
+
+        window.addEventListener('DOMContentLoaded', function () {
+            getAddressData();
+        });
+
+
+        function getCookie(name) {
+            const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+            return cookieValue ? cookieValue.pop() : '';
+        }
+
+        const button = document.getElementById('send-data')
+        button.addEventListener("click", () => {
+            console.log('zzzzzzzzzzzz')
+            updateAddressData()
+        })
+
+
+        function updateAddressData() {
+            const addressdata = {
+                country: document.getElementById('country').value,
+                province: document.getElementById('privod').value,
+                city: document.getElementById('city').value,
+                street: document.getElementById('street').value,
+                pelak: document.getElementById('pelak').value,
+                complete_address: document.getElementById('full_address').value,
+
+
+            };
+            console.log(addressdata)
+            console.log('salam')
+            const csrftoken = getCookie('csrftoken');
+            console.log(csrftoken)
+            console.log(typeof addressId)
+
+            fetch(`http://127.0.0.1:8000/dashbord/detailaddress/${addressId}/`, {
+
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+
+                body: JSON.stringify(addressdata)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('ok');
+                        alert('اطلاعات با موفقیت به‌روز شد.');
+                        window.location.href = '/accounts/' + 'showaddress/';
+
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log('Updated user data:', data);
+                    // Handle response data if needed
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+        }
+    </script>
+
+{% endblock content %}
