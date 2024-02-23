@@ -3435,6 +3435,10 @@ background: var(--primary-color);
     display: flex;
     align-items: center;
 }
+.div-color{
+    width: 50px;
+    height: 50px;
+}
 .sc-product-ttl {
     font-size: 16px;
     font-weight: 500;

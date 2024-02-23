@@ -6,256 +6,341 @@
 {% block content %}
 
     <!-- Product Category start -->
-<section class="e-shopcart-wrap">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-9 col-lg-12">
-                <div class="e-shopcart-sec">
-                    <div class="shopcart-table-wrap mb-30">
-                        <form class="table-responsive">
-                            <table class="shopcart-table">
-                                <thead>
-                                  <tr>
-                                    <th>محصول </th>
-                                    <th>تعداد </th>
-                                    <th>قیمت </th>
-                                    <th>قیمت جمع </th>
-                                    <th>&nbsp;</th>
-                                  </tr>
-                                </thead>
+    <section class="e-shopcart-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-12">
+                    <div class="e-shopcart-sec">
+                        <div class="shopcart-table-wrap mb-30">
+                            <form class="table-responsive">
+                                <table class="shopcart-table">
+                                    <thead>
+                                    <tr>
+                                        <th>محصول</th>
+                                        <th>تعداد</th>
+                                        <th>قیمت</th>
+                                        <th>قیمت جمع</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody id="tbody">
 
 
-
-
-
-
-
-
-
-
-                                <tbody id="tbody">
-{#                                  <tr>#}
-{#                                    <td >#}
-{#                                        <div class="sc-productwrap">#}
-{#                                            <a href="product_details.html" class="sc-product-thumb">#}
-{#                                                <img src="assets/images/index1/shopcart01.jpg" alt="محصول" class="img-fluid">#}
-{#                                            </a>#}
-{#                                            <div class="sc-product-details">#}
-{#                                                <a href="product_details.html" class="sc-product-ttl">کت کلاه دار خاکستری مشکی</a>#}
-{#                                                <p class="sc-product-sz">اندازه: متوسط </p>#}
-{#                                            </div>#}
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="shopcart-bottom mb-30">
+                            <ul class="shopcart-dis-list">
+                                <li>
+                                    <div class="sc-dcinput">
+{#                                        <div class="sc-diswrap">#}
+{#                                            <img src="{% static 'assets/images/index1/svg/discount_Per.svg' %}"#}
+{#                                                 alt="icon">#}
+{#                                            <span>کد تخفیف</span>#}
 {#                                        </div>#}
-{#                                    </td>#}
-{#                                    <td>#}
-{#                                        <div class="quantity-box">#}
-{#                                            <input type="text" class="quantity" value="2">#}
-{#                                            <span class="quantity-minus pa-sub quantity-icon"> - </span>#}
-{#                                            <span class="quantity-plus  pa-add quantity-icon"> + </span>#}
-{#                                        </div>#}
-{#                                    </td>#}
-{#                                    <td><span class="sc-product-prc">120000 تومان</span></td>#}
-{#                                    <td><span class="sc-product-prc">2,240</span></td>#}
-{#                                    <td>#}
-{#                                        <a href="javascript:void(0);" class="sc-produc-remove e-remove-product">#}
-{#                                            <img src="assets/images/index1/svg/cut.svg" alt="icon">#}
-{#                                        </a>#}
-{#                                    </td>#}
-{#                                  </tr>#}
-
-                                </tbody>
-                              </table>
-                        </form>
-                    </div>
-                    <div class="shopcart-bottom mb-30">
-                        <ul class="shopcart-dis-list">
-                            <li>
-                                <div class="sc-dcinput">
-                                    <div class="sc-diswrap">
-{#                                        <img src="assets/images/index1/svg/discount_Per.svg" alt="icon">#}
-                                        <span>کد تخفیف</span>
+                                        <div class="sc-disinputwrap">
+{#                                            <form>#}
+{#                                                <div class="e-nl-box boreder">#}
+{#                                                    <input type="text" placeholder="کد تخفیف را وارد کنید">#}
+{#                                                    <a href="" class="e-btn newsletter-btn">اعمال کد تخفیف </a>#}
+{#                                                </div>#}
+{#                                            </form>#}
+                                        </div>
                                     </div>
-                                    <div class="sc-disinputwrap">
-                                        <form>
-                                            <div class="e-nl-box boreder">
-                                                <input type="text" placeholder="کد تخفیف را وارد کنید">
-                                                <a href="" class="e-btn newsletter-btn">اعمال کد تخفیف </a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="" class="e-btn black update-cart">بروز رسانی سبد </a>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-3 col-lg-12">
-                <div class="e-shopcart-sidebar">
-                    <div class="e-totalsumry mb-30">
-                        <div class="e-totalsumry-header">
-                            <h2 class="e-totalsumry-ttl">خلاصه مجموع سبد خرید</h2>
-                        </div>
-                        <div class="e-totalsumry-body">
-                            <ul class="e-totalsumry-list">
-{#                                <li>#}
-{#                                    <span class="ts-list-head">مجموع سبد:</span>#}
-{#                                    <span class="ts-list-shead">240000 تومان</span>#}
-{#                                </li>#}
-{#                                <li>#}
-{#                                    <span class="ts-list-head">حمل و نقل: </span>#}
-{#                                    <span class="ts-list-shead">22000 تومان</span>#}
-{#                                </li>#}
-                            </ul>
-                            <!-- <a href="javascript:void(0);" class="ts-chngadd">Change Address
-                                <img src="assets/images/index1/svg/edit.svg" alt="edit">
-                            </a> -->
-                        </div>
-                        <div class="e-totalsumry-fotr">
-{#                            <ul class="e-totalsumry-list total">#}
-{#                                <li>#}
-{#                                    <span class="ts-list-head">گراند توتال</span>#}
-{#                                    <span class="ts-list-shead">26000 تومان</span>#}
-{#                                </li>#}
-{#                            </ul>#}
-                        </div>
-                    </div>
-                    {% if user.is_authenticated %}
-                    <button class="e-btn" id="addtocart">پرداخت صورتحساب </button>
-                        {% else %}
-                    <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="e-btn" >لاگین کنید </a>
+                <div class="col-xl-3 col-lg-12">
+                    <div class="e-shopcart-sidebar">
+                        <div class="e-totalsumry mb-30">
+                            <div class="e-totalsumry-header">
+                                <h2 class="e-totalsumry-ttl"> مجموع سبد خرید</h2>
+                            </div>
+                            <div class="e-totalsumry-body">
+                                <ul class="e-totalsumry-list" id="price_cart">
+                                    {#                                    <li>#}
+                                    {#                                        <span class="ts-list-head">مجموع سبد:</span>#}
+                                    {#                                        <span class="ts-list-shead">240000 تومان</span>#}
+                                    {#                                    </li>#}
 
-                    {% endif %}
+                                </ul>
+
+                            </div>
+                            <div class="e-totalsumry-fotr">
+
+                            </div>
+                        </div>
+                        {% if user.is_authenticated %}
+                            <button class="e-btn" id="addtocart">پرداخت صورتحساب</button>
+                        {% else %}
+                            <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="e-btn"> پرداخت
+                                صورتحساب </a>
+
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<script>
+    <script>
 
-let cartItems = sessionStorage.getItem("cart");
-{#console.log(cartItems)#}
-if (cartItems) {
-    for (let [key, value] of Object.entries(JSON.parse(cartItems))) {
-        {#console.log(key)#}
-        {#console.log(value)#}
+        let cartItems = sessionStorage.getItem("cart");
+        let sum = 0
 
+        if (cartItems) {
 
-        const tbody = document.getElementById("tbody")
-        const  tr1 = document.createElement("tr")
-        const  td1 = document.createElement("td")
-
-        const  div1 = document.createElement("div")
-        div1.className += "sc-productwrap"
-        const  a1 = document.createElement("a")
-        a1.className += "sc-product-thumb"
-        const  img1 = document.createElement("img")
-        img1.className += "img-fluid"
-        img1.setAttribute("src", value.imageSrc)
-        a1.appendChild(img1)
-        div1.appendChild(a1)
-
-        const  div2 = document.createElement("div")
-        div2.className += "sc-product-details"
-
-        const  a2 = document.createElement("a")
-        a2.className += "sc-product-ttl"
-        a2.innerHTML = value.name
-
-        const  p1 = document.createElement("p")
-        p1.className += "sc-product-ttl"
-        p1.innerHTML = value.size
-
-        div2.appendChild(a2)
-        div2.appendChild(p1)
-        td1.appendChild(div1)
-        td1.appendChild(div2)
-        tr1.appendChild(td1)
-
-            {#console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')#}
+            const price_cart = document.getElementById("price_cart")
+            const li = document.createElement("li")
+            const span_cart = document.createElement("span")
+            span_cart.className += "ts-list-head"
+            span_cart.innerHTML = "مجموع سبد : "
+            const span_price = document.createElement("span")
+            span_price.className += "ts-list-head"
 
 
-        const  td2 = document.createElement("td")
-        {#const  div3 = document.createElement("div")#}
-        {#div3.className += "quantity-box"#}
-        const  span3 = document.createElement("span")
-        span3.className += "sc-product-prc"
-        span3.innerHTML = value.quantity
-        {#div3.appendChild(span3)#}
-        td2.appendChild(span3)
-        tr1.appendChild(td2)
+            li.appendChild(span_cart)
+            li.appendChild(span_price)
+            price_cart.appendChild(li)
 
 
+            for (let [key, value] of Object.entries(JSON.parse(cartItems))) {
+
+                let inputQuantity, spanQuantityMinus, spanQuantityPlus;
 
 
+                const tbody = document.getElementById("tbody")
+                const tr1 = document.createElement("tr")
+                const td1 = document.createElement("td")
 
-        const  td3 = document.createElement("td")
+                const div1 = document.createElement("div")
+                div1.className += "sc-productwrap"
+                const a1 = document.createElement("a")
+                a1.className += "sc-product-thumb"
+                const img1 = document.createElement("img")
+                img1.className += "img-fluid"
+                img1.setAttribute("src", value.imageSrc)
+                a1.appendChild(img1)
+                div1.appendChild(a1)
 
-        const  span1 = document.createElement("span")
-        span1.className += "sc-product-prc"
-        span1.innerHTML = value.originalPrice
-        td3.appendChild(span1)
-        tr1.appendChild(td3)
+                a1.addEventListener('click', function () {
+                    window.location.href = "/detail/" + key + "/";
+                });
 
 
-        const  td4 = document.createElement("td")
+                const div2 = document.createElement("div")
+                div2.className += "sc-product-details"
 
-        const  span2 = document.createElement("span")
-        span2.className += "sc-product-prc"
-        span2.innerHTML = value.originalPrice * value.quantity
-        td4.appendChild(span2)
-        tr1.appendChild(td4)
+                const a2 = document.createElement("a")
+                a2.className += "sc-product-ttl"
+                a2.innerHTML = value.name
 
-        tbody.appendChild(tr1)
-        {#console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')#}
 
-    }
+                a2.addEventListener('click', function () {
+                    window.location.href = "/detail/" + key + "/";
+                });
 
-}
+                const p1 = document.createElement("p")
+                p1.className += "sc-product-ttl"
+                p1.innerHTML = "سایز: " + value.size
 
-function getCookie(name) {
-    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-    return cookieValue ? cookieValue.pop() : '';
-}
+                const div_color_wrapper = document.createElement("div");
+                div_color_wrapper.className += "sc-productwrap"
 
-const button = document.getElementById('addtocart')
-button.addEventListener("click", ()=>{
-                addToCart()})
+                const pColor = document.createElement("p");
+                pColor.className += "sc-product-ttl"
+                pColor.textContent = "رنگ : ";
 
-function addToCart() {
 
-    let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
-    console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-    const csrftoken = getCookie('csrftoken');
-    fetch('http://127.0.0.1:8000/api/cart/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken,
+                const div_color = document.createElement("div")
+                div_color.style.width = "15px"
+                div_color.style.height = "15px"
+                div_color.style.marginRight = "5px"
+                div_color.style.backgroundColor = value.color
 
-        },
-        body: JSON.stringify(cart),
-    })
-    .then(response => {
-        if (response.ok){
-            window.location.href = "http://127.0.0.1:8000";
-            console.log(response)
-             sessionStorage.clear();
+                div2.appendChild(a2)
+                div2.appendChild(p1)
+                div_color_wrapper.appendChild(pColor);
+                div_color_wrapper.appendChild(div_color)
+                div2.appendChild(div_color_wrapper);
+                div1.appendChild(div2)
+                td1.appendChild(div1)
+                tr1.appendChild(td1)
+
+
+                const td2 = document.createElement("td");
+
+                const divQuantityBox = document.createElement("div");
+                divQuantityBox.className = "quantity-box";
+
+                inputQuantity = document.createElement("input");
+                inputQuantity.type = "text";
+                inputQuantity.style.border = "none"
+                inputQuantity.style.width = "50px";
+                {#inputQuantity.className = "quantity";#}
+                inputQuantity.value = value.quantity;
+
+                spanQuantityMinus = document.createElement("span");
+                spanQuantityMinus.className = "quantity-minus pa-sub quantity-icon";
+                spanQuantityMinus.textContent = " - ";
+
+                spanQuantityPlus = document.createElement("span");
+                spanQuantityPlus.className = "quantity-plus pa-add quantity-icon";
+                spanQuantityPlus.textContent = " + ";
+
+
+                divQuantityBox.appendChild(inputQuantity);
+                divQuantityBox.appendChild(spanQuantityMinus);
+                divQuantityBox.appendChild(spanQuantityPlus);
+
+                td2.appendChild(divQuantityBox);
+                tr1.appendChild(td2);
+
+
+                spanQuantityMinus.addEventListener('click', function () {
+                    let quantity = parseInt(inputQuantity.value);
+                    if (quantity > 1) {
+                        inputQuantity.value = quantity - 1;
+                        updateCartItems(key, quantity - 1);
+                    }
+                });
+
+
+                spanQuantityPlus.addEventListener('click', function () {
+                    let quantity = parseInt(inputQuantity.value);
+                    if (quantity < 4) {
+                        inputQuantity.value = quantity + 1;
+                        updateCartItems(key, quantity + 1);
+                    }
+                });
+
+                const td3 = document.createElement("td")
+
+                const span1 = document.createElement("span")
+                span1.className += "sc-product-prc"
+                span1.innerHTML = value.originalPrice
+                td3.appendChild(span1)
+                tr1.appendChild(td3)
+
+
+                const td4 = document.createElement("td")
+
+                const span2 = document.createElement("span")
+                span2.className += "sc-product-prc"
+                span2.innerHTML = value.originalPrice * value.quantity
+                sum = sum + (value.originalPrice * value.quantity)
+                span_cart.innerHTML = sum + "تومان"
+                td4.appendChild(span2)
+                tr1.appendChild(td4)
+
+
+                const td_icon = document.createElement("td");
+                const a_icon = document.createElement("a");
+                a_icon.className = "sc-produc-remove e-remove-product";
+
+                const img = document.createElement("img");
+                img.src = "{% static 'assets/images/index1/svg/cut.svg' %}";
+                img.alt = "icon";
+
+                a_icon.appendChild(img);
+                td_icon.appendChild(a_icon);
+                tr1.appendChild(td_icon)
+
+
+                tbody.appendChild(tr1)
+
+
+                a_icon.addEventListener('click', function () {
+                    deleteCartItem(key);
+                    tr1.remove();
+                });
+
+                function deleteCartItem(key) {
+                    const cartItems = sessionStorage.getItem("cart");
+                    if (cartItems) {
+                        const parsedCartItems = JSON.parse(cartItems);
+                        delete parsedCartItems[key];
+                        sessionStorage.setItem("cart", JSON.stringify(parsedCartItems));
+                    }
+                }
+
+                function updateCartItems(key, quantity) {
+                    const cartItems = sessionStorage.getItem("cart");
+                    if (cartItems) {
+                        const parsedCartItems = JSON.parse(cartItems);
+                        parsedCartItems[key].quantity = quantity;
+                        sessionStorage.setItem("cart", JSON.stringify(parsedCartItems));
+
+                        const price = parsedCartItems[key].originalPrice;
+                        const totalPrice = price * quantity;
+                        span2.innerHTML = totalPrice
+
+
+                        sum = 0
+                        let cart = sessionStorage.getItem("cart");
+                        for (let [key, value] of Object.entries(JSON.parse(cart))) {
+                            console.log("sum" + sum)
+                            console.log(value.quantity, value.originalPrice)
+                            sum += (value.quantity * value.originalPrice)
+                            console.log("sum2" + sum)
+                        }
+                        span_cart.innerHTML = sum + "تومان"
+
+
+                    }
+                }
+
+
+            }
+
+
         }
-        else if (response.status === 401) {
-            {#window.location.href = "http://127.0.0.1:8000/accounts/login/";#}
-        }
-        else {
-            console.log('Error:', response.statusText);
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
 
 
-</script>
+        function getCookie(name) {
+            const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+            return cookieValue ? cookieValue.pop() : '';
+        }
+
+        const button = document.getElementById('addtocart')
+        button.addEventListener("click", () => {
+            addToCart()
+        })
+
+        function addToCart() {
+
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
+            console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+            const csrftoken = getCookie('csrftoken');
+            fetch('http://127.0.0.1:8000/api/cart/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+
+                },
+                body: JSON.stringify(cart),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "http://127.0.0.1:8000";
+                        console.log(response)
+                        sessionStorage.clear();
+                    } else if (response.status === 401) {
+                        {#window.location.href = "http://127.0.0.1:8000/accounts/login/";#}
+                    } else {
+                        console.log('Error:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+    </script>
 
 {% endblock content %}
