@@ -46,17 +46,7 @@
                     <div class="prodetails-info">
                         <div class="pd-infotop">
                             <h2 class="pd-title">{{ details.name }}</h2>
-                            {#                        <div class="pd-special-price">#}
-                            {#                            <span class="pd-price-end" id="headline">قیمت ویژه در کمتر از</span>#}
-                            {#                            <div id="countdown">#}
-                            {#                                <ul class="pd-counter-list">#}
-                            {#                                  <li><span id="days"></span> روز : </li>#}
-                            {#                                  <li><span id="hours"></span> ساعت : </li>#}
-                            {#                                  <li><span id="minutes"></span> دقیقه : </li>#}
-                            {#                                  <li><span id="seconds"></span> ثانیه پایان می می رسد</li>#}
-                            {#                                </ul>#}
-                            {#                            </div>#}
-                            {#                        </div>#}
+
                             <ul class="pd-price-wrap">
 
 
@@ -90,7 +80,12 @@
                                         <ul style="display: flex; align-items: center;">
                                             {% for color in colors %}
                                                 <li style="width: 50px; height: 50px; padding: 5px;"
-                                                    onclick="selectColor(this, '{{ color }}')"><div style=" width:90%; height:90%; border-radius: 5px; box-sizing: border-box;  margin:auto; background-color: {{ color }}"></div></li>
+                                                    onclick="selectColor(this, '{{ color }}')">
+                                                    <div style=" width:90%;
+                                                     height:90%; border-radius: 5px;
+                                                     box-sizing: border-box;  margin:auto;
+                                                      background-color: {{ color }}"></div>
+                                                </li>
 
                                             {% endfor %}
                                         </ul>
@@ -103,9 +98,7 @@
                                     </div>
                                     <div class="ib-list-right">
                                         <ul class="d-flex">
-                                            {#                                            {% for size in sizes %}#}
-                                            {#                                                <li>{{ size }}</li>#}
-                                            {#                                            {% endfor %}#}
+
                                             {% for size in sizes %}
                                                 <li>
                                                     <input type="radio" id="size_{{ size }}" name="selected_size"
@@ -119,35 +112,22 @@
                                 </li>
 
 
-
-
                                 <li>
-                                    {#                                    <div class="dropdown mx-3">#}
-                                    {#                                        <button class="btn btn-outline-secondary dropdown-toggle " type="button"#}
-                                    {#                                                data-toggle="dropdown" aria-expanded="false">#}
-                                    {#                                            رنگ بندی و سایز#}
-                                    {#                                        </button>#}
-                                    {#                                        <ul class="dropdown-menu ">#}
-                                    {#                                            {% for foo in attributes %}#}
-                                    {#                                                <li><a class="dropdown-item text-end" href="#">#}
-                                    {#                                                    <span style="width: 15px; height: 15px; background-color: {{ foo.code_color }}; display: inline-block; border-radius: 100%;"></span>#}
-                                    {#                                                    سایز: {{ foo.size }}#}
-                                    {#                                                </a></li>#}
-                                    {#                                            {% endfor %}#}
-                                    {#                                        </ul>#}
-                                    {#                                    </div>#}
+
                                     <div class="ib-list-right">
                                         <ul class="pd-qua-wrap">
                                             <li>
                                                 <div class="quantity-box">
-                                                    <input type="text" class="quantity" value="0">
+                                                    <input type="text" value="1" class="quantity_input"
+                                                           style="width: 50px; border: 0">
                                                     <span class="quantity-minus pa-sub quantity-icon"> - </span>
                                                     <span class="quantity-plus  pa-add quantity-icon"> + </span>
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </li>
                                             <li>
-                                                <a href="#" class="e-btn pd-addcart" onclick="addToCart(this)">افزودن به سبد </a>
+                                                <a href="#" class="e-btn pd-addcart" onclick="addToCart(this)">افزودن به
+                                                    سبد </a>
                                             </li>
                                             <li>
                                                 <a href="wishlist.html" class="e-btn light pd-heart">
@@ -215,19 +195,9 @@
                                                 {% for foo in comments %}
                                                     <li><p> {{ foo.body | safe }}</p></li>
                                                 {% endfor %}
-
-
-                                                {#                                            <li><p> <span> رنگ </span>  - صورتی ، مشکی</p></li>#}
-                                                {#                                            <li><p> <span> شماره مدل </span>  - کد 1323</p></li>#}
-                                                {#                                            <li><p> <span> نام محصول </span> - کت تابستانی</p></li>#}
                                             </ul>
                                         </div>
-                                        {#                                    <div class="col-md-4">#}
-                                        {#                                        <ul class="pdtab-addinfo ">#}
-                                        {#                                            <li><p> <span> امتیاز سیستمی  </span> - عالی </p></li>#}
-                                        {#                                            <li><p> <span> طراحی </span> - متریال</p></li>#}
-                                        {#                                        </ul>#}
-                                        {#                                    </div>#}
+
                                     </div>
                                 </div>
                             </div>
@@ -273,91 +243,140 @@
 
 
     <script>
-function selectColor(element, color) {
+        let selected_color = null;
 
-    var liElements = document.querySelectorAll('.ib-list-right ul li');
-    liElements.forEach(function(li) {
-        li.style.border = 'none';
-    });
-    element.style.border = '2px solid black';
-    selectedColor = color;
-}
+        function selectColor(element, color) {
+
+            let liElements = document.querySelectorAll('.ib-list-right ul li');
+            liElements.forEach(function (li) {
+                li.style.border = 'none';
+            });
+            element.style.border = '2px solid black';
+            selectedColor = color;
+            selected_color = color
+            console.log(selected_color)
+        }
 
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const quantityInput = document.querySelector('.quantity_input');
+            const quantityMinus = document.querySelector('.quantity-minus');
+            const quantityPlus = document.querySelector('.quantity-plus');
 
 
-{#    function getCookie(cookieName) {#}
-{#        let name = cookieName + "=";#}
-{#        let decodedCookie = decodeURIComponent(document.cookie);#}
-{#        let cookieArray = decodedCookie.split(';');#}
-{#        for(let i = 0; i < cookieArray.length; i++) {#}
-{#            let cookie = cookieArray[i].trim();#}
-{#            if (cookie.indexOf(name) == 0) {#}
-{#                return cookie.substring(name.length, cookie.length);#}
-{#            }#}
-{#        }#}
-{#        return "";#}
+            const minValue = 1;
+            const maxValue = 4;
 
-{##}
-{##}
-{#function setCookie(cookieName, cookieValue, expireDays) {#}
-{#    let d = new Date();#}
-{#    d.setTime(d.getTime() + (expireDays * 24 * 60 * 60 * 1000));#}
-{#    let expires = "expires="+d.toUTCString();#}
-{#    document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";#}
 
-{##}
-{#    function addToCart() {#}
-{#        let selectedSize = document.querySelector('input[name="selected_size"]:checked').value;#}
-{#        console.log(selectedSize)#}
-{#        let selectedColor = document.querySelector('.na-color-skin li[selectedColor]').getAttribute('selectedColor');#}
-{#        console.log(selectedColor)#}
-{##}
-{#        let itemId = "{{ details.id }}";#}
-{#        console.log(itemId)#}
-{##}
-{#        let quantity = document.querySelector('.quantity').value;#}
-{#        console.log(quantity)#}
-{##}
-{#        let cart = JSON.parse(getCookie("cart")) || {};#}
-{#         cart[itemId] = {#}
-{#        "size": selectedSize,#}
-{#        "color": selectedColor,#}
-{#        "quantity": quantity#}
-{#    };#}
-{##}
-{##}
-{#    setCookie("cart", JSON.stringify(cart), 1);#}
-{##}
-function addToCart() {
-    let selectedSize = document.querySelector('input[name="selected_size"]:checked').value;
-    let selectedColor = document.querySelectorAll('.ib-list-right ul li');
+            quantityMinus.addEventListener('click', function () {
+                let value = parseInt(quantityInput.value);
+                if (value > minValue) {
+                    quantityInput.value = value - 1;
+                } else {
+                    quantityInput.value = minValue;
+                }
+            });
 
-    let itemId = "{{ details.id }}";
-    let quantity = document.querySelector('.quantity').value;
-    let imageSrc = "{{ details.image.url }}";
-    let name = "{{ details.name  }}"
 
-    let originalPrice = "{{ details.price }}";
-    let discountedPrice = "{{ details.calculate_discounted_price }}";
+            quantityPlus.addEventListener('click', function () {
+                let value = parseInt(quantityInput.value);
+                if (value < maxValue) {
+                    quantityInput.value = value + 1;
+                } else {
+                    quantityInput.value = maxValue;
+                }
+            });
 
-    let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
-    cart[itemId] = {
-        "name": name,
-        "size": selectedSize,
-        "color": selectedColor,
-        "quantity": quantity,
-        "imageSrc": imageSrc,
-        "originalPrice": originalPrice,
-        "discountedPrice": discountedPrice
-    };
 
-    sessionStorage.setItem("cart", JSON.stringify(cart));
-    alert("محصول با موفقیت به سبد خرید اضافه شد.");
-}
+        });
+
+
+        function addToCart() {
+            let selectedColor = selected_color;
+            if (!selectedColor) {
+                alert("لطفاً رنگ  محصول را انتخاب کنید.");
+                return;
+            }
+            console.log(selectedColor)
+            let quantity = document.querySelector('.quantity_input').value;
+            console.log(quantity)
+
+            let selectedSizeInput = document.querySelector('input[name="selected_size"]:checked');
+            if (!selectedSizeInput) {
+                alert("لطفاً سایز محصول را انتخاب کنید.");
+                return;
+            }
+            let selectedSize = selectedSizeInput.value;
+
+            console.log('a')
+
+            let itemId = "{{ details.id }}";
+            let imageSrc = "{{ details.image.url }}";
+            let name = "{{ details.name  }}"
+            let originalPrice = "{{ details.price }}";
+            let discountedPrice = "{{ details.calculate_discounted_price }}";
+
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
+            cart[itemId] = {
+                "name": name,
+                "size": selectedSize,
+                "color": selectedColor,
+                "quantity": quantity,
+                "imageSrc": imageSrc,
+                "originalPrice": originalPrice,
+                "discountedPrice": discountedPrice
+            };
+
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+            alert("محصول با موفقیت به سبد خرید اضافه شد.");
+        }
+
+
+        {#    function getCookie(cookieName) {#}
+        {#        let name = cookieName + "=";#}
+        {#        let decodedCookie = decodeURIComponent(document.cookie);#}
+        {#        let cookieArray = decodedCookie.split(';');#}
+        {#        for(let i = 0; i < cookieArray.length; i++) {#}
+        {#            let cookie = cookieArray[i].trim();#}
+        {#            if (cookie.indexOf(name) == 0) {#}
+        {#                return cookie.substring(name.length, cookie.length);#}
+        {#            }#}
+        {#        }#}
+        {#        return "";#}
+
+        {##}
+        {##}
+        {#function setCookie(cookieName, cookieValue, expireDays) {#}
+        {#    let d = new Date();#}
+        {#    d.setTime(d.getTime() + (expireDays * 24 * 60 * 60 * 1000));#}
+        {#    let expires = "expires="+d.toUTCString();#}
+        {#    document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";#}
+
+        {##}
+        {#    function addToCart() {#}
+        {#        let selectedSize = document.querySelector('input[name="selected_size"]:checked').value;#}
+        {#        console.log(selectedSize)#}
+        {#        let selectedColor = document.querySelector('.na-color-skin li[selectedColor]').getAttribute('selectedColor');#}
+        {#        console.log(selectedColor)#}
+        {##}
+        {#        let itemId = "{{ details.id }}";#}
+        {#        console.log(itemId)#}
+        {##}
+        {#        let quantity = document.querySelector('.quantity').value;#}
+        {#        console.log(quantity)#}
+        {##}
+        {#        let cart = JSON.parse(getCookie("cart")) || {};#}
+        {#         cart[itemId] = {#}
+        {#        "size": selectedSize,#}
+        {#        "color": selectedColor,#}
+        {#        "quantity": quantity#}
+        {#    };#}
+        {##}
+        {##}
+        {#    setCookie("cart", JSON.stringify(cart), 1);#}
+        {##}
 
     </script>
-
 
 
 
