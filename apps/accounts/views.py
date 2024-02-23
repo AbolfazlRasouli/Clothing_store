@@ -237,3 +237,11 @@ class ResetPasswordDone(TemplateView):
 
 def profile(request):
     return render(request, 'accounts/profile.html')
+
+def show_address(request):
+    return render(request, 'accounts/addres_show.html')
+
+
+def detail_address(request):
+    return render(request, 'accounts/address_show_single.html')
+
