@@ -10,3 +10,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = ['id', 'email', 'phone_number', 'first_name', 'last_name']
 
+
+class AddressSerializer(serializers.ModelSerializer):
+    # user = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all())
+    class Meta:
+        model = Address
+        fields = ['id', 'country', 'province', 'city', 'street', 'pelak', 'complete_address']
