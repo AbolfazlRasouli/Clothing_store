@@ -60,12 +60,7 @@
                                     <input class="e-field-inner require" id="phone-number" type="text" >
                                 </div>
                             </div>
-{#                            <div class="col-md-12">#}
-{#                                <div class="e-form-field mb-26">#}
-{#                                    <label>آدرس</label>#}
-{#                                    <textarea class="e-field-inner require" placeholder="jabasi26@gmail.com"></textarea>#}
-{#                                </div>#}
-{#                            </div>#}
+
                             <div class="col-md-12">
                                 <div class="">
                                     <button type="button" id="send-data" class="e-btn">ذخیره</button>
@@ -150,7 +145,7 @@ function updateUserData() {
     })
     .then(data => {
         console.log('Updated user data:', data);
-        // Handle response data if needed
+
     })
     .catch(error => {
         console.error('There was an error!', error);
