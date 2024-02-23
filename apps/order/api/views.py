@@ -6,14 +6,12 @@ from django.shortcuts import redirect, reverse
 from django.shortcuts import get_object_or_404
 from apps.product.models import Product
 from apps.order.models import Order, OrderItem
-from .serializer import ProductSerializer
-
+from .serializer import ProductSerializer, OrderItemSerializer
+from django.db.models import F
 
 class CartAPI(APIView):
     def post(self, request):
         cart_data = request.data
-        # print(cart_data,'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqq')
-        # print('asaasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
         for item_id, item_data in cart_data.items():
             size = item_data.get('size')
@@ -44,6 +42,17 @@ class CartAPI(APIView):
                     product=product
                 )
                 print('okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+                print('product : ', product)
+                print('size : ', size)
+                print('color : ', color)
+
+                attribute = product.attribute.filter(size=size, name_color=color)
+                print(attribute)
+                if attribute:
+                    attribute.count = F('count') - quantity
+                    attribute.save()
+
+
 
             else:
 
@@ -51,3 +60,11 @@ class CartAPI(APIView):
 
         return Response({"message": "Data received successfully"})
 
+
+
+class ShowCartApi(APIView):
+    def get(self, request):
+
+        order_item_queryser = OrderItem.objects.filter(order__user=request.user)
+        serializer = OrderItemSerializer(order_item_queryser, many=True)
+        return Response(serializer.data)
