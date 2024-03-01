@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from .models import Address
 
 
 class LoginForm(AuthenticationForm):
@@ -104,3 +105,10 @@ class PasswordResetForm(forms.Form):
             )
 
         return cleaned_data
+
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ('country', 'province', 'city', 'street', 'pelak', 'complete_address')
