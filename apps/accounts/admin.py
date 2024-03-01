@@ -49,7 +49,7 @@ class UserAdmin(UserAdmin):
         return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
 
     def show(self, obj):
-        url = reverse('admin:product_category_change', args=[obj.id])
+        url = reverse('admin:accounts_customuser_change', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
 
     show.short_description = 'مشاهده'
@@ -83,7 +83,7 @@ class AddressAdmin(admin.ModelAdmin):
         return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
 
     def show(self, obj):
-        url = reverse('admin:product_category_change', args=[obj.id])
+        url = reverse('admin:accounts_address_change', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
 
     show.short_description = 'مشاهده'
