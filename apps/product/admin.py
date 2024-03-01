@@ -3,9 +3,10 @@ from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from django.utils.html import format_html
-from .models import Product, Attribute, Comment, Category, Image, Discount, Like
+from .models import Product, Comment, Category, Image, Discount, Like, Variant, Size, Color
 from django.urls import reverse
 from .mixin import CustomAdminMixin
+
 
 
 class ProductInline(admin.StackedInline):
@@ -17,7 +18,16 @@ class ProductInline(admin.StackedInline):
     )
 
 
-class CommenApprovedInline(admin.StackedInline):
+class ProductVariantInline(admin.TabularInline):
+    model = Variant
+    extra = 1
+    classes = ('collapse',)
+    show_change_link = True
+    fieldsets = (
+        (None, {"fields": ("size", "color", "quantity", "price", "discount")}),
+    )
+
+class CommentApprovedInline(admin.StackedInline):
     model = Comment
     verbose_name = "نظر"
     classes = ('collapse',)
@@ -79,12 +89,12 @@ class CategoryAdmin(admin.ModelAdmin):
     delete.short_description = 'حذف'
 
 
-@admin.register(Attribute)
-class AttributeAdmin(admin.ModelAdmin):
-    model = Attribute
-    list_display = ('size', 'name_color', 'display_code_color', 'count', 'edit', 'delete')
-    search_fields = ('size', 'name_color', 'code_color')
-    list_filter = ('size', 'name_color', 'count')
+@admin.register(Color)
+class ColorAdmin(admin.ModelAdmin):
+    model = Color
+    list_display = ('name', 'code', 'display_code_color', 'edit', 'delete')
+    search_fields = ('name', 'code')
+    list_filter = ('name',)
     list_display_links = None
 
     def get_list_display(self, request):
@@ -94,27 +104,105 @@ class AttributeAdmin(admin.ModelAdmin):
         elif 'manager' in user_groups:
             return super().get_list_display(request)
         else:
-            return ('size', 'name_color', 'display_code_color', 'count', 'show')
+            return ('name', 'display_code_color', 'show')
 
     def edit(self, obj):
-        url = reverse('admin:product_attribute_change', args=[obj.id])
+        url = reverse('admin:product_color_change', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
 
     def delete(self, obj):
-        url = reverse('admin:product_attribute_delete', args=[obj.id])
+        url = reverse('admin:product_color_delete', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
 
     def display_code_color(self, obj):
-        return format_html('<div style="width: 40px; height: 40px; background-color: {};"></div>', obj.code_color)
+        return format_html('<div style="width: 40px; height: 40px; background-color: {};"></div>', obj.code)
 
     def show(self, obj):
-        url = reverse('admin:product_attribute_change', args=[obj.id])
+        url = reverse('admin:product_color_change', args=[obj.id])
         return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
 
     display_code_color.short_description = 'رنگ'
     edit.short_description = 'ویرایش'
     delete.short_description = 'حذف'
     show.short_description = 'مشاهده'
+
+
+@admin.register(Size)
+class SizeAdmin(admin.ModelAdmin):
+    model = Size
+    list_display = ('name', 'edit', 'delete')
+    search_fields = ('name',)
+    list_filter = ('name',)
+    list_display_links = None
+
+    def get_list_display(self, request):
+        user_groups = request.user.groups.values_list('name', flat=True)
+        if 'operator' in user_groups:
+            return super().get_list_display(request)
+        elif 'manager' in user_groups:
+            return super().get_list_display(request)
+        else:
+            return ('name','show')
+
+    def edit(self, obj):
+        url = reverse('admin:product_size_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
+
+    def delete(self, obj):
+        url = reverse('admin:product_size_delete', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
+
+    def show(self, obj):
+        url = reverse('admin:product_size_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
+
+    edit.short_description = 'ویرایش'
+    delete.short_description = 'حذف'
+    show.short_description = 'مشاهده'
+
+
+
+@admin.register(Variant)
+class VariantAdmin(admin.ModelAdmin):
+    model = Variant
+    list_display = ('product', 'size', 'color', 'quantity', 'price', 'discount', 'edit', 'delete')
+    search_fields = ('product', 'size', 'color', 'quantity', 'price', 'discount',)
+    list_filter = ('product', 'size', 'color', 'quantity', 'price', 'discount',)
+    list_display_links = None
+
+    def get_list_display(self, request):
+        user_groups = request.user.groups.values_list('name', flat=True)
+        if 'operator' in user_groups:
+            return super().get_list_display(request)
+        elif 'manager' in user_groups:
+            return super().get_list_display(request)
+        else:
+            return ('product', 'size', 'color', 'quantity', 'price', 'discount', 'show')
+
+    def edit(self, obj):
+        url = reverse('admin:product_variant_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
+
+    def delete(self, obj):
+        url = reverse('admin:product_variant_delete', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
+
+    def display_code_color(self, obj):
+        return format_html('<div style="width: 40px; height: 40px; background-color: {};"></div>', obj.code)
+
+    def show(self, obj):
+        url = reverse('admin:product_variant_change', args=[obj.id])
+        return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
+
+    display_code_color.short_description = 'رنگ'
+    edit.short_description = 'ویرایش'
+    delete.short_description = 'حذف'
+    show.short_description = 'مشاهده'
+
+
+
+
+
 
 
 @admin.register(Discount)
@@ -154,11 +242,11 @@ class DiscountAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     model = Product
-    list_display = ('name', 'code', 'price', 'display_image', 'edit', 'delete')
+    list_display = ('name', 'code',  'display_image', 'edit', 'delete')
     search_fields = ('name', 'category__name')
     list_filter = ('name', 'category__name')
     list_display_links = None
-    inlines = (CommenApprovedInline,)
+    inlines = (CommentApprovedInline, ProductVariantInline)
 
     def get_list_display(self, request):
         user_groups = request.user.groups.values_list('name', flat=True)
@@ -167,7 +255,7 @@ class ProductAdmin(admin.ModelAdmin):
         elif 'manager' in user_groups:
             return super().get_list_display(request)
         else:
-            return ('name', 'code', 'price', 'display_image', 'show')
+            return ('name', 'code', 'display_image', 'show')
 
 
 
@@ -214,7 +302,7 @@ class ImageAdmin(admin.ModelAdmin):
         elif 'manager' in user_groups:
             return super().get_list_display(request)
         else:
-            return ('display_image', 'show')
+            return ('product', 'display_image', 'show')
 
     def display_image(self, obj):
         return format_html('<img src="{}" height="60" style="background-color: #121212;"/>'.format(obj.image.url))
@@ -307,3 +395,40 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 
+
+# @admin.register(Attribute)
+# class AttributeAdmin(admin.ModelAdmin):
+#     model = Attribute
+#     list_display = ('size', 'name_color', 'display_code_color', 'count', 'edit', 'delete')
+#     search_fields = ('size', 'name_color', 'code_color')
+#     list_filter = ('size', 'name_color', 'count')
+#     list_display_links = None
+
+    # def get_list_display(self, request):
+    #     user_groups = request.user.groups.values_list('name', flat=True)
+    #     if 'operator' in user_groups:
+    #         return super().get_list_display(request)
+    #     elif 'manager' in user_groups:
+    #         return super().get_list_display(request)
+    #     else:
+    #         return ('size', 'name_color', 'display_code_color', 'count', 'show')
+    #
+    # def edit(self, obj):
+    #     url = reverse('admin:product_attribute_change', args=[obj.id])
+    #     return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">ویرایش</a>', url)
+    #
+    # def delete(self, obj):
+    #     url = reverse('admin:product_attribute_delete', args=[obj.id])
+    #     return format_html('<a href="{}" style="color:white; background-color: #840303; padding:8px">حذف</a>', url)
+    #
+    # def display_code_color(self, obj):
+    #     return format_html('<div style="width: 40px; height: 40px; background-color: {};"></div>', obj.code_color)
+    #
+    # def show(self, obj):
+    #     url = reverse('admin:product_attribute_change', args=[obj.id])
+    #     return format_html('<a href="{}" style="color:white; background-color: #00ff40; padding:8px">مشاهده</a>', url)
+    #
+    # display_code_color.short_description = 'رنگ'
+    # edit.short_description = 'ویرایش'
+    # delete.short_description = 'حذف'
+    # show.short_description = 'مشاهده'
