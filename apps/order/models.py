@@ -2,7 +2,7 @@ from django.db import models
 from apps.accounts.models import Address
 from django.conf import settings
 from apps.core.models import TimeStamp, BaseModel
-from apps.product.models import Product
+from apps.product.models import Product, Variant
 from django.utils.translation import gettext_lazy as _
 
 
@@ -44,13 +44,17 @@ class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE,
                               related_name='orderitem_order',
                               verbose_name=_('order'))
+    # variant = models.ForeignKey(Variant, on_delete=models.CASCADE,
+    #                             related_name='orderitem_variant',
+    #                             verbose_name=_('variant '))
     product = models.ForeignKey(Product, on_delete=models.CASCADE,
                                 related_name='orderitem_product',
-                                verbose_name=_('product '))
+                                verbose_name=_('product'))
+
 
     class Meta:
         verbose_name = _('order item')
         verbose_name_plural = _('order items')
 
     def __str__(self):
-        return f'{self.order} : {self.product}'
+        return f'{self.order} : {self.variant}'
