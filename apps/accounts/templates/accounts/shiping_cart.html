@@ -1,0 +1,322 @@
+{% extends '_base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+    <!-- Breadcumbs start -->
+    <div class="e-breadcumb-wrap text-center">
+        <h2 class="e-breadcumb-title">بررسی و پرداخت</h2>
+        <ul class="e-breadcumb-kist">
+            <li>
+                <a href="index.html">خانه </a>
+            </li>
+            <li>
+                <a href="javascript:void(0);"> صفحات </a>
+            </li>
+            <li>
+                <a href="javascript:void(0);"> بررسی و پرداخت </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <section class="e-shopcart-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-12">
+
+
+                    <div class="e-shopcart-sec" id="address">
+                        <div class="shopcart-table-wrap mb-30">
+                            <form class="table-responsive">
+                                <table class="shopcart-table">
+                                    <thead>
+                                    <tr>
+                                        <th>آدرس های شما</th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <tbody id="tbody">
+                                    {% for address in addresses %}
+                                        <tr>
+                                            <td>
+                                                <div class="sc-product-details">
+                                                    <p style="margin-bottom: 20px;">{{ address.complete_address }}</p>
+                                                    <div class="">
+                                                        <a href="{% url 'accounts:update_address' address.id %}"
+                                                           class="e-btn-black-s2" style="margin: 0 10px;"> ویرایش </a>
+                                                        <a href="#" class="e-btn-black-s2"
+                                                           data-address-id="{{ address.id }}">انتخاب</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+
+                                </table>
+
+                            </form>
+                        </div>
+                        <div>
+                            <a href="{% url 'accounts:address_create_view' %}" id="#" class="e-btn"
+                               style="margin-right: 50px;">اضافه کردن آدرس جدید </a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-xl-3 col-lg-12">
+                    <div class="e-shopcart-sidebar mb-80">
+                        <div class="e-totalsumry mb-30">
+                            <div class="e-totalsumry-header">
+                                <h2 class="e-totalsumry-ttl">خلاصه مجموع سبد خرید</h2>
+                            </div>
+                            <div class="e-totalsumry-body">
+                                <ul class="e-totalsumry-list">
+                                    <li>
+                                        <span class="ts-list-head">تعداد محصولات : </span>
+                                        <span class="ts-list-shead" id="count-product"> </span>
+                                    </li>
+                                    <li>
+                                        <span class="ts-list-head">مجموع سبد:</span>
+                                        <span class="ts-list-shead" id="price-product"> </span>
+                                    </li>
+                                    <li>
+                                        <span class="ts-list-head"> </span>
+                                        <span class="ts-list-shead" id="price-product-discount"> </span>
+                                    </li>
+                                </ul>
+                                <!-- <a href="javascript:void(0);" class="ts-chngadd">Change Address
+                                    <img src="assets/images/index1/svg/edit.svg" alt="edit">
+                                </a> -->
+                            </div>
+                            {#                            <div class="e-totalsumry-fotr">#}
+                            {#                                <ul class="e-totalsumry-list total">#}
+                            {#                                    <li>#}
+                            {#                                        <span class="ts-list-head">گراند توتال</span>#}
+                            {#                                        <span class="ts-list-shead">26000 تومان</span>#}
+                            {#                                    </li>#}
+                            {#                                </ul>#}
+                            {#                            </div>#}
+
+
+                            <div class="sc-dcinput">
+                                {#                                <div class="sc-diswrap">#}
+                                {#                                    <img src="{% static 'assets/images/index1/svg/discount_Per.svg' %}"#}
+                                {#                                         alt="icon">#}
+                                {#                                    <span>کد تخفیف</span>#}
+                                {#                                </div>#}
+                                {#                                <div class="sc-disinputwrap">#}
+                                <div>
+                                    {#                                    <form>#}
+                                    <div class="">
+                                        <input type="text" placeholder="کد تخفیف را وارد کنید"
+                                               style="display: block; height: 50px; margin-bottom: 20px;"
+                                               id="input-code">
+                                        <button class="e-btn newsletter-btn" id="button-code"
+                                                style="margin-bottom: 20px;">اعمال کد تخفیف
+                                        </button>
+                                    </div>
+                                    {#                                    </form>#}
+                                    <button class="e-btn" id="add_to_db">پرداخت صورتحساب</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+
+        let countProductSpan = document.getElementById('count-product');
+        let priceProductSpan = document.getElementById('price-product');
+        let priceProductDiscountSpan = document.getElementById('price-product-discount');
+
+
+        // متغیرهای برای نگهداری تعداد کل و قیمت کل
+        let totalcount = 0;
+        let totalPrice = 0;
+        let addressId;
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('salam')
+
+            let selectButtons = document.querySelectorAll('a[data-address-id]');
+            selectButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    addressId = button.getAttribute('data-address-id');
+                    console.log(addressId)
+                    alert('آدرس شما انتخاب شد .')
+
+                });
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // بارگیری اطلاعات از Session Storage
+            const cartItems = JSON.parse(sessionStorage.getItem('cart'));
+
+
+            // محاسبه تعداد کل و قیمت کل
+            for (const key in cartItems) {
+                if (cartItems.hasOwnProperty(key)) {
+                    const item = cartItems[key];
+                    console.log('totalcount' + totalcount)
+                    totalcount += parseInt(item.quantity);
+                    if (item.discountedPrice > 0) {
+                        console.log('discount : item.quantity : ' + item.quantity)
+                        console.log('discount : item.originalPrice : ' + item.discountedPrice)
+
+                        totalPrice += (item.quantity * item.discountedPrice)
+                        console.log('totalPrice discount : ' + totalPrice)
+                    } else {
+                        console.log('price : item.quantity : ' + item.quantity)
+                        console.log('price : item.originalPrice : ' + item.originalPrice)
+
+                        totalPrice += (item.quantity * item.originalPrice)
+
+                        console.log('totalPrice price : ' + totalPrice)
+                    }
+                    {#totalPrice += parseInt(item.originalPrice) * item.quantity;#}
+                }
+            }
+
+            // نمایش تعداد کل و قیمت کل در صفحه
+            console.log('Total Quantity:', totalcount);
+            console.log('Total Price:', totalPrice);
+
+
+            // تنظیم مقادیر در المان‌ها
+            if (countProductSpan && priceProductSpan) {
+                countProductSpan.textContent = totalcount;
+                priceProductSpan.textContent = totalPrice + ' تومان';
+            }
+        });
+
+
+        function getCookie(name) {
+            const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+            return cookieValue ? cookieValue.pop() : '';
+        }
+
+        let btn_discount = document.getElementById('button-code')
+        btn_discount.addEventListener("click", () => {
+            send_code()
+        })
+
+        function send_code() {
+
+            const inputCode = document.getElementById('input-code');
+
+            const discountCode = inputCode.value; // دریافت مقدار ورودی
+            console.log('inpucode:' + discountCode)
+            const csrftoken = getCookie('csrftoken');
+            fetch('http://127.0.0.1:8000/accounts/copun/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+
+                },
+                body: JSON.stringify({'discountCode': discountCode}),
+            })
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.code !== undefined) {
+                        console.log('Code:', data.code);
+                        console.log('Percent:', data.percent);
+                        console.log('Amount:', data.amount);
+
+                        let discountedPrice = 0
+                        if (data.percent !== null) {
+                            discountedPrice = totalPrice - (totalPrice * data.percent / 100);
+                            console.log('%%%%%%%%%%%' + discountedPrice)
+                        }
+                        if (data.amount !== null) {
+                            discountedPrice = totalPrice - data.amount;
+                            console.log('$$$$$$$$$$$$$$$$$$$' + discountedPrice)
+                        }
+                        priceProductSpan.style.textDecoration = 'line-through'
+                        priceProductSpan.style.color = 'red'
+                        priceProductDiscountSpan.textContent = discountedPrice + ' تومان';
+
+                        alert('کد تخفیف شما اعمال شد . ')
+
+                        {#console.log('Discounted Price:', discountedPrice);#}
+
+
+                    } else {
+                        console.log('Error:', data.error);
+                        alert('کد تخفیف شما نامعتبر است . ')
+                    }
+
+
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+        let add_db = document.getElementById('add_to_db')
+        add_db.addEventListener("click", () => {
+            addToDb()
+        })
+
+        function addToDb() {
+            if (!addressId) {
+                alert('لطفاً یک آدرس را انتخاب کنید.');
+                return;
+            }
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
+            console.log('addressa : ' + addressId)
+            console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+            const csrf = getCookie('csrftoken');
+            const dataToSend = {
+                cart: cart,
+                addressId: addressId
+            };
+            fetch('http://127.0.0.1:8000/api/cart/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrf,
+
+                },
+                body: JSON.stringify(dataToSend),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('ok')
+                        window.location.href = "http://127.0.0.1:8000";
+                        console.log(response)
+                        sessionStorage.clear();
+                    } else if (response.status === 401) {
+
+                    } else {
+                        console.log('Error:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+    </script>
+
+{% endblock content %}
