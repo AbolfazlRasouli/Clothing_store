@@ -9,62 +9,6 @@ from apps.core.models import TimeStamp, BaseModel
 from ckeditor.fields import RichTextField
 
 
-# class TimeStamp(models.Model):
-#     create_at = models.DateTimeField(verbose_name=_('create_at'), auto_now_add=True)
-#     updated_at = models.DateTimeField(verbose_name=_('updated_at'), auto_now=True)
-#
-#     class Meta:
-#         abstract = True
-#
-#
-# class LogicalQuerySet(models.QuerySet):
-#
-#     def delete(self):
-#         print('delete all list queryset')
-#         return super().update(is_deleted=True)
-#
-#     def hard_delete(self):
-#         return super().delete()
-#
-#
-# class LogicalManager(models.Manager):
-#
-#     def logical_queryset(self):
-#         return LogicalQuerySet(self.model)
-#
-#     def get_queryset(self):
-#         return self.logical_queryset().filter(is_deleted=False)
-#
-#     def archive(self):
-#         return self.logical_queryset()
-#
-#     def deleted(self):
-#         return self.logical_queryset().filter(is_deleted=True)
-#
-#
-# class BaseModel(models.Model):
-#     is_deleted = models.BooleanField(verbose_name=_('delete'), default=False)
-#     delete_date = models.DateTimeField(verbose_name=_('delete_date'), null=True, blank=True)
-#
-#     class Meta:
-#         abstract = True
-#
-#     objects = LogicalManager()
-#
-#     def delete(self, using=None, keep_parents=False):
-#         print('delete only object')
-#         self.is_deleted = True
-#         self.delete_date = timezone.now()
-#         self.save()
-#
-#     def hard_delete(self):
-#         super().delete()
-#
-#     def undelete(self):
-#         self.is_deleted = False
-#         self.save()
-
-
 class Category(TimeStamp, BaseModel):
     name = models.CharField(verbose_name=_('name category'), max_length=100, unique=True)
     description = RichTextField(verbose_name=_('description category'), null=True, blank=True)
@@ -88,18 +32,41 @@ class Category(TimeStamp, BaseModel):
         return super().save(*args, **kwargs)
 
 
-class Attribute(models.Model):
-    size = models.CharField(max_length=20, verbose_name=_('size'))
-    name_color = models.CharField(max_length=20, verbose_name=_('name color'))
-    code_color = models.CharField(max_length=20, verbose_name=_('code color'))
-    count = models.PositiveIntegerField(verbose_name=_('count'))
+class Color(TimeStamp, BaseModel):
+    name = models.CharField(max_length=20, verbose_name=_('name color'))
+    code = models.CharField(max_length=10, verbose_name=_('code color'))
 
     class Meta:
-        verbose_name = _('Attribute')
-        verbose_name_plural = _('Attributes')
+        verbose_name = _('Attribute color')
+        verbose_name_plural = _('Attribute colors')
 
     def __str__(self):
-        return f'{self.size} --> {self.name_color}'
+        return self.name
+
+
+class Size(TimeStamp, BaseModel):
+    name = models.CharField(max_length=10, verbose_name=_('size'))
+
+    class Meta:
+        verbose_name = _('Attribute size')
+        verbose_name_plural = _('Attribute sizes')
+
+    def __str__(self):
+        return self.name
+
+
+# class Attribute(models.Model):
+#     size = models.CharField(max_length=20, verbose_name=_('size'))
+#     name_color = models.CharField(max_length=20, verbose_name=_('name color'))
+#     code_color = models.CharField(max_length=20, verbose_name=_('code color'))
+#     count = models.PositiveIntegerField(verbose_name=_('count'))
+#
+#     class Meta:
+#         verbose_name = _('Attribute')
+#         verbose_name_plural = _('Attributes')
+#
+#     def __str__(self):
+#         return f'{self.size} --> {self.name_color}'
 
 
 class DiscountManager(models.Manager):
@@ -144,22 +111,19 @@ class Product(TimeStamp, BaseModel):
     name = models.CharField(verbose_name=_('name product'), max_length=255)
     brand = models.CharField(verbose_name=_('brand'), max_length=100)
     code = models.CharField(verbose_name=_('code'), max_length=15, unique=True)
-    price = models.PositiveIntegerField(verbose_name=_('price product'))
     slug = models.SlugField(verbose_name=_('name unique product'), max_length=100, unique=True, blank=True)
     description = RichTextField(verbose_name=_(' description product'), null=True, blank=True)
     image = models.ImageField(verbose_name=_('image product'), upload_to='item_image/')
-    attribute = models.ManyToManyField(Attribute, related_name='product_attribute',
-                                       verbose_name=_('attribute product'))
-    discount = models.ForeignKey(Discount, on_delete=models.CASCADE,
-                                 related_name='product_discount',
-                                 null=True, blank=True,
-                                 verbose_name=_('discount product'))
+    # attribute = models.ManyToManyField(Attribute, related_name='product_attribute',
+    #                                    verbose_name=_('attribute product'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product_category',
                                  verbose_name=_('category'))
 
-    class Meta:
-        verbose_name = _('product')
-        verbose_name_plural = _('products')
+    price = models.PositiveIntegerField(verbose_name=_('price'))
+    discount = models.ForeignKey(Discount, on_delete=models.CASCADE,
+                                 related_name='discount_product',
+                                 null=True, blank=True,
+                                 verbose_name=_('discount product'))
 
     def calculate_discounted_price(self):
         if self.discount:
@@ -173,6 +137,10 @@ class Product(TimeStamp, BaseModel):
         else:
             return self.price
 
+    class Meta:
+        verbose_name = _('product')
+        verbose_name_plural = _('products')
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name, allow_unicode=True)
@@ -182,9 +150,40 @@ class Product(TimeStamp, BaseModel):
         return f'{self.name}'
 
 
+class Variant(TimeStamp, BaseModel):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variant_product', verbose_name=_('product'))
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, related_name='variant_size', verbose_name=_('size'))
+    color = models.ForeignKey(Color, on_delete=models.CASCADE, related_name='variant_color', verbose_name=_('color'))
+    quantity = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(verbose_name=_('price'))
+    discount = models.ForeignKey(Discount, on_delete=models.CASCADE,
+                                 related_name='discount_attribute',
+                                 null=True, blank=True,
+                                 verbose_name=_('discount attribute'))
+
+    def calculate_discounted_price(self):
+        if self.discount:
+            if self.discount.percent:
+                discount_amount = (self.discount.percent / 100) * self.price
+            elif self.discount.amount:
+                discount_amount = self.discount.amount
+            else:
+                raise ValidationError(_('Invalid discount type.'))
+            return self.price - discount_amount
+        else:
+            return self.price
+
+    class Meta:
+        verbose_name = _('Attribute')
+        verbose_name_plural = _('Attributes')
+
+    def __str__(self):
+        return f'name : {self.product.name} - size : {self.size} - color : {self.color}'
+
+
 class Image(models.Model):
     image = models.ImageField(verbose_name=_('Image'), upload_to='item_image/')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name=_('product'))
 
     class Meta:
         verbose_name = _('Image')
