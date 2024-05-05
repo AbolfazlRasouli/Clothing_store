@@ -147,7 +147,7 @@
         let priceProductDiscountSpan = document.getElementById('price-product-discount');
 
 
-        // متغیرهای برای نگهداری تعداد کل و قیمت کل
+
         let totalcount = 0;
         let totalPrice = 0;
         let addressId;
@@ -169,11 +169,11 @@
 
 
         document.addEventListener('DOMContentLoaded', function () {
-            // بارگیری اطلاعات از Session Storage
+
             const cartItems = JSON.parse(sessionStorage.getItem('cart'));
 
 
-            // محاسبه تعداد کل و قیمت کل
+
             for (const key in cartItems) {
                 if (cartItems.hasOwnProperty(key)) {
                     const item = cartItems[key];
@@ -197,12 +197,12 @@
                 }
             }
 
-            // نمایش تعداد کل و قیمت کل در صفحه
+
             console.log('Total Quantity:', totalcount);
             console.log('Total Price:', totalPrice);
 
 
-            // تنظیم مقادیر در المان‌ها
+
             if (countProductSpan && priceProductSpan) {
                 countProductSpan.textContent = totalcount;
                 priceProductSpan.textContent = totalPrice + ' تومان';
@@ -224,7 +224,7 @@
 
             const inputCode = document.getElementById('input-code');
 
-            const discountCode = inputCode.value; // دریافت مقدار ورودی
+            const discountCode = inputCode.value;
             console.log('inpucode:' + discountCode)
             const csrftoken = getCookie('csrftoken');
             fetch('http://127.0.0.1:8000/accounts/copun/', {

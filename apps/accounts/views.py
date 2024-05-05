@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
-from .forms import EmailCheckForm, LoginForm, SignUpForm, PasswordResetForm
+from .forms import EmailCheckForm, LoginForm, SignUpForm, PasswordResetForm, AddressForm
 from .backends import CustomModelBackend as CMB
 from .utils import store_otp, check_otp
 from .tasks import send_otp_by_email, verify_link, send_by_email
+from .models import Address
 from django.views import View
 from django.views.generic.edit import CreateView, FormView
+from django.views.generic import ListView, UpdateView
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LogoutView, LoginView
 from django.views.generic import TemplateView
@@ -16,11 +18,15 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from config.celery import app
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 import hashlib
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from passlib.hash import pbkdf2_sha256
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+import json
+from django.http import JsonResponse
+from apps.product.models import Discount
 
 User = get_user_model()
 
@@ -244,4 +250,64 @@ def show_address(request):
 
 def detail_address(request):
     return render(request, 'accounts/address_show_single.html')
+
+
+class CheckShipping(LoginRequiredMixin, ListView):
+    model = Address
+    template_name = 'accounts/shiping_cart.html'
+    context_object_name = 'addresses'
+
+    def get_queryset(self):
+        return Address.objects.filter(user=self.request.user)
+
+
+class AddressCreateView(CreateView):
+    form_class = AddressForm
+    template_name = 'accounts/cart_address.html'
+    success_url = reverse_lazy('accounts:shiping_cart')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        super().form_valid(form)
+        messages.success(self.request, "آدرس با موفقیت ایجاد شد.")
+        return redirect(self.success_url)
+
+
+class AddressUpdateView(UpdateView):
+    model = Address
+    form_class = AddressForm
+    template_name = 'accounts/cart_address.html'
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:shiping_cart')
+
+# @login_required()
+# def address_update_view(request, pk):
+#     address_edit = get_object_or_404(Address, pk=pk)
+#     if request.method == 'POST':
+#         form_obj = AddressForm(request.POST, instance=address_edit)
+#         if form_obj.is_valid():
+#             form_obj.save()
+#             return redirect('accounts:shiping_cart')
+#     else:
+#         form_obj = AddressForm(instance=address_edit)
+#     return render(request, 'accounts/cart_address.html', {'forms': form_obj})
+#
+#
+
+
+def code_copun(request):
+    if request.method == 'POST':
+        print('salam')
+        discount_code = json.loads(request.body)
+        print(discount_code)
+
+        discounts = Discount.discount_manage.filter(code=discount_code['discountCode'])
+        print(discounts)
+        if discounts.exists():
+            discount_data = discounts.values('code', 'percent', 'amount').first()
+            print(discount_data)
+            return JsonResponse(discount_data)  # برگرداندن داده‌های مورد نیاز به صورت JSON
+        else:
+            return JsonResponse({'error': 'Discount not found'})
 

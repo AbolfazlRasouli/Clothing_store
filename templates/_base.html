@@ -15,7 +15,7 @@
     <!-- Favicon Link -->
     <link rel="shortcut icon" type="image/png" href={% static 'assets/images/index1/favicon.png' %}>
 
-{#    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">#}
+    {#    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">#}
 
     <title>{% block title %}{% endblock title %}</title>
 </head>
@@ -76,23 +76,24 @@
 
                             </select>
                         </li>
-{#                        <li><a href="wishlist.html">لیست علاقه مندیها </a></li>#}
-{#                        <li><a href="profile.html">حساب کاربری </a></li>#}
+                        {#                        <li><a href="wishlist.html">لیست علاقه مندیها </a></li>#}
+                        {#                        <li><a href="profile.html">حساب کاربری </a></li>#}
                         <li>
 
                             {% if user.is_authenticated %}
                                 <div class="dropdown">
-                                  <button class=" dropdown-toggle" type="button" id="dropdownMenuButton"
-                                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                          style="background-color: white; border: none">
-                                      خوش آمدی  {{ user.username }}
-                                  </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">حساب کاربری</a>
-                                    <a class="dropdown-item" href="{% url 'order:show_buy' %}"> خرید های شما  </a>
-                                    <a class="dropdown-item" href="{% url 'accounts:show_address' %}">آدرس های شما  </a>
-                                    <a class="dropdown-item" href="{% url 'accounts:logout' %}">خروج</a>
-                                  </div>
+                                    <button class=" dropdown-toggle" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            style="background-color: white; border: none">
+                                        خوش آمدی {{ user.username }}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="{% url 'accounts:profile' %}">حساب کاربری</a>
+                                        <a class="dropdown-item" href="{% url 'order:show_buy' %}"> خرید های شما </a>
+                                        <a class="dropdown-item" href="{% url 'accounts:show_address' %}">آدرس های
+                                            شما </a>
+                                        <a class="dropdown-item" href="{% url 'accounts:logout' %}">خروج</a>
+                                    </div>
                                 </div>
 
 
@@ -191,6 +192,7 @@
                     {##}
                     {#                    </ul>#}
 
+
                     <ul class="menu-list d-xl-flex">
                         <li>
                             <p class="menu-btn c-toggle-btn sidebar-toggle">
@@ -199,7 +201,11 @@
                                 <span></span>
                             </p>
                         </li>
+                        <li><a href="{% url 'product:home_page' %}">صفحه ی اصلی </a>
+{#                            <a style="display: inline-block; width: 10px; height: 10px; margin-left: 5px; "></a>#}
 
+
+             </li>
                         {% for cat in category %}
                             {% if cat.replay_cat == None %}
                                 <li>
@@ -225,8 +231,8 @@
                                 <ul class="sub-menu">
                                     <li><a href="{% url 'product:home_page' %}">صفحه ی اصلی </a></li>
                                     <li><a href="#">سبد خرید </a></li>
-{#                                    <li><a href="#">محصولات </a></li>#}
-{#                                    <li><a href="contact.html">تماس با ما </a></li>#}
+                                    {#                                    <li><a href="#">محصولات </a></li>#}
+                                    {#                                    <li><a href="contact.html">تماس با ما </a></li>#}
                                 </ul>
                             </div>
                         </li>
@@ -246,7 +252,7 @@
                             </a>
                         </li>
                         <li class="hs-cart-box cmn-cart-tgl">
-                            <a href="{% url 'order:cart_view' %}">
+                            <a href="{% url 'order:cart_view' %}" id="cart-view">
                                 <div class="hs-cartbox-inner">
                                     <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="22px" height="20px">
                                         <path fill-rule="evenodd" fill="rgb(125, 143, 179)"
@@ -254,7 +260,7 @@
                                     </svg>
                                     <span class="hs-cart-circle"></span>
                                 </div>
-{#                                <span class="hs-cart-value">512 هزار تومان</span>#}
+                                {#                                <span class="hs-cart-value">512 هزار تومان</span>#}
                             </a>
                         </li>
                         <li>
@@ -290,7 +296,8 @@
                             {#                            <a href="#"><img src="{% static 'assets/images/index1/logo.png' %}" alt="logo"#}
                             {#                                                      class="img-fluid"></a>#}
                             <a href="#" class="efoot-heading text-white">مانتو آواک </a>
-                            <p class="efoot-about text-white">مانتو آواک یک مجموعه تولیدی فروشگاهی پوشاک بانوان می باشد که با هدف
+                            <p class="efoot-about text-white">مانتو آواک یک مجموعه تولیدی فروشگاهی پوشاک بانوان می باشد
+                                که با هدف
                                 ارائه محصول به صورت مستقیم از تولیدی به مصرف کنندگان شروع به کار کرده است. کیفیت مطلوب
                                 در کنار قیمت مناسب حق مشتریان ماست. باور قلبی ما بر ایجاد شبکه فروش مبتنی بر صداقت،
                                 اصالت کالا و راحتی در خرید است.</p>
@@ -345,18 +352,58 @@
 <script src="{% static 'assets/js/custom.js' %}"></script>
 <script>
     let cartItem = sessionStorage.getItem("cart");
-let totalQuantity = 0;
+    let totalQuantity = 0;
 
-if (cartItem) {
-    const parsedCartItems = JSON.parse(cartItem);
-    for (let key in parsedCartItems) {
-        totalQuantity += parseInt(parsedCartItems[key].quantity);
+    if (cartItem) {
+        const parsedCartItems = JSON.parse(cartItem);
+        for (let key in parsedCartItems) {
+            totalQuantity += parseInt(parsedCartItems[key].quantity);
+        }
+        {#console.log(totalQuantity)#}
     }
-    {#console.log(totalQuantity)#}
-}
 
-const spanCartCircle = document.querySelector(".hs-cart-circle");
-spanCartCircle.textContent = totalQuantity.toString().padStart(2, '0');
+    const spanCartCircle = document.querySelector(".hs-cart-circle");
+    spanCartCircle.textContent = totalQuantity.toString().padStart(2, '0');
+
+
+    function getCookie(name) {
+        const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return cookieValue ? cookieValue.pop() : '';
+    }
+
+    const button = document.getElementById('cart-view')
+    button.addEventListener("click", () => {
+        cart_view()
+    })
+
+    function cart_view() {
+
+        let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
+        console.log('salam')
+        const csrftoken = getCookie('csrftoken');
+        fetch('http://127.0.0.1:8000/order/cart/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+
+            },
+            body: JSON.stringify(cart),
+        })
+            .then(response => {
+                if (response.ok) {
+                    {#window.location.href = "http://127.0.0.1:8000";#}
+                    console.log(response)
+                    window.location.href = "http://127.0.0.1:8000/order/cart/";
+
+                } else if (response.status === 401) {
+                    pass
+                } else {
+                    console.log('Error:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
 </script>
 </body>

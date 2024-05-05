@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (UsernameLoginView, EmailLoginView, OTPView, LoginView, SignUpView, VerifyUser, CustomLogoutView,
-                    PasswordChange, PasswordReset, ResetPasswordDone, profile, show_address, detail_address)
+                    PasswordChange, PasswordReset, ResetPasswordDone, profile, show_address, detail_address,
+                    AddressUpdateView, CheckShipping, AddressCreateView, code_copun)
 
 
 app_name = "accounts"
@@ -38,5 +39,9 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('showaddress/', show_address, name='show_address'),
     # path('show-address-single/', detail_address, name='detail_address')
+    path('shipingcart/', CheckShipping.as_view(), name='shiping_cart'),
+    path('addresscreat/', AddressCreateView.as_view(), name='address_create_view'),
+    path('updateaddress/<int:pk>/', AddressUpdateView.as_view(), name='update_address'),
+    path('copun/', code_copun, name='code_copon')
 
 ]

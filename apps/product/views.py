@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, TemplateView, CreateView
 from django.views import View
 from django.db.models import Q, F
-from .models import Product, Attribute, Discount, Category, Image, Comment, Like
+from .models import Product, Discount, Category, Image, Comment, Like, Variant
 from .forms import CommentForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -12,14 +12,16 @@ from django.http import JsonResponse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 
+
 class HomePage(ListView):
     model = Product
+    # model = Variant
     template_name = 'product/home_product.html'
     context_object_name = 'products'
     paginate_by = 2
-    queryset = Product.objects.prefetch_related('images')
+    # queryset = Variant.objects.select_related('product', 'discount').distinct()
+    queryset = Product.objects.prefetch_related('images', 'variant_product')
     print(queryset)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['new_products'] = Product.objects.prefetch_related('images').order_by('-create_at')[:10]
@@ -51,11 +53,13 @@ class HomePage(ListView):
 
 
 class CategoryProductListView(ListView):
+
     template_name = 'product/category_product.html'
     context_object_name = 'products'
     paginate_by = 2
 
     def get_queryset(self):
+        pass
         cat = Category.objects.get(pk=self.kwargs['pk'])
         subcategories = Category.objects.filter(replay_cat=cat)
         if subcategories.exists():
@@ -71,6 +75,7 @@ class CategoryProductListView(ListView):
 
 
 class ProductDetailView(DetailView):
+    # pass
     model = Product
     template_name = 'product/detail_product.html'
     context_object_name = 'details'
@@ -79,21 +84,50 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         product = self.get_object()
         comments = Comment.objects.filter(product=product, status=Comment.COMMENT_STATUS_APPROVED)
-        # context['comments'] = comments
-        # context['images'] = self.object.images.all()
-        # context['attributes'] = self.object.attribute.all()
         context['comments'] = comments
         context['images'] = product.images.all()
-        # context['attributes'] = product.attribute.all()
         context['comment_form'] = CommentForm()
-        context['sizes'] = product.attribute.values_list('size', flat=True).distinct()
-        context['colors'] = product.attribute.values_list('code_color', flat=True).distinct()
+        variants = Variant.objects.filter(product=product)
+        print(variants)
 
+
+        size = []
+        size_color_dict = {}
+        count = {}
+
+        for variant in variants:
+            size.append(variant.size)
+        size = list(set(size))
+        print(size)
+
+
+        for variant in variants:
+            # if variant.size not in size_color_dict:
+                # size_color_dict[variant.size] = [variant.color]
+            a = size_color_dict.setdefault(variant.size.name, [])
+            a.append(variant.color.code)
+            # else:
+            #     # a = size_color_dict[variant.size].append(variant.color)
+            #     a= size_color_dict.setdefault(variant.size.name, [variants.color])
+
+        # for variant in variants:
+        #     a = count.setdefault(variant.size.name, [])
+        #     a.append(variant.quantity)
+
+        print(size_color_dict)
+        context['sizes'] = size
+        context['colors'] = size_color_dict
+        return context
+        # context['attributes'] = self.object.attribute.all()
+        # context['comments'] = comments
+        # context['images'] = self.object.images.all()
+        # context['attributes'] = product.attribute.all()
+        # context['sizes'] = product.attribute.values_list('size', flat=True).distinct()
+        # context['colors'] = product.attribute.values_list('code_color', flat=True).distinct()
         # print(self.object)
         # print(self.object.price)
         # print(context['images'])
         # print(context['attributes'])
-        return context
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
@@ -120,7 +154,6 @@ def item_search(request):
 
 
 class LikeProductView(LoginRequiredMixin, View):
-
     def get(self, request, *args, **kwargs):
         product_id = self.kwargs['pk']
         user = request.user

@@ -57,4 +57,4 @@ class OrderItem(BaseModel):
         verbose_name_plural = _('order items')
 
     def __str__(self):
-        return f'{self.order} : {self.variant}'
+        return f'{self.order} : {self.product}'

@@ -72,26 +72,7 @@
                         </div>
                         <div class="pd-info-bottom">
                             <ul class="info-bottom-list">
-                                <li>
-                                    <div class="ib-list-left">
-                                        <span>رنگ های موجود</span>
-                                    </div>
-                                    <div class="ib-list-right">
-                                        <ul style="display: flex; align-items: center;">
-                                            {% for color in colors %}
-                                                <li style="width: 50px; height: 50px; padding: 5px;"
-                                                    onclick="selectColor(this, '{{ color }}')">
-                                                    <div style=" width:90%;
-                                                     height:90%; border-radius: 5px;
-                                                     box-sizing: border-box;  margin:auto;
-                                                      background-color: {{ color }}"></div>
-                                                </li>
 
-                                            {% endfor %}
-                                        </ul>
-
-                                    </div>
-                                </li>
                                 <li>
                                     <div class="ib-list-left">
                                         <span>سایز های موجود</span>
@@ -100,8 +81,11 @@
                                         <ul class="d-flex">
 
                                             {% for size in sizes %}
-                                                <li>
-                                                    <input type="radio" id="size_{{ size }}" name="selected_size"
+                                                <li style="margin: 0 5px;">
+                                                    {#   <input type="radio" id="size_{{ size }}" name="selected_size"#}
+                                                    {#  value="{{ size }}">#}
+                                                    <input type="radio" id="size_{{ forloop.counter0 }}"
+                                                           name="selected_size"
                                                            value="{{ size }}">
                                                     <label for="size_{{ size }}">{{ size }}</label>
                                                 </li>
@@ -109,6 +93,31 @@
                                         </ul>
                                     </div>
 
+                                </li>
+
+
+                                <li>
+                                    <div class="ib-list-left">
+                                        <span>رنگ های موجود</span>
+                                    </div>
+                                    <div class="ib-list-right">
+                                        <div id="size_color_dict" style="display: none; ">
+                                            {{ colors }}</div>
+
+                                        <ul style="display: flex; align-items: center;" id="color">
+                                            {#                                            {% for color in colors %}#}
+                                            {#                                                <li style="width: 50px; height: 50px; padding: 5px;"#}
+                                            {#                                                    onclick="selectColor(this, '{{ color }}')">#}
+                                            {#                                                    <div style=" width:90%;#}
+                                            {#                                                                                             height:90%; border-radius: 5px;#}
+                                            {#                                                                                             box-sizing: border-box;  margin:auto;#}
+                                            {#                                                                                              background-color: {{ color }}"></div>#}
+                                            {#                                                </li>#}
+                                            {##}
+                                            {#                                            {% endfor %}#}
+                                        </ul>
+
+                                    </div>
                                 </li>
 
 
@@ -243,6 +252,64 @@
 
 
     <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            let sizeInputs = document.getElementsByName('selected_size');
+
+
+            sizeInputs.forEach(function (input) {
+                input.addEventListener('click', function () {
+
+                    let selectedSize = input.value;
+                    console.log('Selected Size: ' + selectedSize);
+                    let sizeColorDictElement = document.getElementById('size_color_dict');
+
+                    let sizeColorDictContent = sizeColorDictElement.textContent.trim();
+
+
+                    let sizeColorDictContentCleaned = sizeColorDictContent.replace(/'/g, '"').replace(/ /g, '');
+
+
+                    let sizeColorDictJSON = JSON.parse(sizeColorDictContentCleaned);
+
+
+                    console.log(sizeColorDictJSON);
+
+                    console.log(sizeColorDictJSON[selectedSize])
+
+                    ul_color = document.getElementById('color')
+                    ul_color.innerHTML = '';
+                    let colors = sizeColorDictJSON[selectedSize];
+
+                    for (let i = 0; i < colors.length; i++) {
+                        let color = colors[i];
+
+                        let li = document.createElement('li');
+                        li.style.width = '50px';
+                        li.style.height = '50px';
+                        li.style.padding = '5px';
+                        {#li.setAttribute('onclick', 'selectColor(this, "' + color + '")');#}
+                        li.setAttribute('onclick', 'selectColor(this, "' + color + '")');
+
+                        let div = document.createElement('div');
+                        div.style.width = '90%';
+                        div.style.height = '90%';
+                        div.style.borderRadius = '5px';
+                        div.style.boxSizing = 'border-box';
+                        div.style.margin = 'auto';
+                        div.style.backgroundColor = color;
+
+                        li.appendChild(div);
+                        ul_color.appendChild(li);
+
+                    }
+
+                });
+            });
+        });
+
+
         let selected_color = null;
 
         function selectColor(element, color) {
@@ -310,11 +377,26 @@
 
             console.log('a')
 
+
+
             let itemId = "{{ details.id }}";
             let imageSrc = "{{ details.image.url }}";
             let name = "{{ details.name  }}"
             let originalPrice = "{{ details.price }}";
-            let discountedPrice = "{{ details.calculate_discounted_price }}";
+            {#let discountedPrice = "{{ details.calculate_discounted_price }}";#}
+            let discountedPrice;
+            {#let a = "{{ details.discount  }}"#}
+            {#console.log(typeof a)#}
+            {#console.log(a)#}
+
+            if ("{{ details.discount }}" !== "None") {
+                discountedPrice = parseInt("{{ details.calculate_discounted_price }}");
+                console.log('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
+            } else {
+
+                discountedPrice = 0;
+            }
+
 
             let cart = JSON.parse(sessionStorage.getItem("cart")) || {};
             cart[itemId] = {
